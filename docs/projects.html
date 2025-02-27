@@ -1,30 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects - Grug Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+  </style>
 </head>
-<body class="bg-gray-900 text-white p-10">
-    <h1 class="text-3xl font-bold text-center">My Projects</h1>
-
-    <div class="mt-10 grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
-        <div class="p-6 bg-gray-800 rounded-lg shadow-lg">
-            <h2 class="text-xl font-semibold">Cool Project 1</h2>
-            <p class="text-gray-400 mt-2">Description of the project.</p>
-            <a href="#" class="text-blue-400 hover:underline mt-3 block">View on GitHub</a>
-        </div>
-        <div class="p-6 bg-gray-800 rounded-lg shadow-lg">
-            <h2 class="text-xl font-semibold">Cool Project 2</h2>
-            <p class="text-gray-400 mt-2">Another cool thing Grug made.</p>
-            <a href="#" class="text-blue-400 hover:underline mt-3 block">View on GitHub</a>
-        </div>
+<body class="bg-gray-900 text-white">
+  <!-- Navigation -->
+  <nav class="p-4">
+    <div class="flex justify-center space-x-4">
+      <a href="index.html" class="hover:text-blue-400">Home</a>
+      <a href="skills.html" class="hover:text-blue-400">Skills</a>
+      <a href="projects.html" class="hover:text-blue-400">Projects</a>
+      <a href="about.html" class="hover:text-blue-400">About</a>
     </div>
+  </nav>
 
-    <div class="text-center mt-10">
-        <a href="index.html" class="text-blue-400 hover:underline">⬅️ Back to Home</a>
+  <!-- Main Content -->
+  <main class="py-16 px-4 text-center">
+    <h1 class="text-4xl font-bold mb-6">Projects</h1>
+    <div class="max-w-xl mx-auto space-y-8 text-gray-300 leading-relaxed">
+      <div>
+        <h2 class="text-2xl font-bold mb-2">Project One</h2>
+        <p>
+          A brief description of project one showcasing raw DevOps techniques and a hands-on approach.
+        </p>
+        <a href="#" class="text-blue-400 hover:underline">View on GitHub</a>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold mb-2">Project Two</h2>
+        <p>
+          A brief description of project two where I built a robust automated solution the Grug way.
+        </p>
+        <a href="#" class="text-blue-400 hover:underline">View on GitHub</a>
+      </div>
     </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-4 text-center text-gray-400">
+    &copy; 2025 Grug Portfolio. All rights reserved.
+  </footer>
 </body>
 </html>
-
