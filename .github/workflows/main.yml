@@ -3,8 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Triggers deployment on push to the main branch
-  workflow_dispatch:  # Allows manual triggering of the workflow
+      - main  # Runs when pushing to main branch
+  workflow_dispatch:  # Allows manual trigger
 
 permissions:
   contents: read
@@ -12,37 +12,21 @@ permissions:
   id-token: write
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  deploy:
+    runs-on: self-hosted  # ✅ This tells GitHub to run on your machine
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set Up Node.js
-        uses: actions/setup-node@v3
+      - name: Build Project (Optional)
+        run: |
+          echo "Building project..."
+          # Add your build commands here
+
+      - name: Upload GitHub Pages Artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          node-version: '16'  # Specify the Node.js version you need
+          path: .  # Ensure this points to your static files
 
-      - name: Install Dependencies
-        run: npm install  # Adjust this if you're using yarn or another package manager
-
-      - name: Build Project
-        run: npm run build  # Ensure this script builds your site into the 'dist' directory
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4  # Updated to the latest version
-        with:
-          name: github-pages
-          path: dist  # Ensure this matches your build output directory
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-    steps:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
