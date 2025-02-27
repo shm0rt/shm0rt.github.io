@@ -24,8 +24,9 @@ jobs:
           cp -r * output  # ✅ Copy files to output folder
 
       - name: Upload GitHub Pages Artifact
-        uses: actions/upload-pages-artifact@v2  # ✅ Correct version
+        uses: actions/upload-artifact@v4  # ✅ Updated to correct version
         with:
+          name: github-pages
           path: output  # ✅ Adjust if your site is built elsewhere
 
   deploy:
