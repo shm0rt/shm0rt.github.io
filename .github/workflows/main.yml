@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main  # Deploy on push to the main branch
-  workflow_dispatch:  # Allows manual trigger
 
 permissions:
   contents: read
@@ -12,32 +11,19 @@ permissions:
   id-token: write
 
 jobs:
-  build:
-    runs-on: self-hosted
+  deploy:
+    runs-on: ubuntu-latest  # Uses GitHub's default runner
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Build Static Files (Optional)
-        run: |
-          mkdir output
-          cp -r * output
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
 
       - name: Upload GitHub Pages Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v2
         with:
-          name: github-pages
-          path: output
-
-  deploy:
-    runs-on: self-hosted
-    needs: build
-    steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: github-pages
-          path: output
+          path: .  # Ensure this points to your static files
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
