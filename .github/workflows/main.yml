@@ -24,6 +24,6 @@ jobs:
           path: .  # Upload all files in the repo
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
         with:
           artifact_name: github-pages  # Ensure artifact name matches upload
