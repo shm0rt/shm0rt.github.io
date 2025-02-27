@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { transition: background 0.3s; }
+        .dark-mode { background-color: #1a202c; color: #e2e8f0; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white text-center p-10">
+    <button onclick="toggleDarkMode()" class="absolute top-5 right-5 px-3 py-2 bg-gray-800 rounded">
+        🌙 Toggle Dark Mode
+    </button>
+
+    <h1 class="text-5xl font-bold">Hey, I'm <span class="text-blue-400">[Your Name]</span> 👋</h1>
+    <p class="mt-4 text-gray-400 text-lg">I build cool stuff with Python & C#.</p>
+
+    <a href="projects.html" class="mt-6 inline-block bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-600">
+        View My Work
+    </a>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+    </script>
+</body>
+</html>
+
