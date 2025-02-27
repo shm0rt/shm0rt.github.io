@@ -3,8 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - main  # Deploy on push to the main branch
+  workflow_dispatch:  # Allows manual trigger
 
 permissions:
   contents: read
@@ -20,17 +20,24 @@ jobs:
 
       - name: Build Static Files (Optional)
         run: |
-          mkdir output  # ✅ Create output folder if needed
-          cp -r * output  # ✅ Copy files to output folder
+          mkdir output
+          cp -r * output
 
       - name: Upload GitHub Pages Artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
+          name: github-pages
           path: output
 
   deploy:
     runs-on: self-hosted
-    needs: build 
+    needs: build
     steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: output
+
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
