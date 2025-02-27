@@ -1,4 +1,4 @@
-# Grug Portfolio
+# Shm0rt's Portfolio
 
 A raw and straightforward portfolio site built the Grug way.
 
