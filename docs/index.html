@@ -1,39 +1,315 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Home - Shm0rt Portfolio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-  </style>
-</head>
-<body class="bg-gray-900 text-white">
-  <!-- Navigation -->
-  <nav class="p-4">
-    <div class="flex justify-center space-x-4">
-      <a href="index.html" class="hover:text-blue-400">Home</a>
-      <a href="skills.html" class="hover:text-blue-400">Skills</a>
-      <a href="projects.html" class="hover:text-blue-400">Projects</a>
-      <a href="about.html" class="hover:text-blue-400">About</a>
-    </div>
-  </nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shm0rt Portfolio - One Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        scroll-behavior: smooth;
+      }
 
-  <!-- Main Content -->
-  <main class="py-16 px-4 text-center">
-    <h1 class="text-4xl font-bold mb-6">Welcome to Shm0rt's Portfolio</h1>
-    <p class="max-w-xl mx-auto text-gray-300 leading-relaxed mb-8">
-      A no-nonsense DevOps journey. I build raw, robust, and automated infrastructures using Linux, Bash, Windows, PowerShell, Azure, Python, and C#.
-    </p>
-    <a href="projects.html" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition">
-      See My Work
-    </a>
-  </main>
+      section {
+        padding-top: 4rem; /* Extra space for when the nav is visible */
+      }
 
-  <!-- Footer -->
-  <footer class="py-4 text-center text-gray-400">
-    &copy; 2025 Shm0rt Portfolio. All rights reserved.
-  </footer>
-</body>
+      /* Hide the nav by default */
+      #mainNav.hiddenNav {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+      /* Show the nav */
+      #mainNav {
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-white">
+    <!-- Home Section -->
+    <section
+      id="home"
+      class="min-h-screen flex flex-col justify-center items-center text-center px-4"
+    >
+      <!-- Typed Title -->
+      <h1 class="typed-text text-5xl font-bold mb-4 relative mx-auto">
+        Welcome to my Portfolio
+      </h1>
+
+      <!-- Short About -->
+      <p class="max-w-xl text-gray-300 leading-relaxed mb-8">
+        I'm Shm0rt, a DevOps enthusiast who builds raw, robust, and automated
+        infrastructures.
+      </p>
+
+      <!-- Terminal Snippet with Linked Commands -->
+      <div
+        class="max-w-xl w-full bg-gray-800 p-6 rounded-lg font-mono text-left shadow-lg mb-8"
+      >
+        <p class="text-green-400">> grug.goToSkills</p>
+        <a href="#skills" class="ml-4 text-blue-400 hover:underline">
+          "View Skills"
+        </a>
+        <br /><br />
+
+        <p class="text-green-400">> grug.goToProjects</p>
+        <a href="#projects" class="ml-4 text-blue-400 hover:underline">
+          "Check Projects"
+        </a>
+        <br /><br />
+
+        <p class="text-green-400">> grug.goToAbout</p>
+        <a href="#about" class="ml-4 text-blue-400 hover:underline">
+          "More About Shm0rt"
+        </a>
+        <br /><br />
+
+        <p class="text-green-400">> grug.goToContact</p>
+        <a href="#contact" class="ml-4 text-blue-400 hover:underline">
+          "Contact Shm0rt"
+        </a>
+      </div>
+    </section>
+
+    <style>
+      /* Typewriter effect */
+      .typed-text {
+        /* So we can "clip" the text as it "types" */
+        overflow: hidden;
+        white-space: nowrap;
+        width: 0; /* Start with zero width */
+        animation: typing 3s steps(30, end) forwards;
+        /* 'steps(30, end)' matches how many characters are typed, 
+   and 'forwards' keeps it at 100% after the animation. */
+      }
+
+      /* Larger blinking block cursor */
+      .typed-text::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        /* Make the cursor as big as you want */
+        width: 0.6em;
+        height: 1.2em;
+        background: currentColor;
+        animation: blink 1s step-end infinite;
+      }
+
+      /* Keyframes for typing effect */
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        /* '24ch' matches the length of "Welcome to my Portfolio" 
+   (including spaces). Adjust if you change the text. */
+        to {
+          width: 24ch;
+        }
+      }
+
+      /* Keyframes for blinking cursor */
+      @keyframes blink {
+        50% {
+          background: transparent;
+        }
+      }
+    </style>
+
+    <!-- Fixed Navigation (hidden by default) -->
+    <nav
+      id="mainNav"
+      class="fixed top-0 left-0 right-0 bg-gray-900 bg-opacity-75 z-50 shadow hiddenNav"
+    >
+      <div class="max-w-4xl mx-auto flex justify-center space-x-8 p-4">
+        <a href="#home" class="hover:text-blue-400">Home</a>
+        <a href="#skills" class="hover:text-blue-400">Skills</a>
+        <a href="#projects" class="hover:text-blue-400">Projects</a>
+        <a href="#about" class="hover:text-blue-400">About</a>
+        <a href="#contact" class="hover:text-blue-400">Contact</a>
+      </div>
+    </nav>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-16 px-4 text-center">
+      <h2 class="text-4xl font-bold mb-6">Skills</h2>
+      <div class="max-w-xl mx-auto text-gray-300">
+        <h3 class="text-2xl font-bold mt-8 mb-4">
+          Containerization &amp; Orchestration
+        </h3>
+        <ul class="list-disc list-inside">
+          <li>Docker</li>
+          <li>Kubernetes</li>
+          <li>Rancher</li>
+        </ul>
+
+        <h3 class="text-2xl font-bold mt-8 mb-4">Cloud &amp; Virtualization</h3>
+        <ul class="list-disc list-inside">
+          <li>Microsoft Azure</li>
+          <li>Proxmox</li>
+        </ul>
+
+        <h3 class="text-2xl font-bold mt-8 mb-4">Infrastructure as Code</h3>
+        <ul class="list-disc list-inside">
+          <li>Terraform</li>
+          <li>OpenTofu</li>
+          <li>cloud-init</li>
+        </ul>
+
+        <h3 class="text-2xl font-bold mt-8 mb-4">Scripting &amp; Automation</h3>
+        <ul class="list-disc list-inside">
+          <li>Linux</li>
+          <li>Bash</li>
+          <li>Python</li>
+          <li>Windows</li>
+          <li>PowerShell</li>
+          <li>GitHub Actions</li>
+          <li>Azure Pipelines</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 px-4 text-center">
+      <h2 class="text-4xl font-bold mb-6">Projects</h2>
+      <div class="max-w-3xl mx-auto space-y-12 text-gray-300">
+        <div>
+          <h3 class="text-2xl font-bold mb-2">Project One</h3>
+          <p>
+            A brief description of project one showcasing raw DevOps techniques
+            and a hands‑on approach.
+          </p>
+          <a href="#" class="text-blue-400 hover:underline">View on GitHub</a>
+        </div>
+        <div>
+          <h3 class="text-2xl font-bold mb-2">Project Two</h3>
+          <p>
+            A brief description of project two where I built a robust automated
+            solution the Grug way.
+          </p>
+          <a href="#" class="text-blue-400 hover:underline">View on GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 px-4">
+      <h2 class="text-4xl font-bold text-center mb-6">About Shm0rt</h2>
+      <p class="max-w-xl mx-auto text-center text-gray-300 leading-relaxed">
+        I'm a DevOps enthusiast skilled in Linux, Bash, Windows, PowerShell,
+        Microsoft Azure, Python, and C#. I build robust, automated
+        infrastructures the Grug way—direct, raw, and effective.
+      </p>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 px-4 bg-gray-800">
+      <h2 class="text-4xl font-bold text-center mb-6">Get in Touch</h2>
+      <div class="mx-auto w-16 h-1 bg-blue-500 my-4"></div>
+      <p
+        class="max-w-xl mx-auto text-center text-gray-300 leading-relaxed mb-8"
+      >
+        For inquiries or collaborations, please use one of the following
+        methods.
+      </p>
+      <!-- Terminal-style container -->
+      <div
+        class="max-w-xl mx-auto bg-gray-900 p-6 rounded-lg font-mono shadow-lg space-y-4"
+      >
+        <!-- Email -->
+        <a
+          href="mailto:me@shm0rt.ch"
+          class="group flex items-center space-x-2 transition"
+        >
+          <svg
+            class="w-6 h-6 text-gray-300 group-hover:text-blue-400 transition"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21.75 7.5L12.108 13.27a.75.75 0 01-.816 0L2.25 7.5m19.5 9.75A2.25 2.25 0 0119.5 19.5h-15a2.25 2.25 0 01-2.25-2.25V6.75A2.25 2.25 0 014.5 4.5h15a2.25 2.25 0 012.25 2.25v9z"
+            />
+          </svg>
+          <span class="text-gray-300 group-hover:text-blue-400 transition">
+            me@shm0rt.ch
+          </span>
+        </a>
+        <!-- LinkedIn -->
+        <a
+          href="https://www.linkedin.com/in/chirkov-egor-449403224/"
+          target="_blank"
+          class="group flex items-center space-x-2 transition"
+        >
+          <svg
+            class="w-6 h-6 text-gray-300 group-hover:text-blue-400 transition"
+            role="img"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <title>LinkedIn</title>
+            <path
+              fill="currentColor"
+              d="M19 0h-14C2.24 0 0 2.24 0 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5V5c0-2.76-2.24-5-5-5zM8.48 18.2H5.56V9h2.92v9.2zM7.02 7.76h-.02c-.98 0-1.62-.66-1.62-1.48 0-.84.66-1.48 1.66-1.48s1.62.64 1.64 1.48c0 .82-.64 1.48-1.66 1.48zM18.2 18.2h-2.92v-4.7c0-1.12-.4-1.88-1.4-1.88-.76 0-1.2.5-1.4 1-.07.16-.08.4-.08.64v5h-2.92s.04-8.1 0-9h2.92v1.28c.4-.62 1.08-1.5 2.64-1.5 1.92 0 3.36 1.26 3.36 3.98v5.24z"
+            />
+          </svg>
+          <span class="text-gray-300 group-hover:text-blue-400 transition">
+            LinkedIn
+          </span>
+        </a>
+        <!-- GitHub -->
+        <a
+          href="https://github.com/shm0rt"
+          target="_blank"
+          class="group flex items-center space-x-2 transition"
+        >
+          <svg
+            class="w-6 h-6 text-gray-300 group-hover:text-blue-400 transition"
+            role="img"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <title>GitHub</title>
+            <path
+              fill="currentColor"
+              d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.016-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.084-.73.084-.73 1.205.085 1.84 1.236 1.84 1.236 1.07 1.835 2.807 1.304 3.492.997.108-.776.418-1.304.76-1.604-2.665-.305-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.236-3.22-.124-.304-.536-1.527.116-3.176 0 0 1.01-.323 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.29-1.553 3.3-1.23 3.3-1.23.652 1.649.24 2.872.118 3.176.77.84 1.236 1.91 1.236 3.22 0 4.61-2.807 5.624-5.48 5.92.43.372.81 1.102.81 2.222 0 1.606-.014 2.903-.014 3.293 0 .319.216.694.82.576C20.565 22.092 24 17.593 24 12.297 24 5.67 18.627.297 12 .297z"
+            />
+          </svg>
+          <span class="text-gray-300 group-hover:text-blue-400 transition">
+            GitHub
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 text-center text-gray-400">
+      &copy; 2025 Shm0rt Portfolio. All rights reserved.
+    </footer>
+
+    <!-- Script to Show/Hide Nav on Scroll -->
+    <script>
+      const nav = document.getElementById("mainNav");
+      const homeSection = document.getElementById("home");
+      const homeHeight = homeSection.offsetHeight;
+
+      window.addEventListener("scroll", () => {
+        // If scrolled beyond home section, show nav; otherwise, hide it
+        if (window.scrollY > homeHeight - 80) {
+          nav.classList.remove("hiddenNav");
+        } else {
+          nav.classList.add("hiddenNav");
+        }
+      });
+    </script>
+  </body>
 </html>
