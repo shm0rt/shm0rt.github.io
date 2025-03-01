@@ -3,338 +3,326 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shm0rt Portfolio - Grug Edition</title>
-    <script src="https://cdn.tailwindcss.com" ></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-    />
+    <title>Shm0rt Portfolio</title>
     <style>
-      body{font-family:"Inter",sans-serif;margin:0;padding:0}
-      html {scroll-behavior: smooth;}
-      #mainNav{transition:opacity 0.3s,visibility 0.3s}
-      #mainNav.hiddenNav{opacity:0;visibility:hidden}
-      .desktop-typewriter{overflow:hidden;white-space:nowrap;width:0;animation:typing 3s steps(24,end) forwards;position:relative}
-      .desktop-typewriter::after{content:"";position:absolute;top:0;right:0;width:0.6em;height:1.2em;background:currentColor;animation:blink 1s step-end infinite}
-      @keyframes typing{from{width:0}to{width:24ch}}
-      @keyframes blink{50%{background:transparent}}
-      .mobile-typewriter .typed-first,
-      .mobile-typewriter .typed-second{position:relative;overflow:hidden;white-space:nowrap;display:inline-block}
-      .mobile-typewriter .typed-first{width:0;animation:typing-first 1.5s steps(10,end) forwards}
-      .mobile-typewriter .typed-first::after{content:"";position:absolute;right:0;top:0;width:0.6em;height:1.2em;background:currentColor;animation:blink 1s step-end infinite,hide-cursor 0.01s forwards 1.5s}
-      .mobile-typewriter .typed-second{width:0;animation:typing-second 1.5s steps(14,end) forwards;animation-delay:1.5s}
-      .mobile-typewriter .typed-second::after{content:"";position:absolute;right:0;top:0;width:0.6em;height:1.2em;background:currentColor;animation:blink 1s step-end infinite;animation-delay:1.5s}
-      @keyframes typing-first{from{width:0}to{width:10ch}}
-      @keyframes typing-second{from{width:0}to{width:14ch}}
-      @keyframes hide-cursor{to{opacity:0}}
-      .terminal-container{max-width:640px;width:100%;border-radius:0.5rem;box-shadow:0 4px 10px rgba(0,0,0,0.5);overflow:hidden;margin-bottom:2rem}
-      .terminal-header{background:#2d3748;padding:0.5rem 1rem;display:flex;gap:0.5rem}
-      .terminal-body{position:relative;background:#1a202c;padding:1.5rem 2rem;font-family:"Fira Code",monospace;color:#68d391;line-height:1.5;font-size:0.9rem}
-      .grug-arrow{position:absolute;left:0.2rem;font-size:1.3rem;color:#68d391;font-weight:bold;transition:top 0.3s;pointer-events:none;z-index:5}
+      /* Global Styles */
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: "Fira Code", monospace;
+        background: #1e1e1e;
+        color: #c5c8c6;
+        line-height: 1.4;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* HERO / LANDING SECTION */
+      .hero {
+        min-height: 60vh;
+        background: linear-gradient(135deg, #2c2c2c 0%, #1e1e1e 70%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 4em 1em 2em;
+      }
+      .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 0.5em;
+      }
+      .hero p {
+        font-size: 1.3rem;
+        max-width: 600px;
+        margin-bottom: 2em;
+      }
+
+      /* TERMINAL WINDOW (Zsh-Style) */
+      .floating-terminal {
+        width: 90%;
+        max-width: 900px;
+        margin: 0 auto;
+        border: 2px solid #333;
+        border-radius: 6px;
+        background-color: #1e1e1e;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+        text-align: left; /* keep text left-aligned inside the terminal */
+        /* Force uniform font size/line-height inside terminal */
+        font-size: 1rem !important;
+        line-height: 1.4 !important;
+      }
+      /* Ensure all children inside the terminal inherit exactly the same rules */
+      .floating-terminal * {
+        font-size: inherit !important;
+        line-height: inherit !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      /* We’ll re-add minimal spacing in the output via a custom rule */
+      .output p,
+      .output pre {
+        padding: 0.2rem 0 !important;
+      }
+
+      .terminal-header {
+        display: flex;
+        align-items: center;
+        height: 30px;
+        padding: 0.5rem 1rem;
+        background-color: #2c2c2c;
+        border-bottom: 1px solid #333;
+      }
+      .traffic-lights {
+        display: flex;
+        gap: 8px;
+      }
+      .traffic-light {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+      .close {
+        background-color: #ff5f56;
+      }
+      .minimize {
+        background-color: #ffbd2e;
+      }
+      .zoom {
+        background-color: #27c93f;
+      }
+      .terminal-body {
+        padding: 1rem !important;
+      }
+      .output {
+        min-height: 80px;
+        margin-bottom: 0.5rem !important;
+        overflow-y: auto !important;
+      }
+      .prompt-line {
+        display: flex;
+        align-items: center;
+      }
+      .prompt {
+        color: #8abeb7;
+        margin-right: 0.5rem !important;
+      }
+      .command-input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #c5c8c6;
+      }
+      .error {
+        color: #ff5555 !important;
+      }
+      .tree {
+        white-space: pre;
+        font-family: inherit;
+      }
+      .dir {
+        color: #8abeb7 !important;
+        cursor: pointer;
+      }
+
+      /* MAIN CONTENT SECTIONS */
+      .content {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1em;
+      }
+      .content section {
+        margin-bottom: 2rem;
+      }
+      .content h2 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+      }
     </style>
   </head>
-  <body class="bg-gray-900 text-white" style="opacity: 0; transition: opacity 2s ease;">
-    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-4" style="background: linear-gradient(180deg, #1f2937 0%, #111827 100%);background-position: 50% 0;background-size: cover;">
-      <h1 class="desktop-typewriter text-5xl font-bold mb-4 relative mx-auto hidden md:block">Welcome to my Portfolio</h1>
-      <h1 class="mobile-typewriter text-5xl font-bold mb-4 relative mx-auto block md:hidden">
-        <span class="typed-first">Welcome to</span><br />
-        <span class="typed-second">my Portfolio</span>
-      </h1>
-      <p class="max-w-xl text-gray-300 leading-relaxed mb-8">I'm Shm0rt, a DevOps enthusiast building raw, robust, automated infrastructures the Grug way.</p>
-      <div class="terminal-container mx-auto">
-        <div class="terminal-header flex gap-2 p-2">
-          <span class="w-3 h-3 rounded-full bg-red-500"></span>
-          <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-          <span class="w-3 h-3 rounded-full bg-green-500"></span>
+  <body>
+    <!-- HERO SECTION WITH TERMINAL -->
+    <section class="hero">
+      <h1>Welcome to my Portfolio</h1>
+      <p>
+        I'm Shm0rt, a DevOps enthusiast building raw, robust, automated
+        infrastructures the Grug way.
+      </p>
+      <!-- Terminal Window right below the text -->
+      <div class="floating-terminal" id="terminalWindow">
+        <div class="terminal-header">
+          <div class="traffic-lights">
+            <div class="traffic-light close"></div>
+            <div class="traffic-light minimize"></div>
+            <div class="traffic-light zoom"></div>
+          </div>
         </div>
-        <div id="terminalBody" class="terminal-body relative">
-          <span id="grugArrow" class="grug-arrow">&gt;</span>
-          <div class="grug-line" data-line="0">
-            <span>grug.goToSkills</span>
-            <a href="#skills" class="ml-2 text-blue-400 hover:underline">View Skills</a>
-          </div>
-          <div class="grug-line" data-line="1">
-            <span>grug.goToProjects</span>
-            <a href="#projects" class="ml-2 text-blue-400 hover:underline">Check Projects</a>
-          </div>
-          <div class="grug-line" data-line="2">
-            <span>grug.goToAbout</span>
-            <a href="#about" class="ml-2 text-blue-400 hover:underline">More About Shm0rt</a>
-          </div>
-          <div class="grug-line" data-line="3">
-            <span>grug.goToContact</span>
-            <a href="#contact" class="ml-2 text-blue-400 hover:underline">Contact Shm0rt</a>
+        <div class="terminal-body">
+          <div class="output" id="terminalOutput"></div>
+          <div class="prompt-line">
+            <span class="prompt">user@my-portfolio:~$</span>
+            <input
+              type="text"
+              class="command-input"
+              id="commandInput"
+              placeholder="Enter command"
+              autocomplete="off"
+            />
           </div>
         </div>
       </div>
     </section>
-    <nav id="mainNav" class="fixed top-0 left-0 right-0 bg-gray-900 bg-opacity-75 z-50 shadow hiddenNav">
-      <div class="max-w-4xl mx-auto flex justify-center space-x-8 p-4">
-        <a href="#home" class="hover:text-blue-400">Home</a>
-        <a href="#skills" class="hover:text-blue-400">Skills</a>
-        <a href="#projects" class="hover:text-blue-400">Projects</a>
-        <a href="#about" class="hover:text-blue-400">About</a>
-        <a href="#contact" class="hover:text-blue-400">Contact</a>
-      </div>
-    </nav>
-    <section id="skills" class="py-6">
-      <h2 class="text-3xl font-bold text-white text-center mb-3">Skills</h2>
-      <div class="mx-auto max-w-4xl px-4 space-y-6">
-        <div class="p-2 bg-gray-800 rounded">
-          <h3 class="text-lg font-semibold text-white mb-2">Containers & Orchestration</h3>
-          <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 place-items-center">
-            <li class="w-full max-w-xs">
-              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
-                <div class="flex items-center space-x-2">
-                  <i class="fab fa-docker text-white text-xl"></i>
-                  <span class="text-white text-sm font-medium">Docker</span>
-                </div>
-                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
-                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:85%"></div>
-                </div>
-              </div>
-            </li>
-            <li class="w-full max-w-xs">
-              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-cubes text-white text-xl"></i>
-                  <span class="text-white text-sm font-medium">Kubernetes</span>
-                </div>
-                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
-                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:75%"></div>
-                </div>
-              </div>
-            </li>
-            <li class="w-full max-w-xs">
-              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-server text-white text-xl"></i>
-                  <span class="text-white text-sm font-medium">Rancher</span>
-                </div>
-                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
-                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:70%"></div>
-                </div>
-              </div>
-            </li>
-            <li class="w-full max-w-xs">
-              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-desktop text-white text-xl"></i>
-                  <span class="text-white text-sm font-medium">Proxmox</span>
-                </div>
-                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
-                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:65%"></div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="p-2 bg-gray-800 rounded">
-          <h3 class="text-lg font-semibold text-white mb-2">Infrastructure as Code</h3>
-          <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 place-items-center">
-            <li class="w-full max-w-xs">
-              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-sitemap text-white text-xl"></i>
-                  <span class="text-white text-sm font-medium">Terraform</span>
-                </div>
-                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
-                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:80%"></div>
-                </div>
-              </div>
-            </li>
-            <li class="w-full max-w-xs">
-              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-code-branch text-white text-xl"></i>
-                  <span class="text-white text-sm font-medium">OpenTofu</span>
-                </div>
-                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
-                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:60%"></div>
-                </div>
-              </div>
-            </li>
-            <li class="w-full max-w-xs">
-              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-cloud text-white text-xl"></i>
-                  <span class="text-white text-sm font-medium">cloud-init</span>
-                </div>
-                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
-                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:70%"></div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="p-2 bg-gray-800 rounded">
-          <h3 class="text-lg font-semibold text-white mb-2">Operating Systems</h3>
-          <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 place-items-center">
-            <li class="w-full max-w-xs">
-              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
-                <div class="flex items-center space-x-2">
-                  <i class="fab fa-linux text-white text-xl"></i>
-                  <span class="text-white text-sm font-medium">Linux</span>
-                </div>
-                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
-                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:90%"></div>
-                </div>
-              </div>
-            </li>
-            <li class="w-full max-w-xs">
-              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
-                <div class="flex items-center space-x-2">
-                  <i class="fab fa-windows text-white text-xl"></i>
-                  <span class="text-white text-sm font-medium">Windows</span>
-                </div>
-                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
-                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:70%"></div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="p-2 bg-gray-800 rounded">
-          <h3 class="text-lg font-semibold text-white mb-2">Scripting & Programming</h3>
-          <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 place-items-center">
-            <li class="w-full max-w-xs">
-              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-terminal text-white text-xl"></i>
-                  <span class="text-white text-sm font-medium">Bash</span>
-                </div>
-                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
-                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:85%"></div>
-                </div>
-              </div>
-            </li>
-            <li class="w-full max-w-xs">
-              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
-                <div class="flex items-center space-x-2">
-                  <i class="fab fa-python text-white text-xl"></i>
-                  <span class="text-white text-sm font-medium">Python</span>
-                </div>
-                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
-                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:80%"></div>
-                </div>
-              </div>
-            </li>
-            <li class="w-full max-w-xs">
-              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-power-off text-white text-xl"></i>
-                  <span class="text-white text-sm font-medium">PowerShell</span>
-                </div>
-                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
-                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:65%"></div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="p-2 bg-gray-800 rounded">
-          <h3 class="text-lg font-semibold text-white mb-2">Cloud & CI/CD</h3>
-          <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 place-items-center">
-            <li class="w-full max-w-xs">
-              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
-                <div class="flex items-center space-x-2">
-                  <i class="fab fa-microsoft text-white text-xl"></i>
-                  <span class="text-white text-sm font-medium">Azure</span>
-                </div>
-                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
-                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:80%"></div>
-                </div>
-              </div>
-            </li>
-            <li class="w-full max-w-xs">
-              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
-                <div class="flex items-center space-x-2">
-                  <i class="fab fa-github text-white text-xl"></i>
-                  <span class="text-white text-sm font-medium">GitHub</span>
-                </div>
-                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
-                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:75%"></div>
-                </div>
-              </div>
-            </li>
-            <li class="w-full max-w-xs">
-              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
-                <div class="flex items-center space-x-2">
-                  <i class="fas fa-cloud-upload-alt text-white text-xl"></i>
-                  <span class="text-white text-sm font-medium">Azure Pipelines</span>
-                </div>
-                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
-                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:70%"></div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-    <section id="projects" class="py-16 px-4" style="background: linear-gradient(180deg, #111827 0%, #1f2937 100%)">
-      <h2 class="text-4xl font-bold mb-10 text-center text-white">Projects</h2>
-      <div class="space-y-12">
-        <div class="max-w-[640px] mx-auto bg-gray-900 bg-opacity-90 p-6 rounded-lg shadow-lg">
-          <img src="https://via.placeholder.com/640x360" alt="Project One" class="w-full h-auto object-cover rounded-md mb-4" />
-          <h3 class="text-2xl font-bold mb-2 text-blue-400">Project One</h3>
-          <p class="text-gray-300 mb-4">A brief description of project one showcasing raw DevOps techniques and a hands‑on approach.</p>
-          <div class="space-x-2">
-            <a href="#" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">View on GitHub</a>
-            <a href="#" class="px-4 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition">Follow</a>
-          </div>
-        </div>
-        <div class="max-w-[640px] mx-auto bg-gray-900 bg-opacity-90 p-6 rounded-lg shadow-lg">
-          <img src="https://via.placeholder.com/640x360" alt="Project Two" class="w-full h-auto object-cover rounded-md mb-4" />
-          <h3 class="text-2xl font-bold mb-2 text-blue-400">Project Two</h3>
-          <p class="text-gray-300 mb-4">A brief description of project two where I built a robust automated solution the Grug way.</p>
-          <div class="space-x-2">
-            <a href="#" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">View on GitHub</a>
-            <a href="#" class="px-4 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition">Follow</a>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section id="about" class="py-16 px-4">
-      <h2 class="text-4xl font-bold text-center mb-6">About Shm0rt</h2>
-      <p class="max-w-xl mx-auto text-center text-gray-300 leading-relaxed">I'm a DevOps enthusiast skilled in Linux, Bash, Windows, PowerShell, Azure, Python, and C#. I build robust, automated infrastructures—raw, direct, and effective, just like Grug.</p>
-    </section>
-    <section id="contact" class="py-16 px-4 bg-gray-800">
-      <h2 class="text-4xl font-bold text-center mb-6">Get in Touch</h2>
-      <div class="mx-auto w-16 h-1 bg-blue-500 my-4"></div>
-      <p class="max-w-xl mx-auto text-center text-gray-300 leading-relaxed mb-8">For inquiries or collaborations, please use one of the methods below.</p>
-      <div class="max-w-xl mx-auto bg-gray-900 p-6 rounded-lg font-mono shadow-lg space-y-4">
-        <a href="mailto:me@shm0rt.ch" class="group flex items-center space-x-2 transition">
-          <i class="fa-solid fa-envelope text-gray-300 group-hover:text-blue-400 text-xl transition"></i>
-          <span class="group-hover:text-blue-400 transition">me@shm0rt.ch</span>
-        </a>
-        <a href="https://www.linkedin.com/in/chirkov-egor-449403224/" target="_blank" class="group flex items-center space-x-2 transition">
-          <i class="fa-brands fa-linkedin text-gray-300 group-hover:text-blue-400 text-xl transition"></i>
-          <span class="group-hover:text-blue-400 transition">LinkedIn</span>
-        </a>
-        <a href="https://github.com/shm0rt" target="_blank" class="group flex items-center space-x-2 transition">
-          <i class="fa-brands fa-github text-gray-300 group-hover:text-blue-400 text-xl transition"></i>
-          <span class="group-hover:text-blue-400 transition">GitHub</span>
-        </a>
-      </div>
-    </section>
-    <footer class="py-2 text-center text-gray-400 text-sm">&copy; 2025 Shm0rt Portfolio. All rights reserved.</footer>
-    <script defer>
-      document.addEventListener("DOMContentLoaded", () => {
-        document.body.style.opacity = "1";
-        const nav = document.getElementById("mainNav"),
-          home = document.getElementById("home"),
-          grug = document.getElementById("grugArrow"),
-          lines = document.querySelectorAll(".grug-line");
-        if (lines.length) center(lines[0]);
-        lines.forEach(line => line.addEventListener("mouseenter", () => center(line)));
-        function center(el) {
-          const offset = el.getBoundingClientRect().top - el.parentElement.getBoundingClientRect().top;
-          grug.style.top = offset + el.offsetHeight / 2 - grug.offsetHeight / 2 + "px";
+
+    <!-- MAIN CONTENT SECTIONS -->
+    <div class="content">
+      <section id="home">
+        <h2>Home</h2>
+        <p>
+          I'm Shm0rt, a DevOps enthusiast building raw, robust, automated
+          infrastructures the Grug way. (Home section content goes here.)
+        </p>
+      </section>
+
+      <section id="skills">
+        <h2>Skills</h2>
+        <p>Summary of skills or bullet points here...</p>
+      </section>
+
+      <section id="projects">
+        <h2>Projects</h2>
+        <p>
+          A brief overview of some DevOps or personal projects. Possibly link to
+          GitHub repos or show quick highlights...
+        </p>
+      </section>
+
+      <section id="about">
+        <h2>About Shm0rt</h2>
+        <p>
+          I'm a DevOps enthusiast skilled in Linux, Bash, Windows, PowerShell,
+          Azure, Python, and C#. I build robust, automated infrastructures—raw,
+          direct, and effective, just like Grug.
+        </p>
+      </section>
+
+      <section id="contact">
+        <h2>Contact Shm0rt</h2>
+        <p>Email: <a href="mailto:me@shm0rt.ch">me@shm0rt.ch</a></p>
+        <p>
+          LinkedIn:
+          <a href="https://www.linkedin.com/in/chirkov-egor-449403224/"
+            >LinkedIn</a
+          >
+        </p>
+        <p>
+          GitHub: <a href="https://github.com/shm0rt">GitHub</a>
+        </p>
+      </section>
+    </div>
+
+    <!-- TERMINAL LOGIC -->
+    <script>
+      const outputEl = document.getElementById('terminalOutput');
+      const commandInput = document.getElementById('commandInput');
+
+      // Append a line of HTML to the terminal output
+      function appendHtmlLine(html, isError = false) {
+        const p = document.createElement('p');
+        if (isError) p.classList.add('error');
+        p.innerHTML = html;
+        outputEl.appendChild(p);
+        outputEl.scrollTop = outputEl.scrollHeight;
+      }
+      
+      // Append a plain text line to the terminal output
+      function appendLine(text, isError = false) {
+        const p = document.createElement('p');
+        if (isError) p.classList.add('error');
+        p.textContent = text;
+        outputEl.appendChild(p);
+        outputEl.scrollTop = outputEl.scrollHeight;
+      }
+
+      // Print the tree view (ls) listing directories
+      function printTree() {
+        const pre = document.createElement('pre');
+        pre.classList.add('tree');
+        pre.innerHTML = `
+.
+├── <span class="dir" onclick="cdDir('home')">/home</span>
+├── <span class="dir" onclick="cdDir('skills')">/skills</span>
+├── <span class="dir" onclick="cdDir('projects')">/projects</span>
+├── <span class="dir" onclick="cdDir('about')">/about</span>
+└── <span class="dir" onclick="cdDir('contact')">/contact</span>
+        `.trim();
+        outputEl.appendChild(pre);
+        outputEl.scrollTop = outputEl.scrollHeight;
+      }
+
+      // Print an introductory message with a clickable /help
+      function printIntro() {
+        appendHtmlLine('type <span class="dir" onclick="processCommand(\'/help\')">/help</span> for help');
+        printTree();
+      }
+
+      // Print the short help menu
+      function printHelp() {
+        appendLine("cd <dir>   - move to dir");
+        appendLine("clear      - clear terminal");
+        appendLine("ls         - list directories");
+      }
+
+      // Function for clickable tree view lines (cd)
+      function cdDir(dirId) {
+        const target = document.getElementById(dirId);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          appendLine(`No such directory: ${dirId}`, true);
         }
-        window.addEventListener("scroll", () => {
-          nav.classList.toggle("hiddenNav", window.scrollY <= home.offsetHeight - 80);
-        });
+      }
+
+      // Clear the terminal output
+      function clearOutput() {
+        outputEl.innerHTML = "";
+      }
+
+      // Process typed commands (no echo)
+      function processCommand(cmd) {
+        const c = cmd.trim();
+        if (!c) return;
+        if (c === '/help' || c === 'help') {
+          printHelp();
+        } else if (c === 'clear') {
+          clearOutput();
+        } else if (c === 'ls') {
+          printTree();
+        } else if (c.startsWith('cd ')) {
+          // Accept both "cd /dir" and "cd dir"
+          const path = c.slice(3).trim().replace(/^\//, '');
+          cdDir(path);
+        } else {
+          appendLine(`Command not found: ${c}`, true);
+        }
+      }
+
+      // Listen for Enter key in the command input
+      commandInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          processCommand(commandInput.value);
+          commandInput.value = "";
+        }
+      });
+
+      // On page load, print intro and focus the command input
+      window.addEventListener('DOMContentLoaded', () => {
+        printIntro();
+        commandInput.focus();
       });
     </script>
   </body>
