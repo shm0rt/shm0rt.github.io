@@ -4,13 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shm0rt Portfolio - Grug Edition</title>
-    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdn.tailwindcss.com" ></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
     />
     <style>
-      body{font-family:"Inter",sans-serif;scroll-behavior:smooth;margin:0;padding:0}
+      body{font-family:"Inter",sans-serif;margin:0;padding:0}
+      html {scroll-behavior: smooth;}
       #mainNav{transition:opacity 0.3s,visibility 0.3s}
       #mainNav.hiddenNav{opacity:0;visibility:hidden}
       .desktop-typewriter{overflow:hidden;white-space:nowrap;width:0;animation:typing 3s steps(24,end) forwards;position:relative}
@@ -32,7 +33,7 @@
       .grug-arrow{position:absolute;left:0.2rem;font-size:1.3rem;color:#68d391;font-weight:bold;transition:top 0.3s;pointer-events:none;z-index:5}
     </style>
   </head>
-  <body class="bg-gray-900 text-white">
+  <body class="bg-gray-900 text-white" style="opacity: 0; transition: opacity 2s ease;">
     <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-4" style="background: linear-gradient(180deg, #1f2937 0%, #111827 100%);background-position: 50% 0;background-size: cover;">
       <h1 class="desktop-typewriter text-5xl font-bold mb-4 relative mx-auto hidden md:block">Welcome to my Portfolio</h1>
       <h1 class="mobile-typewriter text-5xl font-bold mb-4 relative mx-auto block md:hidden">
@@ -320,6 +321,7 @@
     <footer class="py-2 text-center text-gray-400 text-sm">&copy; 2025 Shm0rt Portfolio. All rights reserved.</footer>
     <script defer>
       document.addEventListener("DOMContentLoaded", () => {
+        document.body.style.opacity = "1";
         const nav = document.getElementById("mainNav"),
           home = document.getElementById("home"),
           grug = document.getElementById("grugArrow"),
