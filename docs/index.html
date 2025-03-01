@@ -3,126 +3,71 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shm0rt Portfolio - One Page</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Shm0rt Portfolio - Grug Edition</title>
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
     <style>
-      body {
-        font-family: "Inter", sans-serif;
-        scroll-behavior: smooth;
-      }
-
-      section {
-        padding-top: 4rem; /* Extra space for when the nav is visible */
-      }
-
-      /* Hide the nav by default */
-      #mainNav.hiddenNav {
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-      }
-      /* Show the nav */
-      #mainNav {
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-      }
+      body{font-family:"Inter",sans-serif;scroll-behavior:smooth;margin:0;padding:0}
+      #mainNav{transition:opacity 0.3s,visibility 0.3s}
+      #mainNav.hiddenNav{opacity:0;visibility:hidden}
+      .desktop-typewriter{overflow:hidden;white-space:nowrap;width:0;animation:typing 3s steps(24,end) forwards;position:relative}
+      .desktop-typewriter::after{content:"";position:absolute;top:0;right:0;width:0.6em;height:1.2em;background:currentColor;animation:blink 1s step-end infinite}
+      @keyframes typing{from{width:0}to{width:24ch}}
+      @keyframes blink{50%{background:transparent}}
+      .mobile-typewriter .typed-first,
+      .mobile-typewriter .typed-second{position:relative;overflow:hidden;white-space:nowrap;display:inline-block}
+      .mobile-typewriter .typed-first{width:0;animation:typing-first 1.5s steps(10,end) forwards}
+      .mobile-typewriter .typed-first::after{content:"";position:absolute;right:0;top:0;width:0.6em;height:1.2em;background:currentColor;animation:blink 1s step-end infinite,hide-cursor 0.01s forwards 1.5s}
+      .mobile-typewriter .typed-second{width:0;animation:typing-second 1.5s steps(14,end) forwards;animation-delay:1.5s}
+      .mobile-typewriter .typed-second::after{content:"";position:absolute;right:0;top:0;width:0.6em;height:1.2em;background:currentColor;animation:blink 1s step-end infinite;animation-delay:1.5s}
+      @keyframes typing-first{from{width:0}to{width:10ch}}
+      @keyframes typing-second{from{width:0}to{width:14ch}}
+      @keyframes hide-cursor{to{opacity:0}}
+      .terminal-container{max-width:640px;width:100%;border-radius:0.5rem;box-shadow:0 4px 10px rgba(0,0,0,0.5);overflow:hidden;margin-bottom:2rem}
+      .terminal-header{background:#2d3748;padding:0.5rem 1rem;display:flex;gap:0.5rem}
+      .terminal-body{position:relative;background:#1a202c;padding:1.5rem 2rem;font-family:"Fira Code",monospace;color:#68d391;line-height:1.5;font-size:0.9rem}
+      .grug-arrow{position:absolute;left:0.2rem;font-size:1.3rem;color:#68d391;font-weight:bold;transition:top 0.3s;pointer-events:none;z-index:5}
     </style>
   </head>
   <body class="bg-gray-900 text-white">
-    <!-- Home Section -->
-    <section
-      id="home"
-      class="min-h-screen flex flex-col justify-center items-center text-center px-4"
-    >
-      <!-- Typed Title -->
-      <h1 class="typed-text text-5xl font-bold mb-4 relative mx-auto">
-        Welcome to my Portfolio
+    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-4" style="background: linear-gradient(180deg, #1f2937 0%, #111827 100%);background-attachment: fixed;background-position: 50% 0;background-size: cover;">
+      <h1 class="desktop-typewriter text-5xl font-bold mb-4 relative mx-auto hidden md:block">Welcome to my Portfolio</h1>
+      <h1 class="mobile-typewriter text-5xl font-bold mb-4 relative mx-auto block md:hidden">
+        <span class="typed-first">Welcome to</span><br />
+        <span class="typed-second">my Portfolio</span>
       </h1>
-
-      <!-- Short About -->
-      <p class="max-w-xl text-gray-300 leading-relaxed mb-8">
-        I'm Shm0rt, a DevOps enthusiast who builds raw, robust, and automated
-        infrastructures.
-      </p>
-
-      <!-- Terminal Snippet with Linked Commands -->
-      <div
-        class="max-w-xl w-full bg-gray-800 p-6 rounded-lg font-mono text-left shadow-lg mb-8"
-      >
-        <p class="text-green-400">> grug.goToSkills</p>
-        <a href="#skills" class="ml-4 text-blue-400 hover:underline">
-          "View Skills"
-        </a>
-        <br /><br />
-
-        <p class="text-green-400">> grug.goToProjects</p>
-        <a href="#projects" class="ml-4 text-blue-400 hover:underline">
-          "Check Projects"
-        </a>
-        <br /><br />
-
-        <p class="text-green-400">> grug.goToAbout</p>
-        <a href="#about" class="ml-4 text-blue-400 hover:underline">
-          "More About Shm0rt"
-        </a>
-        <br /><br />
-
-        <p class="text-green-400">> grug.goToContact</p>
-        <a href="#contact" class="ml-4 text-blue-400 hover:underline">
-          "Contact Shm0rt"
-        </a>
+      <p class="max-w-xl text-gray-300 leading-relaxed mb-8">I'm Shm0rt, a DevOps enthusiast building raw, robust, automated infrastructures the Grug way.</p>
+      <div class="terminal-container mx-auto">
+        <div class="terminal-header flex gap-2 p-2">
+          <span class="w-3 h-3 rounded-full bg-red-500"></span>
+          <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+          <span class="w-3 h-3 rounded-full bg-green-500"></span>
+        </div>
+        <div id="terminalBody" class="terminal-body relative">
+          <span id="grugArrow" class="grug-arrow">&gt;</span>
+          <div class="grug-line" data-line="0">
+            <span>grug.goToSkills</span>
+            <a href="#skills" class="ml-2 text-blue-400 hover:underline">View Skills</a>
+          </div>
+          <div class="grug-line" data-line="1">
+            <span>grug.goToProjects</span>
+            <a href="#projects" class="ml-2 text-blue-400 hover:underline">Check Projects</a>
+          </div>
+          <div class="grug-line" data-line="2">
+            <span>grug.goToAbout</span>
+            <a href="#about" class="ml-2 text-blue-400 hover:underline">More About Shm0rt</a>
+          </div>
+          <div class="grug-line" data-line="3">
+            <span>grug.goToContact</span>
+            <a href="#contact" class="ml-2 text-blue-400 hover:underline">Contact Shm0rt</a>
+          </div>
+        </div>
       </div>
     </section>
-
-    <style>
-      /* Typewriter effect */
-      .typed-text {
-        /* So we can "clip" the text as it "types" */
-        overflow: hidden;
-        white-space: nowrap;
-        width: 0; /* Start with zero width */
-        animation: typing 3s steps(30, end) forwards;
-        /* 'steps(30, end)' matches how many characters are typed, 
-   and 'forwards' keeps it at 100% after the animation. */
-      }
-
-      /* Larger blinking block cursor */
-      .typed-text::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        /* Make the cursor as big as you want */
-        width: 0.6em;
-        height: 1.2em;
-        background: currentColor;
-        animation: blink 1s step-end infinite;
-      }
-
-      /* Keyframes for typing effect */
-      @keyframes typing {
-        from {
-          width: 0;
-        }
-        /* '24ch' matches the length of "Welcome to my Portfolio" 
-   (including spaces). Adjust if you change the text. */
-        to {
-          width: 24ch;
-        }
-      }
-
-      /* Keyframes for blinking cursor */
-      @keyframes blink {
-        50% {
-          background: transparent;
-        }
-      }
-    </style>
-
-    <!-- Fixed Navigation (hidden by default) -->
-    <nav
-      id="mainNav"
-      class="fixed top-0 left-0 right-0 bg-gray-900 bg-opacity-75 z-50 shadow hiddenNav"
-    >
+    <nav id="mainNav" class="fixed top-0 left-0 right-0 bg-gray-900 bg-opacity-75 z-50 shadow hiddenNav">
       <div class="max-w-4xl mx-auto flex justify-center space-x-8 p-4">
         <a href="#home" class="hover:text-blue-400">Home</a>
         <a href="#skills" class="hover:text-blue-400">Skills</a>
@@ -131,184 +76,263 @@
         <a href="#contact" class="hover:text-blue-400">Contact</a>
       </div>
     </nav>
-
-    <!-- Skills Section -->
-    <section id="skills" class="py-16 px-4 text-center">
-      <h2 class="text-4xl font-bold mb-6">Skills</h2>
-      <div class="max-w-xl mx-auto text-gray-300">
-        <h3 class="text-2xl font-bold mt-8 mb-4">
-          Containerization &amp; Orchestration
-        </h3>
-        <ul class="list-disc list-inside">
-          <li>Docker</li>
-          <li>Kubernetes</li>
-          <li>Rancher</li>
-        </ul>
-
-        <h3 class="text-2xl font-bold mt-8 mb-4">Cloud &amp; Virtualization</h3>
-        <ul class="list-disc list-inside">
-          <li>Microsoft Azure</li>
-          <li>Proxmox</li>
-        </ul>
-
-        <h3 class="text-2xl font-bold mt-8 mb-4">Infrastructure as Code</h3>
-        <ul class="list-disc list-inside">
-          <li>Terraform</li>
-          <li>OpenTofu</li>
-          <li>cloud-init</li>
-        </ul>
-
-        <h3 class="text-2xl font-bold mt-8 mb-4">Scripting &amp; Automation</h3>
-        <ul class="list-disc list-inside">
-          <li>Linux</li>
-          <li>Bash</li>
-          <li>Python</li>
-          <li>Windows</li>
-          <li>PowerShell</li>
-          <li>GitHub Actions</li>
-          <li>Azure Pipelines</li>
-        </ul>
+    <section id="skills" class="py-6">
+      <h2 class="text-3xl font-bold text-white text-center mb-3">Skills</h2>
+      <div class="mx-auto max-w-4xl px-4 space-y-6">
+        <div class="p-2 bg-gray-800 rounded">
+          <h3 class="text-lg font-semibold text-white mb-2">Containers & Orchestration</h3>
+          <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 place-items-center">
+            <li class="w-full max-w-xs">
+              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
+                <div class="flex items-center space-x-2">
+                  <i class="fab fa-docker text-white text-xl"></i>
+                  <span class="text-white text-sm font-medium">Docker</span>
+                </div>
+                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
+                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:85%"></div>
+                </div>
+              </div>
+            </li>
+            <li class="w-full max-w-xs">
+              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
+                <div class="flex items-center space-x-2">
+                  <i class="fas fa-cubes text-white text-xl"></i>
+                  <span class="text-white text-sm font-medium">Kubernetes</span>
+                </div>
+                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
+                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:75%"></div>
+                </div>
+              </div>
+            </li>
+            <li class="w-full max-w-xs">
+              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
+                <div class="flex items-center space-x-2">
+                  <i class="fas fa-server text-white text-xl"></i>
+                  <span class="text-white text-sm font-medium">Rancher</span>
+                </div>
+                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
+                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:70%"></div>
+                </div>
+              </div>
+            </li>
+            <li class="w-full max-w-xs">
+              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
+                <div class="flex items-center space-x-2">
+                  <i class="fas fa-desktop text-white text-xl"></i>
+                  <span class="text-white text-sm font-medium">Proxmox</span>
+                </div>
+                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
+                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:65%"></div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="p-2 bg-gray-800 rounded">
+          <h3 class="text-lg font-semibold text-white mb-2">Infrastructure as Code</h3>
+          <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 place-items-center">
+            <li class="w-full max-w-xs">
+              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
+                <div class="flex items-center space-x-2">
+                  <i class="fas fa-sitemap text-white text-xl"></i>
+                  <span class="text-white text-sm font-medium">Terraform</span>
+                </div>
+                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
+                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:80%"></div>
+                </div>
+              </div>
+            </li>
+            <li class="w-full max-w-xs">
+              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
+                <div class="flex items-center space-x-2">
+                  <i class="fas fa-code-branch text-white text-xl"></i>
+                  <span class="text-white text-sm font-medium">OpenTofu</span>
+                </div>
+                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
+                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:60%"></div>
+                </div>
+              </div>
+            </li>
+            <li class="w-full max-w-xs">
+              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
+                <div class="flex items-center space-x-2">
+                  <i class="fas fa-cloud text-white text-xl"></i>
+                  <span class="text-white text-sm font-medium">cloud-init</span>
+                </div>
+                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
+                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:70%"></div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="p-2 bg-gray-800 rounded">
+          <h3 class="text-lg font-semibold text-white mb-2">Operating Systems</h3>
+          <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 place-items-center">
+            <li class="w-full max-w-xs">
+              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
+                <div class="flex items-center space-x-2">
+                  <i class="fab fa-linux text-white text-xl"></i>
+                  <span class="text-white text-sm font-medium">Linux</span>
+                </div>
+                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
+                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:90%"></div>
+                </div>
+              </div>
+            </li>
+            <li class="w-full max-w-xs">
+              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
+                <div class="flex items-center space-x-2">
+                  <i class="fab fa-windows text-white text-xl"></i>
+                  <span class="text-white text-sm font-medium">Windows</span>
+                </div>
+                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
+                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:70%"></div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="p-2 bg-gray-800 rounded">
+          <h3 class="text-lg font-semibold text-white mb-2">Scripting & Programming</h3>
+          <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 place-items-center">
+            <li class="w-full max-w-xs">
+              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
+                <div class="flex items-center space-x-2">
+                  <i class="fas fa-terminal text-white text-xl"></i>
+                  <span class="text-white text-sm font-medium">Bash</span>
+                </div>
+                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
+                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:85%"></div>
+                </div>
+              </div>
+            </li>
+            <li class="w-full max-w-xs">
+              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
+                <div class="flex items-center space-x-2">
+                  <i class="fab fa-python text-white text-xl"></i>
+                  <span class="text-white text-sm font-medium">Python</span>
+                </div>
+                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
+                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:80%"></div>
+                </div>
+              </div>
+            </li>
+            <li class="w-full max-w-xs">
+              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
+                <div class="flex items-center space-x-2">
+                  <i class="fas fa-power-off text-white text-xl"></i>
+                  <span class="text-white text-sm font-medium">PowerShell</span>
+                </div>
+                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
+                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:65%"></div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="p-2 bg-gray-800 rounded">
+          <h3 class="text-lg font-semibold text-white mb-2">Cloud & CI/CD</h3>
+          <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 place-items-center">
+            <li class="w-full max-w-xs">
+              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
+                <div class="flex items-center space-x-2">
+                  <i class="fab fa-microsoft text-white text-xl"></i>
+                  <span class="text-white text-sm font-medium">Azure</span>
+                </div>
+                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
+                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:80%"></div>
+                </div>
+              </div>
+            </li>
+            <li class="w-full max-w-xs">
+              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
+                <div class="flex items-center space-x-2">
+                  <i class="fab fa-github text-white text-xl"></i>
+                  <span class="text-white text-sm font-medium">GitHub</span>
+                </div>
+                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
+                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:75%"></div>
+                </div>
+              </div>
+            </li>
+            <li class="w-full max-w-xs">
+              <div class="flex items-center justify-between bg-gray-700 p-2 rounded">
+                <div class="flex items-center space-x-2">
+                  <i class="fas fa-cloud-upload-alt text-white text-xl"></i>
+                  <span class="text-white text-sm font-medium">Azure Pipelines</span>
+                </div>
+                <div class="w-2 h-12 bg-gray-300 rounded-full relative">
+                  <div class="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full" style="height:70%"></div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="py-16 px-4 text-center">
-      <h2 class="text-4xl font-bold mb-6">Projects</h2>
-      <div class="max-w-3xl mx-auto space-y-12 text-gray-300">
-        <div>
-          <h3 class="text-2xl font-bold mb-2">Project One</h3>
-          <p>
-            A brief description of project one showcasing raw DevOps techniques
-            and a hands‑on approach.
-          </p>
-          <a href="#" class="text-blue-400 hover:underline">View on GitHub</a>
+    <section id="projects" class="py-16 px-4" style="background: linear-gradient(180deg, #111827 0%, #1f2937 100%)">
+      <h2 class="text-4xl font-bold mb-10 text-center text-white">Projects</h2>
+      <div class="space-y-12">
+        <div class="max-w-[640px] mx-auto bg-gray-900 bg-opacity-90 p-6 rounded-lg shadow-lg">
+          <img src="https://via.placeholder.com/640x360" alt="Project One" class="w-full h-auto object-cover rounded-md mb-4" />
+          <h3 class="text-2xl font-bold mb-2 text-blue-400">Project One</h3>
+          <p class="text-gray-300 mb-4">A brief description of project one showcasing raw DevOps techniques and a hands‑on approach.</p>
+          <div class="space-x-2">
+            <a href="#" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">View on GitHub</a>
+            <a href="#" class="px-4 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition">Follow</a>
+          </div>
         </div>
-        <div>
-          <h3 class="text-2xl font-bold mb-2">Project Two</h3>
-          <p>
-            A brief description of project two where I built a robust automated
-            solution the Grug way.
-          </p>
-          <a href="#" class="text-blue-400 hover:underline">View on GitHub</a>
+        <div class="max-w-[640px] mx-auto bg-gray-900 bg-opacity-90 p-6 rounded-lg shadow-lg">
+          <img src="https://via.placeholder.com/640x360" alt="Project Two" class="w-full h-auto object-cover rounded-md mb-4" />
+          <h3 class="text-2xl font-bold mb-2 text-blue-400">Project Two</h3>
+          <p class="text-gray-300 mb-4">A brief description of project two where I built a robust automated solution the Grug way.</p>
+          <div class="space-x-2">
+            <a href="#" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">View on GitHub</a>
+            <a href="#" class="px-4 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition">Follow</a>
+          </div>
         </div>
       </div>
     </section>
-
-    <!-- About Section -->
     <section id="about" class="py-16 px-4">
       <h2 class="text-4xl font-bold text-center mb-6">About Shm0rt</h2>
-      <p class="max-w-xl mx-auto text-center text-gray-300 leading-relaxed">
-        I'm a DevOps enthusiast skilled in Linux, Bash, Windows, PowerShell,
-        Microsoft Azure, Python, and C#. I build robust, automated
-        infrastructures the Grug way—direct, raw, and effective.
-      </p>
+      <p class="max-w-xl mx-auto text-center text-gray-300 leading-relaxed">I'm a DevOps enthusiast skilled in Linux, Bash, Windows, PowerShell, Azure, Python, and C#. I build robust, automated infrastructures—raw, direct, and effective, just like Grug.</p>
     </section>
-
-    <!-- Contact Section -->
     <section id="contact" class="py-16 px-4 bg-gray-800">
       <h2 class="text-4xl font-bold text-center mb-6">Get in Touch</h2>
       <div class="mx-auto w-16 h-1 bg-blue-500 my-4"></div>
-      <p
-        class="max-w-xl mx-auto text-center text-gray-300 leading-relaxed mb-8"
-      >
-        For inquiries or collaborations, please use one of the following
-        methods.
-      </p>
-      <!-- Terminal-style container -->
-      <div
-        class="max-w-xl mx-auto bg-gray-900 p-6 rounded-lg font-mono shadow-lg space-y-4"
-      >
-        <!-- Email -->
-        <a
-          href="mailto:me@shm0rt.ch"
-          class="group flex items-center space-x-2 transition"
-        >
-          <svg
-            class="w-6 h-6 text-gray-300 group-hover:text-blue-400 transition"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M21.75 7.5L12.108 13.27a.75.75 0 01-.816 0L2.25 7.5m19.5 9.75A2.25 2.25 0 0119.5 19.5h-15a2.25 2.25 0 01-2.25-2.25V6.75A2.25 2.25 0 014.5 4.5h15a2.25 2.25 0 012.25 2.25v9z"
-            />
-          </svg>
-          <span class="text-gray-300 group-hover:text-blue-400 transition">
-            me@shm0rt.ch
-          </span>
+      <p class="max-w-xl mx-auto text-center text-gray-300 leading-relaxed mb-8">For inquiries or collaborations, please use one of the methods below.</p>
+      <div class="max-w-xl mx-auto bg-gray-900 p-6 rounded-lg font-mono shadow-lg space-y-4">
+        <a href="mailto:me@shm0rt.ch" class="group flex items-center space-x-2 transition">
+          <i class="fa-solid fa-envelope text-gray-300 group-hover:text-blue-400 text-xl transition"></i>
+          <span class="group-hover:text-blue-400 transition">me@shm0rt.ch</span>
         </a>
-        <!-- LinkedIn -->
-        <a
-          href="https://www.linkedin.com/in/chirkov-egor-449403224/"
-          target="_blank"
-          class="group flex items-center space-x-2 transition"
-        >
-          <svg
-            class="w-6 h-6 text-gray-300 group-hover:text-blue-400 transition"
-            role="img"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <title>LinkedIn</title>
-            <path
-              fill="currentColor"
-              d="M19 0h-14C2.24 0 0 2.24 0 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5V5c0-2.76-2.24-5-5-5zM8.48 18.2H5.56V9h2.92v9.2zM7.02 7.76h-.02c-.98 0-1.62-.66-1.62-1.48 0-.84.66-1.48 1.66-1.48s1.62.64 1.64 1.48c0 .82-.64 1.48-1.66 1.48zM18.2 18.2h-2.92v-4.7c0-1.12-.4-1.88-1.4-1.88-.76 0-1.2.5-1.4 1-.07.16-.08.4-.08.64v5h-2.92s.04-8.1 0-9h2.92v1.28c.4-.62 1.08-1.5 2.64-1.5 1.92 0 3.36 1.26 3.36 3.98v5.24z"
-            />
-          </svg>
-          <span class="text-gray-300 group-hover:text-blue-400 transition">
-            LinkedIn
-          </span>
+        <a href="https://www.linkedin.com/in/chirkov-egor-449403224/" target="_blank" class="group flex items-center space-x-2 transition">
+          <i class="fa-brands fa-linkedin text-gray-300 group-hover:text-blue-400 text-xl transition"></i>
+          <span class="group-hover:text-blue-400 transition">LinkedIn</span>
         </a>
-        <!-- GitHub -->
-        <a
-          href="https://github.com/shm0rt"
-          target="_blank"
-          class="group flex items-center space-x-2 transition"
-        >
-          <svg
-            class="w-6 h-6 text-gray-300 group-hover:text-blue-400 transition"
-            role="img"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <title>GitHub</title>
-            <path
-              fill="currentColor"
-              d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.016-2.04-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757-1.09-.745.084-.73.084-.73 1.205.085 1.84 1.236 1.84 1.236 1.07 1.835 2.807 1.304 3.492.997.108-.776.418-1.304.76-1.604-2.665-.305-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.236-3.22-.124-.304-.536-1.527.116-3.176 0 0 1.01-.323 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.29-1.553 3.3-1.23 3.3-1.23.652 1.649.24 2.872.118 3.176.77.84 1.236 1.91 1.236 3.22 0 4.61-2.807 5.624-5.48 5.92.43.372.81 1.102.81 2.222 0 1.606-.014 2.903-.014 3.293 0 .319.216.694.82.576C20.565 22.092 24 17.593 24 12.297 24 5.67 18.627.297 12 .297z"
-            />
-          </svg>
-          <span class="text-gray-300 group-hover:text-blue-400 transition">
-            GitHub
-          </span>
+        <a href="https://github.com/shm0rt" target="_blank" class="group flex items-center space-x-2 transition">
+          <i class="fa-brands fa-github text-gray-300 group-hover:text-blue-400 text-xl transition"></i>
+          <span class="group-hover:text-blue-400 transition">GitHub</span>
         </a>
       </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="py-4 text-center text-gray-400">
-      &copy; 2025 Shm0rt Portfolio. All rights reserved.
-    </footer>
-
-    <!-- Script to Show/Hide Nav on Scroll -->
-    <script>
-      const nav = document.getElementById("mainNav");
-      const homeSection = document.getElementById("home");
-      const homeHeight = homeSection.offsetHeight;
-
-      window.addEventListener("scroll", () => {
-        // If scrolled beyond home section, show nav; otherwise, hide it
-        if (window.scrollY > homeHeight - 80) {
-          nav.classList.remove("hiddenNav");
-        } else {
-          nav.classList.add("hiddenNav");
+    <footer class="py-2 text-center text-gray-400 text-sm">&copy; 2025 Shm0rt Portfolio. All rights reserved.</footer>
+    <script defer>
+      document.addEventListener("DOMContentLoaded", () => {
+        const nav = document.getElementById("mainNav"),
+          home = document.getElementById("home"),
+          grug = document.getElementById("grugArrow"),
+          lines = document.querySelectorAll(".grug-line");
+        if (lines.length) center(lines[0]);
+        lines.forEach(line => line.addEventListener("mouseenter", () => center(line)));
+        function center(el) {
+          const offset = el.getBoundingClientRect().top - el.parentElement.getBoundingClientRect().top;
+          grug.style.top = offset + el.offsetHeight / 2 - grug.offsetHeight / 2 + "px";
         }
+        window.addEventListener("scroll", () => {
+          nav.classList.toggle("hiddenNav", window.scrollY <= home.offsetHeight - 80);
+        });
       });
     </script>
   </body>
