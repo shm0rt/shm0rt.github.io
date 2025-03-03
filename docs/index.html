@@ -1,329 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shm0rt Portfolio</title>
-    <style>
-      /* Global Styles */
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        margin: 0;
-        font-family: "Fira Code", monospace;
-        background: #1e1e1e;
-        color: #c5c8c6;
-        line-height: 1.4;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
 
-      /* HERO / LANDING SECTION */
-      .hero {
-        min-height: 60vh;
-        background: linear-gradient(135deg, #2c2c2c 0%, #1e1e1e 70%);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 4em 1em 2em;
-      }
-      .hero h1 {
-        font-size: 3rem;
-        margin-bottom: 0.5em;
-      }
-      .hero p {
-        font-size: 1.3rem;
-        max-width: 600px;
-        margin-bottom: 2em;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Shm0rt Portfolio</title>
+  <link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.4/dist/terminal.min.css" />
+  <style>
+    :root {
+      --background-color: #2c2c2c;
+      --font-color: #fff;
+      --link-color: #8abeb7;
+      --font-stack: "Fira Code", monospace;
+      --global-font-size: 1rem;
+      --global-line-height: 1.4;
+    }
 
-      /* TERMINAL WINDOW (Zsh-Style) */
-      .floating-terminal {
-        width: 90%;
-        max-width: 900px;
-        margin: 0 auto;
-        border: 2px solid #333;
-        border-radius: 6px;
-        background-color: #1e1e1e;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-        text-align: left; /* keep text left-aligned inside the terminal */
-        /* Force uniform font size/line-height inside terminal */
-        font-size: 1rem !important;
-        line-height: 1.4 !important;
-      }
-      /* Ensure all children inside the terminal inherit exactly the same rules */
-      .floating-terminal * {
-        font-size: inherit !important;
-        line-height: inherit !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-      /* We’ll re-add minimal spacing in the output via a custom rule */
-      .output p,
-      .output pre {
-        padding: 0.2rem 0 !important;
-      }
+    body {
+      margin: 0;
+      background-color: var(--background-color);
+      color: var(--font-color);
+      font-family: var(--font-stack);
+      font-size: var(--global-font-size);
+      line-height: var(--global-line-height);
+    }
 
-      .terminal-header {
-        display: flex;
-        align-items: center;
-        height: 30px;
-        padding: 0.5rem 1rem;
-        background-color: #2c2c2c;
-        border-bottom: 1px solid #333;
-      }
-      .traffic-lights {
-        display: flex;
-        gap: 8px;
-      }
-      .traffic-light {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-      }
-      .close {
-        background-color: #ff5f56;
-      }
-      .minimize {
-        background-color: #ffbd2e;
-      }
-      .zoom {
-        background-color: #27c93f;
-      }
-      .terminal-body {
-        padding: 1rem !important;
-      }
-      .output {
-        min-height: 80px;
-        margin-bottom: 0.5rem !important;
-        overflow-y: auto !important;
-      }
-      .prompt-line {
-        display: flex;
-        align-items: center;
-      }
-      .prompt {
-        color: #8abeb7;
-        margin-right: 0.5rem !important;
-      }
-      .command-input {
-        flex: 1;
-        background: transparent;
-        border: none;
-        outline: none;
-        color: #c5c8c6;
-      }
-      .error {
-        color: #ff5555 !important;
-      }
-      .tree {
-        white-space: pre;
-        font-family: inherit;
-      }
-      .dir {
-        color: #8abeb7 !important;
-        cursor: pointer;
-      }
+    a {
+      color: var(--link-color);
+      text-decoration: none;
+    }
 
-      /* MAIN CONTENT SECTIONS */
-      .content {
-        max-width: 900px;
-        margin: 2rem auto;
-        padding: 0 1em;
-      }
-      .content section {
-        margin-bottom: 2rem;
-      }
-      .content h2 {
-        font-size: 1.8rem;
-        margin-bottom: 0.5rem;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- HERO SECTION WITH TERMINAL -->
-    <section class="hero">
-      <h1>Welcome to my Portfolio</h1>
-      <p>
-        I'm Shm0rt, a DevOps enthusiast building raw, robust, automated
-        infrastructures the Grug way.
-      </p>
-      <!-- Terminal Window right below the text -->
-      <div class="floating-terminal" id="terminalWindow">
-        <div class="terminal-header">
-          <div class="traffic-lights">
-            <div class="traffic-light close"></div>
-            <div class="traffic-light minimize"></div>
-            <div class="traffic-light zoom"></div>
-          </div>
-        </div>
-        <div class="terminal-body">
-          <div class="output" id="terminalOutput"></div>
-          <div class="prompt-line">
-            <span class="prompt">user@my-portfolio:~$</span>
-            <input
-              type="text"
-              class="command-input"
-              id="commandInput"
-              placeholder="Enter command"
-              autocomplete="off"
-            />
-          </div>
+    .hero {
+      min-height: 60vh;
+      background: var(--background-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4em 1em 2em;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5em;
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      max-width: 600px;
+      margin-bottom: 2em;
+    }
+
+    .content {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1em;
+    }
+
+    .content section {
+      background: var(--background-color);
+      color: var(--font-color);
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .content h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .terminal {
+      width: 90%;
+      max-width: 900px;
+      margin: 0 auto;
+      border-radius: 6px;
+      background-color: #1e1e1e;
+      /* You can also use var(--background-color) if you prefer. */
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+      text-align: left;
+      font-size: 1rem !important;
+      line-height: 1.4 !important;
+    }
+
+    .terminal .output p {
+      font-size: 1rem !important;
+      margin: 0.2rem 0 !important;
+      line-height: 1.2 !important;
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      height: 30px;
+      padding: 0.5rem 1rem;
+      background-color: var(--background-color);
+    }
+
+    .traffic-lights {
+      display: flex;
+      gap: 8px;
+    }
+
+    .traffic-light {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .close {
+      background-color: #ff5f56;
+      margin-left: 10px !important;
+    }
+
+    .minimize {
+      background-color: #ffbd2e;
+    }
+
+    .zoom {
+      background-color: #27c93f;
+    }
+
+    .terminal-body {
+      padding: 1rem !important;
+    }
+
+    .output {
+      min-height: 80px;
+      margin-bottom: 0.5rem !important;
+      overflow-y: auto !important;
+    }
+
+    .prompt-line {
+      display: flex;
+      align-items: center;
+    }
+
+    .prompt {
+      color: var(--font-color);
+      margin-right: 0.5rem !important;
+    }
+
+    .command-input {
+      background: #1e1e1e !important;
+      border: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      transition: none !important;
+      appearance: none;
+    }
+
+    .command-input:focus,
+    .command-input:active,
+    .command-input:focus-visible {
+      background: #1e1e1e !important;
+      outline: none !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .error {
+      color: #ff5555 !important;
+    }
+
+    .tree {
+      background-color: #1e1e1e;
+      white-space: pre;
+      font-family: inherit;
+      outline: none;
+      border: none;
+    }
+
+    .dir {
+      color: #8abeb7 !important;
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      background-color: #333;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="hero">
+    <h1>Welcome to my Portfolio</h1>
+    <p>I'm Shm0rt, a DevOps enthusiast building raw, robust, automated infrastructures the Grug way.</p>
+    <div class="terminal" id="terminalWindow">
+      <div class="terminal-header">
+        <div class="traffic-lights">
+          <div class="traffic-light close"></div>
+          <div class="traffic-light minimize"></div>
+          <div class="traffic-light zoom"></div>
         </div>
       </div>
-    </section>
-
-    <!-- MAIN CONTENT SECTIONS -->
-    <div class="content">
-      <section id="home">
-        <h2>Home</h2>
-        <p>
-          I'm Shm0rt, a DevOps enthusiast building raw, robust, automated
-          infrastructures the Grug way. (Home section content goes here.)
-        </p>
-      </section>
-
-      <section id="skills">
-        <h2>Skills</h2>
-        <p>Summary of skills or bullet points here...</p>
-      </section>
-
-      <section id="projects">
-        <h2>Projects</h2>
-        <p>
-          A brief overview of some DevOps or personal projects. Possibly link to
-          GitHub repos or show quick highlights...
-        </p>
-      </section>
-
-      <section id="about">
-        <h2>About Shm0rt</h2>
-        <p>
-          I'm a DevOps enthusiast skilled in Linux, Bash, Windows, PowerShell,
-          Azure, Python, and C#. I build robust, automated infrastructures—raw,
-          direct, and effective, just like Grug.
-        </p>
-      </section>
-
-      <section id="contact">
-        <h2>Contact Shm0rt</h2>
-        <p>Email: <a href="mailto:me@shm0rt.ch">me@shm0rt.ch</a></p>
-        <p>
-          LinkedIn:
-          <a href="https://www.linkedin.com/in/chirkov-egor-449403224/"
-            >LinkedIn</a
-          >
-        </p>
-        <p>
-          GitHub: <a href="https://github.com/shm0rt">GitHub</a>
-        </p>
-      </section>
+      <div class="terminal-body">
+        <div class="output" id="terminalOutput"></div>
+        <div class="prompt-line">
+          <span class="prompt">↪</span>
+          <input type="text" class="command-input" id="commandInput" placeholder="Enter command" autocomplete="off" />
+        </div>
+      </div>
     </div>
+  </section>
+  <div class="content">
+    <section id="home">
+      <h2>Home</h2>
+      <p>I'm Shm0rt, a DevOps enthusiast building raw, robust, automated infrastructures the Grug way.</p>
+    </section>
+    <section id="skills">
+      <h2>Skills</h2>
+      <p>Summary of skills or bullet points here...</p>
+    </section>
+    <section id="projects">
+      <h2>Projects</h2>
+      <p>A brief overview of some DevOps or personal projects. Possibly link to GitHub repos or show quick highlights...
+      </p>
+    </section>
+    <section id="about">
+      <h2>About Shm0rt</h2>
+      <p>I'm a DevOps enthusiast skilled in Linux, Bash, Windows, PowerShell, Azure, Python, and C#. I build robust,
+        automated infrastructures—raw, direct, and effective, just like Grug.</p>
+    </section>
+    <section id="contact">
+      <h2>Contact Shm0rt</h2>
+      <p>Email: <a href="mailto:me@shm0rt.ch">me@shm0rt.ch</a></p>
+      <p>LinkedIn: <a href="https://www.linkedin.com/in/chirkov-egor-449403224/">LinkedIn</a></p>
+      <p>GitHub: <a href="https://github.com/shm0rt">GitHub</a></p>
+    </section>
+  </div>
 
-    <!-- TERMINAL LOGIC -->
-    <script>
-      const outputEl = document.getElementById('terminalOutput');
-      const commandInput = document.getElementById('commandInput');
-
-      // Append a line of HTML to the terminal output
-      function appendHtmlLine(html, isError = false) {
-        const p = document.createElement('p');
-        if (isError) p.classList.add('error');
-        p.innerHTML = html;
-        outputEl.appendChild(p);
-        outputEl.scrollTop = outputEl.scrollHeight;
-      }
-      
-      // Append a plain text line to the terminal output
-      function appendLine(text, isError = false) {
-        const p = document.createElement('p');
-        if (isError) p.classList.add('error');
-        p.textContent = text;
-        outputEl.appendChild(p);
-        outputEl.scrollTop = outputEl.scrollHeight;
-      }
-
-      // Print the tree view (ls) listing directories
-      function printTree() {
-        const pre = document.createElement('pre');
-        pre.classList.add('tree');
-        pre.innerHTML = `
+  <!-- Same JS logic for commands, etc. -->
+  <script>
+    const outputEl = document.getElementById('terminalOutput');
+    const commandInput = document.getElementById('commandInput');
+    function appendHtmlLine(html, isError = false) {
+      const p = document.createElement('p');
+      if (isError) p.classList.add('error');
+      p.innerHTML = html;
+      outputEl.appendChild(p);
+      outputEl.scrollTop = outputEl.scrollHeight;
+    }
+    function appendLine(text, isError = false) {
+      const p = document.createElement('p');
+      if (isError) p.classList.add('error');
+      p.textContent = text;
+      outputEl.appendChild(p);
+      outputEl.scrollTop = outputEl.scrollHeight;
+    }
+    function printTree() {
+      const pre = document.createElement('pre');
+      pre.classList.add('tree');
+      pre.innerHTML = `
 .
-├── <span class="dir" onclick="cdDir('home')">/home</span>
-├── <span class="dir" onclick="cdDir('skills')">/skills</span>
-├── <span class="dir" onclick="cdDir('projects')">/projects</span>
-├── <span class="dir" onclick="cdDir('about')">/about</span>
-└── <span class="dir" onclick="cdDir('contact')">/contact</span>
-        `.trim();
-        outputEl.appendChild(pre);
-        outputEl.scrollTop = outputEl.scrollHeight;
+├── <span class="dir nav-link" onclick="cdDir('home')">/home</span>
+├── <span class="dir nav-link" onclick="cdDir('skills')">/skills</span>
+├── <span class="dir nav-link" onclick="cdDir('projects')">/projects</span>
+├── <span class="dir nav-link" onclick="cdDir('about')">/about</span>
+└── <span class="dir nav-link" onclick="cdDir('contact')">/contact</span>
+      `.trim();
+      outputEl.appendChild(pre);
+      outputEl.scrollTop = outputEl.scrollHeight;
+    }
+    function printIntro() {
+      appendHtmlLine('Press or type <span class="dir" onclick="processCommand(\'/help\')">/help</span> or <span class="dir" onclick="processCommand(\'?\')">?</span> for the help menu.');
+      printTree();
+    }
+    function printHelp() {
+      appendLine("cd <dir>   - move to dir");
+      appendLine("clear      - clear terminal");
+      appendLine("ls         - list directories");
+    }
+    function cdDir(dirId) {
+      const target = document.getElementById(dirId);
+      target
+        ? target.scrollIntoView({ behavior: 'smooth' })
+        : appendLine(`No such directory: ${dirId}`, true);
+    }
+    function clearOutput() {
+      outputEl.innerHTML = "";
+    }
+    function processCommand(cmd) {
+      const c = cmd.trim();
+      if (!c) return;
+      if (c === '/help' || c === 'help' || c === '?') printHelp();
+      else if (c === 'clear') clearOutput();
+      else if (c === 'ls') printTree();
+      else if (c.startsWith('cd ')) {
+        const path = c.slice(3).trim().replace(/^\//, '');
+        cdDir(path);
+      } else appendLine(`Command not found: ${c}`, true);
+    }
+    commandInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        processCommand(commandInput.value);
+        commandInput.value = "";
       }
+    });
+    window.addEventListener('DOMContentLoaded', () => {
+      printIntro();
+      commandInput.focus();
+    });
+  </script>
+</body>
 
-      // Print an introductory message with a clickable /help
-      function printIntro() {
-        appendHtmlLine('type <span class="dir" onclick="processCommand(\'/help\')">/help</span> for help');
-        printTree();
-      }
-
-      // Print the short help menu
-      function printHelp() {
-        appendLine("cd <dir>   - move to dir");
-        appendLine("clear      - clear terminal");
-        appendLine("ls         - list directories");
-      }
-
-      // Function for clickable tree view lines (cd)
-      function cdDir(dirId) {
-        const target = document.getElementById(dirId);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        } else {
-          appendLine(`No such directory: ${dirId}`, true);
-        }
-      }
-
-      // Clear the terminal output
-      function clearOutput() {
-        outputEl.innerHTML = "";
-      }
-
-      // Process typed commands (no echo)
-      function processCommand(cmd) {
-        const c = cmd.trim();
-        if (!c) return;
-        if (c === '/help' || c === 'help') {
-          printHelp();
-        } else if (c === 'clear') {
-          clearOutput();
-        } else if (c === 'ls') {
-          printTree();
-        } else if (c.startsWith('cd ')) {
-          // Accept both "cd /dir" and "cd dir"
-          const path = c.slice(3).trim().replace(/^\//, '');
-          cdDir(path);
-        } else {
-          appendLine(`Command not found: ${c}`, true);
-        }
-      }
-
-      // Listen for Enter key in the command input
-      commandInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          processCommand(commandInput.value);
-          commandInput.value = "";
-        }
-      });
-
-      // On page load, print intro and focus the command input
-      window.addEventListener('DOMContentLoaded', () => {
-        printIntro();
-        commandInput.focus();
-      });
-    </script>
-  </body>
 </html>
