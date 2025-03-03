@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Shm0rt Portfolio</title>
+  <link rel="icon" type="shortcut icon" href="favicon.ico">
   <link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.4/dist/terminal.min.css" />
   <style>
     :root {
@@ -14,10 +15,10 @@
       --font-stack: "Fira Code", monospace;
       --global-font-size: 1rem;
       --global-line-height: 1.4;
+      --hover-bg-color: #444444;
     }
 
     body {
-      margin: 0;
       background-color: var(--background-color);
       color: var(--font-color);
       font-family: var(--font-stack);
@@ -30,6 +31,11 @@
       text-decoration: none;
     }
 
+    a:hover {
+      background-color: var(--hover-bg-color);
+      color: var(--font-color);
+    }
+
     .hero {
       min-height: 60vh;
       background: var(--background-color);
@@ -38,7 +44,7 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 4em 1em 2em;
+      padding: 3em 1em;
     }
 
     .hero h1 {
@@ -59,7 +65,6 @@
     }
 
     .content section {
-      background: var(--background-color);
       color: var(--font-color);
       padding: 1rem;
       margin-bottom: 2rem;
@@ -74,13 +79,12 @@
       width: 90%;
       max-width: 900px;
       margin: 0 auto;
-      border-radius: 6px;
       background-color: #1e1e1e;
-      /* You can also use var(--background-color) if you prefer. */
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
       text-align: left;
       font-size: 1rem !important;
       line-height: 1.4 !important;
+      border-radius: 6px;
     }
 
     .terminal .output p {
@@ -146,7 +150,6 @@
       border: none !important;
       margin: 0 !important;
       padding: 0 !important;
-      transition: none !important;
       appearance: none;
     }
 
@@ -177,16 +180,67 @@
     }
 
     .nav-link:hover {
-      background-color: #333;
-      color: #fff;
+      background-color: var(--hover-bg-color);
+      color: var(--font-color);
+    }
+
+    .manual {
+      display: block;
+      width: 90%;
+      max-width: 900px;
+      margin: 1em auto;
+      /* centers horizontally */
+      padding: 0.25em;
+      background-color: var(--background-color);
+      border-left: 2px solid var(--link-color);
+    }
+
+    .manual-title {
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: var(--link-color);
+      display: block;
+      padding: 0.3em 0.6em;
+      transition: background-color 0.2s;
+    }
+
+    .manual-title:hover {
+      background-color: var(--hover-bg-color);
+      color: var(--font-color);
+      border-radius: 4px;
+    }
+
+    .manual-content {
+      margin-top: 0.6em;
+      padding: 0.8em 1em;
+      background-color: rgba(255, 255, 255, 0.05);
+      line-height: 1.5;
+    }
+
+    .manual-content h3 {
+      color: var(--link-color);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      margin: 0.8em 0 0.4em;
+    }
+
+    .manual-content h3 i {
+      margin-right: 6px;
+    }
+
+    .manual-content p {
+      margin: 0.4em 0;
+      overflow-wrap: break-word;
     }
   </style>
 </head>
 
 <body>
   <section class="hero">
-    <h1>Welcome to my Portfolio</h1>
-    <p>I'm Shm0rt, a DevOps enthusiast building raw, robust, automated infrastructures the Grug way.</p>
+    <h1>Welcome to Shm0rt's Portfolio</h1>
+    <p>I'm a DevOps engineer who loves Linux, open-source solutions, and a direct, minimal approach. Daily check-ins keep us aligned, with no room for bloat.</p>
     <div class="terminal" id="terminalWindow">
       <div class="terminal-header">
         <div class="traffic-lights">
@@ -205,9 +259,56 @@
     </div>
   </section>
   <div class="content">
-    <section id="home">
-      <h2>Home</h2>
-      <p>I'm Shm0rt, a DevOps enthusiast building raw, robust, automated infrastructures the Grug way.</p>
+    <section id="about">
+      <h2>About Me</h2>
+      <p>I'm a DevOps engineer who focuses on clarity, minimal overhead, and open-source solutions. Linux is my go-to 
+        environment, and I often rely on Proxmox for virtualization. I believe in daily check-ins, quick problem-solving, 
+        and building efficient systems that stick to the spirit of free and community-driven software. There's no place 
+        for bloat here—just a direct approach that gets the job done.</p>
+      <details class="manual terminal">
+        <summary class="manual-title">
+          <i data-feather="book-open"></i> The Manual: How to Work with Me
+        </summary>
+        <div class="manual-content">
+
+          <h3><i data-feather="user-check"></i>Working Style</h3>
+          <ul>
+            <li>Tasks run best with direct, clear requests. Extra fluff slows everything down.</li>
+            <li>Providing full context at the start ensures accurate execution. Once direction is clear, short requests
+              are fine.</li>
+            <li>Daily check-ins help keep alignment. For urgent needs, calling is fastest.</li>
+          </ul>
+
+          <h3><i data-feather="clock"></i>Availability</h3>
+          <ul>
+            <li>A structured schedule is preferred, though overtime is possible if the project is engaging.</li>
+            <li>Messages are read carefully. Replies may not be instant, but each concern is addressed thoughtfully.
+            </li>
+            <li>Avoid excessive messaging; it disrupts focus.</li>
+          </ul>
+
+          <h3><i data-feather="settings"></i>How to Get the Best Results</h3>
+          <ul>
+            <li>Clear instructions. The more detail, the better the output.</li>
+            <li>Minimalism is key—no bloat. Use tools only if they solve real problems.</li>
+            <li>Trust the process. Focus on end goals, not micromanagement.</li>
+          </ul>
+
+          <h3><i data-feather="x-octagon"></i>Things to Avoid</h3>
+          <ul>
+            <li>Unstructured or vague objectives slow down progress.</li>
+            <li>Last-minute changes only if they genuinely improve outcomes.</li>
+            <li>Over-management can hinder efficiency.</li>
+          </ul>
+
+          <h3><i data-feather="mail"></i>Contact</h3>
+          <ul>
+            <li>Email is the best starting point. Additional channels can be discussed as needed.</li>
+            <li>Responses come as soon as possible, factoring in workload.</li>
+          </ul>
+
+        </div>
+      </details>
     </section>
     <section id="skills">
       <h2>Skills</h2>
@@ -218,16 +319,11 @@
       <p>A brief overview of some DevOps or personal projects. Possibly link to GitHub repos or show quick highlights...
       </p>
     </section>
-    <section id="about">
-      <h2>About Shm0rt</h2>
-      <p>I'm a DevOps enthusiast skilled in Linux, Bash, Windows, PowerShell, Azure, Python, and C#. I build robust,
-        automated infrastructures—raw, direct, and effective, just like Grug.</p>
-    </section>
     <section id="contact">
       <h2>Contact Shm0rt</h2>
-      <p>Email: <a href="mailto:me@shm0rt.ch">me@shm0rt.ch</a></p>
-      <p>LinkedIn: <a href="https://www.linkedin.com/in/chirkov-egor-449403224/">LinkedIn</a></p>
-      <p>GitHub: <a href="https://github.com/shm0rt">GitHub</a></p>
+      <a href="mailto:me@shm0rt.ch"><i data-feather="mail"></i> Email</a>
+      <a href="https://github.com/shm0rt"><i data-feather="github"></i> GitHub</a>
+      <a href="https://www.linkedin.com/in/chirkov-egor-449403224/"><i data-feather="linkedin"></i> LinkedIn</a>
     </section>
   </div>
 
@@ -254,10 +350,9 @@
       pre.classList.add('tree');
       pre.innerHTML = `
 .
-├── <span class="dir nav-link" onclick="cdDir('home')">/home</span>
+├── <span class="dir nav-link" onclick="cdDir('about')">/about</span>
 ├── <span class="dir nav-link" onclick="cdDir('skills')">/skills</span>
 ├── <span class="dir nav-link" onclick="cdDir('projects')">/projects</span>
-├── <span class="dir nav-link" onclick="cdDir('about')">/about</span>
 └── <span class="dir nav-link" onclick="cdDir('contact')">/contact</span>
       `.trim();
       outputEl.appendChild(pre);
@@ -303,6 +398,8 @@
       commandInput.focus();
     });
   </script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script>feather.replace();</script>
 </body>
 
 </html>
