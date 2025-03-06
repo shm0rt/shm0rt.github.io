@@ -9,36 +9,39 @@
   <link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.4/dist/terminal.min.css" />
   <style>
     :root {
-      --background-color: #2c2c2c;
-      --font-color: #fff;
-      --link-color: #8abeb7;
-      --font-stack: "Fira Code", monospace;
-      --global-font-size: 1rem;
-      --global-line-height: 1.4;
-      --hover-bg-color: #444444;
+      --background-color: #121212;
+      /* Darker background */
+      --page-background: #1e1e1e;
+      /* Slightly lighter than before */
+      --font-color: #e0e0e0;
+      /* Softer white */
+      --primary-color: #4db6ac;
+      /* Slightly more vibrant teal */
+      --error-color: #ef5350;
+      /* Brighter red */
+      --border-color: var(--primary-color);
+      --selection-color: var(--primary-color);
+      --font-stack: "JetBrains Mono", "Fira Code", monospace;
     }
 
     body {
-      background-color: var(--background-color);
+      background-color: var(--page-background);
       color: var(--font-color);
       font-family: var(--font-stack);
-      font-size: var(--global-font-size);
-      line-height: var(--global-line-height);
     }
 
     a {
-      color: var(--link-color);
+      color: var(--primary-color);
       text-decoration: none;
     }
 
     a:hover {
-      background-color: var(--hover-bg-color);
+      background-color: #444444;
       color: var(--font-color);
     }
 
     .hero {
       min-height: 60vh;
-      background: var(--background-color);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -65,32 +68,24 @@
     }
 
     .content section {
-      color: var(--font-color);
-      padding: 1rem;
-      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
     }
 
-    .content h2 {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
+    .content section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .terminal {
       width: 90%;
       max-width: 900px;
       margin: 0 auto;
-      background-color: #1e1e1e;
+      background-color: var(--background-color);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-      text-align: left;
-      font-size: 1rem !important;
-      line-height: 1.4 !important;
       border-radius: 6px;
-    }
-
-    .terminal .output p {
-      font-size: 1rem !important;
-      margin: 0.2rem 0 !important;
-      line-height: 1.2 !important;
+      overflow: hidden;
     }
 
     .terminal-header {
@@ -114,7 +109,6 @@
 
     .close {
       background-color: #ff5f56;
-      margin-left: 10px !important;
     }
 
     .minimize {
@@ -126,13 +120,14 @@
     }
 
     .terminal-body {
-      padding: 1rem !important;
+      padding: 1rem 1rem 1.5rem;
+      position: relative;
     }
 
     .output {
       min-height: 80px;
-      margin-bottom: 0.5rem !important;
-      overflow-y: auto !important;
+      margin-bottom: 0.5rem;
+      overflow-y: auto;
     }
 
     .prompt-line {
@@ -141,72 +136,70 @@
     }
 
     .prompt {
-      color: var(--font-color);
-      margin-right: 0.5rem !important;
+      color: var(--primary-color);
+      margin-right: 0.5rem;
     }
 
     .command-input {
-      background: #1e1e1e !important;
+      background: transparent !important;
       border: none !important;
+      color: var(--font-color) !important;
+      font-family: var(--font-stack) !important;
       margin: 0 !important;
       padding: 0 !important;
-      appearance: none;
-    }
-
-    .command-input:focus,
-    .command-input:active,
-    .command-input:focus-visible {
-      background: #1e1e1e !important;
+      width: 100%;
       outline: none !important;
-      border: none !important;
-      box-shadow: none !important;
     }
 
-    .error {
-      color: #ff5555 !important;
-    }
-
+    /* File system styling */
     .tree {
-      background-color: #1e1e1e;
+      background-color: var(--background-color);
       white-space: pre;
-      font-family: inherit;
       outline: none;
       border: none;
+      margin: 0.2rem 0;
+      padding: 0.2rem 0;
+      line-height: 1.2;
     }
 
     .dir {
-      color: #8abeb7 !important;
+      color: var(--primary-color);
       cursor: pointer;
     }
 
-    .nav-link:hover {
-      background-color: var(--hover-bg-color);
-      color: var(--font-color);
+    .hidden-file {
+      color: #666;
     }
 
+    .error {
+      color: var(--error-color);
+    }
+
+    /* Manual section styling */
     .manual {
       display: block;
       width: 90%;
       max-width: 900px;
       margin: 1em auto;
-      /* centers horizontally */
       padding: 0.25em;
       background-color: var(--background-color);
-      border-left: 2px solid var(--link-color);
+      border-left: 2px solid var(--primary-color);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+      border-radius: 6px;
     }
 
     .manual-title {
       cursor: pointer;
       font-weight: bold;
       font-size: 1.2rem;
-      color: var(--link-color);
+      color: var(--primary-color);
       display: block;
       padding: 0.3em 0.6em;
       transition: background-color 0.2s;
     }
 
     .manual-title:hover {
-      background-color: var(--hover-bg-color);
+      background-color: #444444;
       color: var(--font-color);
       border-radius: 4px;
     }
@@ -219,7 +212,7 @@
     }
 
     .manual-content h3 {
-      color: var(--link-color);
+      color: var(--primary-color);
       font-size: 1.1rem;
       display: flex;
       align-items: center;
@@ -230,17 +223,29 @@
       margin-right: 6px;
     }
 
-    .manual-content p {
-      margin: 0.4em 0;
-      overflow-wrap: break-word;
+    .output p,
+    .tree {
+      margin: 0 0 0.3rem 0 !important;
+      padding: 0 !important;
+      font-family: var(--font-stack) !important;
+      font-size: 0.9rem !important;
+      line-height: 1.3 !important;
+      text-align: left !important;
+    }
+
+    .prompt-line {
+      display: flex !important;
+      align-items: center !important;
+      margin-top: 0.5rem !important;
     }
   </style>
 </head>
 
 <body>
   <section class="hero">
-    <h1>Welcome to Shm0rt's Portfolio</h1>
-    <p>I'm a DevOps engineer who loves Linux, open-source solutions, and a direct, minimal approach. Daily check-ins keep us aligned, with no room for bloat.</p>
+    <h1>Shm0rt: DevOps & Linux Craftsman</h1>
+    <p>Minimalist approach to infrastructure. Building efficient, scalable systems with open-source solutions. No
+      complexity, just results.</p>
     <div class="terminal" id="terminalWindow">
       <div class="terminal-header">
         <div class="traffic-lights">
@@ -261,16 +266,14 @@
   <div class="content">
     <section id="about">
       <h2>About Me</h2>
-      <p>I'm a DevOps engineer who focuses on clarity, minimal overhead, and open-source solutions. Linux is my go-to 
-        environment, and I often rely on Proxmox for virtualization. I believe in daily check-ins, quick problem-solving, 
-        and building efficient systems that stick to the spirit of free and community-driven software. There's no place 
-        for bloat here—just a direct approach that gets the job done.</p>
+      <p>Linux infrastructure engineer specializing in minimalist, high-performance solutions. I transform complex
+        challenges into elegant, streamlined systems using Proxmox, containerization, and infrastructure-as-code. My
+        philosophy: less is more, efficiency is king.</p>
       <details class="manual terminal">
         <summary class="manual-title">
           <i data-feather="book-open"></i> The Manual: How to Work with Me
         </summary>
         <div class="manual-content">
-
           <h3><i data-feather="user-check"></i>Working Style</h3>
           <ul>
             <li>Tasks run best with direct, clear requests. Extra fluff slows everything down.</li>
@@ -306,7 +309,6 @@
             <li>Email is the best starting point. Additional channels can be discussed as needed.</li>
             <li>Responses come as soon as possible, factoring in workload.</li>
           </ul>
-
         </div>
       </details>
     </section>
@@ -327,76 +329,238 @@
     </section>
   </div>
 
-  <!-- Same JS logic for commands, etc. -->
   <script>
     const outputEl = document.getElementById('terminalOutput');
     const commandInput = document.getElementById('commandInput');
-    function appendHtmlLine(html, isError = false) {
+
+    const dirStructure = {
+      about: { type: 'dir', desc: 'Personal information' },
+      skills: { type: 'dir', desc: 'Technical skills' },
+      projects: { type: 'dir', desc: 'Portfolio projects' },
+      contact: { type: 'dir', desc: 'Contact information' }
+    };
+
+
+    function appendOutput(content, isError = false) {
       const p = document.createElement('p');
       if (isError) p.classList.add('error');
-      p.innerHTML = html;
+      p.innerHTML = content;
       outputEl.appendChild(p);
       outputEl.scrollTop = outputEl.scrollHeight;
     }
-    function appendLine(text, isError = false) {
-      const p = document.createElement('p');
-      if (isError) p.classList.add('error');
-      p.textContent = text;
-      outputEl.appendChild(p);
-      outputEl.scrollTop = outputEl.scrollHeight;
-    }
-    function printTree() {
+
+
+    function printLs() {
       const pre = document.createElement('pre');
       pre.classList.add('tree');
-      pre.innerHTML = `
-.
-├── <span class="dir nav-link" onclick="cdDir('about')">/about</span>
-├── <span class="dir nav-link" onclick="cdDir('skills')">/skills</span>
-├── <span class="dir nav-link" onclick="cdDir('projects')">/projects</span>
-└── <span class="dir nav-link" onclick="cdDir('contact')">/contact</span>
-      `.trim();
+
+
+      const dirs = Object.keys(dirStructure);
+      let output = '';
+
+      dirs.forEach((dir, index) => {
+        output += `<a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>`;
+        if (index < dirs.length - 1) {
+          output += '       ';
+        }
+      });
+
+      pre.innerHTML = output;
       outputEl.appendChild(pre);
       outputEl.scrollTop = outputEl.scrollHeight;
     }
+
+    function printLa() {
+      const pre = document.createElement('pre');
+      pre.classList.add('tree');
+
+      let output = '';
+      output += '<span class="dir">.</span>        ';
+      output += '<span class="dir">..</span>       ';
+      output += '<span class="hidden-file">.config</span>  ';
+      output += '<span class="hidden-file">.bashrc</span>\n';
+
+      Object.keys(dirStructure).forEach(dir => {
+        output += `<a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>`;
+        output += '       '; // Add consistent spacing
+      });
+
+      pre.innerHTML = output;
+      outputEl.appendChild(pre);
+      outputEl.scrollTop = outputEl.scrollHeight;
+    }
+
+    function printLl() {
+      const pre = document.createElement('pre');
+      pre.classList.add('tree');
+
+      const date = new Date();
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const month = monthNames[date.getMonth()];
+      const day = String(date.getDate()).padStart(2, ' ');
+      const time = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+
+      // Create Unix-like ls -l output
+      let output = `total ${Object.keys(dirStructure).length * 4}\n`;
+
+      Object.keys(dirStructure).forEach(dir => {
+        output += `drwxr-xr-x  2 shm0rt  users  4096 ${month} ${day} ${time} `;
+        output += `<a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>`;
+      });
+
+      pre.innerHTML = output;
+      outputEl.appendChild(pre);
+      outputEl.scrollTop = outputEl.scrollHeight;
+    }
+
+    function printTree() {
+      const pre = document.createElement('pre');
+      pre.classList.add('tree');
+
+      const dirs = Object.keys(dirStructure);
+      let output = `<span class="dir">.</span>\n`;
+      dirs.forEach((dir, index) => {
+        const prefix = (index === dirs.length - 1) ? '└── ' : '├── ';
+        output += `<span>${prefix}</span><a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>\n`;
+      });
+
+      pre.innerHTML = output;
+      outputEl.appendChild(pre);
+      outputEl.scrollTop = outputEl.scrollHeight;
+    }
+
+    function printFastfetch() {
+      const pre = document.createElement('pre');
+      pre.classList.add('tree');
+
+      const sysInfo = [
+        { label: "OS:", value: "Linux x86_64" },
+        { label: "Host:", value: "Portfolio (v1.0)" },
+        { label: "Kernel:", value: "6.6.30-minimal" },
+        { label: "Shell:", value: "bash 5.2.15" },
+        { label: "Terminal:", value: "web-term" }
+      ];
+
+      let output = `<span style="color:var(--primary-color)">shm0rt@portfolio</span>
+<span style="color:var(--primary-color)">-----------------</span>
+
+<span style="color:#FFA500">>(.)__</span> <span style="color:#8abeb7"><(.)__</span> <span style="color:#cc6666">=(.)__</span>
+<span style="color:#FFA500"> (___/</span>  <span style="color:#8abeb7">(___/</span>  <span style="color:#cc6666">(___/</span>  
+
+`;
+
+      sysInfo.forEach(info => {
+        output += `<span style="color:var(--primary-color)">${info.label}</span> ${info.value}\n`;
+      });
+
+      output += "\n<span style=\"background-color:#FF0000\"> </span><span style=\"background-color:#FFFF00\"> </span><span style=\"background-color:#00FF00\"> </span><span style=\"background-color:#00FFFF\"> </span><span style=\"background-color:#0000FF\"> </span><span style=\"background-color:#FF00FF\"> </span><span style=\"background-color:#FFFFFF\"> </span>\n";
+
+      pre.innerHTML = output;
+      outputEl.appendChild(pre);
+      outputEl.scrollTop = outputEl.scrollHeight;
+    }
+    // Command functions
     function printIntro() {
-      appendHtmlLine('Press or type <span class="dir" onclick="processCommand(\'/help\')">/help</span> or <span class="dir" onclick="processCommand(\'?\')">?</span> for the help menu.');
-      printTree();
+      printFastfetch();
+      appendOutput('Press or type <span class="dir" onclick="processCommand(\'/help\')">/help</span> or <span class="dir" onclick="processCommand(\'?\')">?</span> for the help menu.');
+      printLs();
     }
+
     function printHelp() {
-      appendLine("cd <dir>   - move to dir");
-      appendLine("clear      - clear terminal");
-      appendLine("ls         - list directories");
+      appendOutput("Available commands:");
+      appendOutput("cd &lt;dir&gt;   - move to directory");
+      appendOutput("ls         - list directories");
+      appendOutput("ll         - list directories (long format)");
+      appendOutput("la         - list all directories including hidden");
+      appendOutput("tree       - show directory structure as a tree");
+      appendOutput("clear      - clear terminal");
+      appendOutput("help, ?    - show this help menu");
     }
+
     function cdDir(dirId) {
       const target = document.getElementById(dirId);
-      target
-        ? target.scrollIntoView({ behavior: 'smooth' })
-        : appendLine(`No such directory: ${dirId}`, true);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        appendOutput(`No such directory: ${dirId}`, true);
+      }
     }
+
     function clearOutput() {
       outputEl.innerHTML = "";
     }
+
     function processCommand(cmd) {
-      const c = cmd.trim();
+      const c = cmd.trim().toLowerCase();
       if (!c) return;
+
+      appendOutput(`↪ ${c}`);
+
       if (c === '/help' || c === 'help' || c === '?') printHelp();
       else if (c === 'clear') clearOutput();
-      else if (c === 'ls') printTree();
+      else if (c === 'ls') printLs();
+      else if (c === 'll') printLl();
+      else if (c === 'la') printLa();
+      else if (c === 'tree') printTree();
       else if (c.startsWith('cd ')) {
         const path = c.slice(3).trim().replace(/^\//, '');
         cdDir(path);
-      } else appendLine(`Command not found: ${c}`, true);
+      } else appendOutput(`Command not found: ${c}`, true);
     }
+
+    let commandHistory = [];
+    let historyIndex = -1;
+
     commandInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
-        processCommand(commandInput.value);
+        const cmd = commandInput.value.trim();
+        if (cmd) {
+          processCommand(cmd);
+          commandHistory.unshift(cmd);
+          historyIndex = -1;
+        }
         commandInput.value = "";
+      } else if (e.key === 'ArrowUp') {
+        if (historyIndex < commandHistory.length - 1) {
+          historyIndex++;
+          commandInput.value = commandHistory[historyIndex];
+          setTimeout(() => {
+            commandInput.selectionStart = commandInput.selectionEnd = commandInput.value.length;
+          }, 0);
+        }
+        e.preventDefault();
+      } else if (e.key === 'ArrowDown') {
+        if (historyIndex > 0) {
+          historyIndex--;
+          commandInput.value = commandHistory[historyIndex];
+        } else if (historyIndex === 0) {
+          historyIndex = -1;
+          commandInput.value = '';
+        }
+        e.preventDefault();
       }
     });
+
     window.addEventListener('DOMContentLoaded', () => {
       printIntro();
       commandInput.focus();
+
+      document.getElementById('terminalWindow').addEventListener('click', () => {
+        commandInput.focus();
+      });
     });
+
+    document.addEventListener('scroll', function () {
+      document.querySelectorAll('.content section').forEach(function (section) {
+        let rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 50) {
+          section.classList.add('visible');
+        } else {
+          section.classList.remove('visible');
+        }
+      });
+    });
+
   </script>
   <script src="https://unpkg.com/feather-icons"></script>
   <script>feather.replace();</script>
