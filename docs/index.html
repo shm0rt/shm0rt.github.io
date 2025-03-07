@@ -233,14 +233,28 @@
     #skills, #projects, #contact {
     margin-top: 80px;
     }
+
+    .cursor {
+  display: inline-block;
+  color: var(--primary-color);
+  font-weight: bold;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
   </style>
 </head>
 
 <body>
   <section class="hero">
     <h1>Shm0rt: DevOps & Linux Craftsman</h1>
-    <p>Minimalist approach to infrastructure. Building efficient, scalable systems with open-source solutions. No
-      complexity, just results.</p>
+    <p>Crafting infrastructure with surgical precision.
+      Building systems that breathe efficiency,
+      scale effortlessly, and deliver exactly what's needed.
+      Nothing more, nothing less.</p>
     <div class="terminal" id="terminalWindow">
       <div class="terminal-header">
         <div class="traffic-lights">
@@ -261,48 +275,50 @@
   <div class="content">
     <section id="about">
       <h2>About Me</h2>
-      <p>Linux infrastructure engineer specializing in minimalist, high-performance solutions. I transform complex
-        challenges into elegant, streamlined systems using Proxmox, containerization, and infrastructure-as-code. My
-        philosophy: less is more, efficiency is king.</p>
+      <p>Passionate about stripping systems down to their elegant essentials. I see complex infrastructure challenges as 
+        puzzles waiting for clean, minimalist solutions that deliver maximum impact. For three years as a DevOps platform 
+        developer, I've been crafting high-performance environments using Proxmox, containerization, and 
+        infrastructure-as-code—building systems that breathe efficiency. My open-source focus keeps me at the cutting edge 
+        where innovation meets practicality. When I architect solutions, bloat and complexity simply aren't invited to the 
+        table. The philosophy is straightforward: build it right, build it lean, and watch it outperform the alternatives—because 
+        in my world, less truly is more.</p>
       <details class="manual terminal">
         <summary class="manual-title">
-          <i data-feather="book-open"></i> The Manual: How to Work with Me
+          <i data-feather="book-open"></i> What Makes Me Tick
         </summary>
         <div class="manual-content">
-          <h3><i data-feather="user-check"></i>Working Style</h3>
+          <h3><i data-feather="user-check"></i>How I Collaborate</h3>
           <ul>
-            <li>Tasks run best with direct, clear requests. Extra fluff slows everything down.</li>
-            <li>Providing full context at the start ensures accurate execution. Once direction is clear, short requests
-              are fine.</li>
-            <li>Daily check-ins help keep alignment. For urgent needs, calling is fastest.</li>
+            <li>Direct communication gets us where we need to go—no unnecessary detours.</li>
+            <li>Starting with the full picture helps me deliver exactly what you need, first time around.</li>
+            <li>I'm a fan of quick check-ins to stay on the same page, and I'm just a call away when things are urgent.</li>
           </ul>
 
-          <h3><i data-feather="clock"></i>Availability</h3>
+          <h3><i data-feather="clock"></i>My Rhythm</h3>
           <ul>
-            <li>A structured schedule is preferred, though overtime is possible if the project is engaging.</li>
-            <li>Messages are read carefully. Replies may not be instant, but each concern is addressed thoughtfully.
-            </li>
-            <li>Avoid excessive messaging; it disrupts focus.</li>
+            <li>I value structure but won't hesitate to put in extra hours for projects that spark excitement.</li>
+            <li>You'll find I take time to understand your messages completely before crafting thoughtful replies.</li>
+            <li>My best work happens in focused stretches—it's how the magic happens.</li>
           </ul>
 
-          <h3><i data-feather="settings"></i>How to Get the Best Results</h3>
+          <h3><i data-feather="settings"></i>The Secret Sauce</h3>
           <ul>
-            <li>Clear instructions. The more detail, the better the output.</li>
-            <li>Minimalism is key—no bloat. Use tools only if they solve real problems.</li>
-            <li>Trust the process. Focus on end goals, not micromanagement.</li>
+            <li>The clearer your vision, the better I can bring it to life—details matter!</li>
+            <li>I'm all about the right tool for the right job—no bloat, just solutions that work.</li>
+            <li>Let's focus on end goals together and trust each other's expertise along the way.</li>
           </ul>
 
-          <h3><i data-feather="x-octagon"></i>Things to Avoid</h3>
+          <h3><i data-feather="x-octagon"></i>Worth Noting</h3>
           <ul>
-            <li>Unstructured or vague objectives slow down progress.</li>
-            <li>Last-minute changes only if they genuinely improve outcomes.</li>
-            <li>Over-management can hinder efficiency.</li>
+            <li>Clear objectives help me hit the target every time.</li>
+            <li>I'm open to pivots when they make the end result better.</li>
+            <li>I thrive when given space to work my technical magic.</li>
           </ul>
 
           <h3><i data-feather="mail"></i>Contact</h3>
           <ul>
-            <li>Email is the best starting point. Additional channels can be discussed as needed.</li>
-            <li>Responses come as soon as possible, factoring in workload.</li>
+            <li>Drop me an email to start the conversation—I'm all ears.</li>
+            <li>I promise timely responses that respect both urgency and quality.</li>
           </ul>
         </div>
       </details>
@@ -335,7 +351,6 @@
       contact: { type: 'dir', desc: 'Contact information' }
     };
 
-
     function appendOutput(content, isError = false) {
       const p = document.createElement('p');
       if (isError) p.classList.add('error');
@@ -343,7 +358,6 @@
       outputEl.appendChild(p);
       outputEl.scrollTop = outputEl.scrollHeight;
     }
-
 
     function printLs() {
       const pre = document.createElement('pre');
@@ -400,7 +414,7 @@
 
       Object.keys(dirStructure).forEach(dir => {
         output += `drwxr-xr-x  2 shm0rt  users  4096 ${month} ${day} ${time} `;
-        output += `<a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>`;
+        output += `<a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>\n`;
       });
 
       pre.innerHTML = output;
@@ -536,14 +550,66 @@
       }
     });
 
-    window.addEventListener('DOMContentLoaded', () => {
-      printIntro();
-      commandInput.focus();
-
-      document.getElementById('terminalWindow').addEventListener('click', () => {
+    window.addEventListener('DOMContentLoaded', function() {
+  // Elements to animate
+  const heroTitle = document.querySelector('.hero h1');
+  const heroText = heroTitle.textContent;
+  heroTitle.textContent = '';
+  
+  // Add the blinking cursor
+  const cursor = document.createElement('span');
+  cursor.className = 'cursor';
+  cursor.textContent = '|';
+  heroTitle.appendChild(cursor);
+  
+  let charIndex = 0;
+  const baseDelay = 70; // Base typing speed
+  
+  // Function to add variation to typing speed for more realistic feel
+  function getTypingDelay() {
+    // Random variation between 0.7x and 1.5x the base speed
+    return Math.floor(baseDelay * (0.7 + Math.random() * 0.8));
+  }
+  
+  // Simple recursive function to type one character at a time
+  function typeNextChar() {
+    if (charIndex < heroText.length) {
+      // Insert character before cursor
+      heroTitle.insertBefore(
+        document.createTextNode(heroText.charAt(charIndex)), 
+        cursor
+      );
+      charIndex++;
+      setTimeout(typeNextChar, getTypingDelay());
+    } else {
+      // Initialize the terminal when typing is done
+      setTimeout(function() {
+        printIntro();
         commandInput.focus();
-      });
+      }, 300);
+    }
+  }
+  
+  // Start typing animation after a short delay
+  setTimeout(typeNextChar, 500);
+  
+  // Keep your existing click event listener
+  document.getElementById('terminalWindow').addEventListener('click', () => {
+    commandInput.focus();
+  });
+  
+  // Keep your existing scroll event listener
+  document.addEventListener('scroll', function () {
+    document.querySelectorAll('.content section').forEach(function (section) {
+      let rect = section.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 50) {
+        section.classList.add('visible');
+      } else {
+        section.classList.remove('visible');
+      }
     });
+  });
+});
 
     document.addEventListener('scroll', function () {
       document.querySelectorAll('.content section').forEach(function (section) {
