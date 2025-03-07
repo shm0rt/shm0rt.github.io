@@ -8,6 +8,7 @@
   <link rel="icon" type="shortcut icon" href="favicon.ico">
   <link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.4/dist/terminal.min.css" />
   <style>
+    /* ========== VARIABLES ========== */
     :root {
       --background-color: #121212;
       --page-background: #1e1e1e;
@@ -17,6 +18,11 @@
       --border-color: var(--primary-color);
       --selection-color: var(--primary-color);
       --font-stack: "JetBrains Mono", "Fira Code", monospace;
+    }
+
+    /* ========== BASE STYLES ========== */
+    html.loading {
+      visibility: hidden;
     }
 
     body {
@@ -35,14 +41,15 @@
       color: var(--font-color);
     }
 
+    /* ========== LAYOUT ========== */
     .hero {
-      min-height: 60vh;
+      min-height: 75vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 3em 1em;
+      padding: 2em 1em;
     }
 
     .hero h1 {
@@ -62,15 +69,60 @@
       padding: 0 1em;
     }
 
-    .content section {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    #about,
+    #skills,
+    #projects,
+    #contact {
+      margin-top: 80px;
     }
 
+    /* ========== ANIMATIONS ========== */
+    /* Loading animations - single declaration for performance */
+    .hero h1,
+    .hero p,
+    .content section {
+      opacity: 0;
+      filter: blur(5px);
+      transform: scale(0.97);
+      transition: all 0.5s ease-out;
+    }
+
+    .hero h1.visible,
+    .hero p.visible,
     .content section.visible {
       opacity: 1;
-      transform: translateY(0);
+      filter: blur(0);
+      transform: scale(1);
+    }
+
+    .cursor {
+      display: inline-block;
+      color: var(--primary-color);
+      font-weight: bold;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+
+      from,
+      to {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    /* ========== TERMINAL COMPONENT ========== */
+    #terminalWindow {
+      width: 90%;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      top: 2em;
+      opacity: 0;
+      transition: opacity 0.5s ease;
     }
 
     .terminal {
@@ -89,6 +141,11 @@
       height: 30px;
       padding: 0.5rem 1rem;
       background-color: var(--background-color);
+    }
+
+    .terminal-body {
+      padding: 1rem 1rem 1.5rem;
+      position: relative;
     }
 
     .traffic-lights {
@@ -114,11 +171,7 @@
       background-color: #27c93f;
     }
 
-    .terminal-body {
-      padding: 1rem 1rem 1.5rem;
-      position: relative;
-    }
-
+    /* Terminal content */
     .output {
       min-height: 80px;
       margin-bottom: 0.5rem;
@@ -126,13 +179,24 @@
     }
 
     .prompt-line {
-      display: flex;
-      align-items: center;
+      display: flex !important;
+      align-items: center !important;
+      margin-top: 0.5rem !important;
     }
 
     .prompt {
       color: var(--primary-color);
       margin-right: 0.5rem;
+    }
+
+    .output p,
+    .tree {
+      margin: 0 0 0.3rem 0 !important;
+      padding: 0 !important;
+      font-family: var(--font-stack) !important;
+      font-size: 0.9rem !important;
+      line-height: 1.3 !important;
+      text-align: left !important;
     }
 
     .command-input {
@@ -146,11 +210,10 @@
       outline: none !important;
     }
 
-    /* File system styling */
+    /* ========== FILE SYSTEM STYLING ========== */
     .tree {
       background-color: var(--background-color);
       white-space: pre;
-      outline: none;
       border: none;
       margin: 0.2rem 0;
       padding: 0.2rem 0;
@@ -170,7 +233,7 @@
       color: var(--error-color);
     }
 
-    /* Manual section styling */
+    /* ========== MANUAL SECTION STYLING ========== */
     .manual {
       display: block;
       width: 90%;
@@ -213,38 +276,6 @@
       align-items: center;
       margin: 0.8em 0 0.4em;
     }
-
-    .output p,
-    .tree {
-      margin: 0 0 0.3rem 0 !important;
-      padding: 0 !important;
-      font-family: var(--font-stack) !important;
-      font-size: 0.9rem !important;
-      line-height: 1.3 !important;
-      text-align: left !important;
-    }
-
-    .prompt-line {
-      display: flex !important;
-      align-items: center !important;
-      margin-top: 0.5rem !important;
-    }
-
-    #skills, #projects, #contact {
-    margin-top: 80px;
-    }
-
-    .cursor {
-  display: inline-block;
-  color: var(--primary-color);
-  font-weight: bold;
-  animation: blink 1s step-end infinite;
-}
-
-@keyframes blink {
-  from, to { opacity: 1; }
-  50% { opacity: 0; }
-}
   </style>
 </head>
 
@@ -275,12 +306,16 @@
   <div class="content">
     <section id="about">
       <h2>About Me</h2>
-      <p>Passionate about stripping systems down to their elegant essentials. I see complex infrastructure challenges as 
-        puzzles waiting for clean, minimalist solutions that deliver maximum impact. For three years as a DevOps platform 
-        developer, I've been crafting high-performance environments using Proxmox, containerization, and 
-        infrastructure-as-code—building systems that breathe efficiency. My open-source focus keeps me at the cutting edge 
-        where innovation meets practicality. When I architect solutions, bloat and complexity simply aren't invited to the 
-        table. The philosophy is straightforward: build it right, build it lean, and watch it outperform the alternatives—because 
+      <p>Passionate about stripping systems down to their elegant essentials. I see complex infrastructure challenges as
+        puzzles waiting for clean, minimalist solutions that deliver maximum impact. For three years as a DevOps
+        platform
+        developer, I've been crafting high-performance environments using Proxmox, containerization, and
+        infrastructure-as-code—building systems that breathe efficiency. My open-source focus keeps me at the cutting
+        edge
+        where innovation meets practicality. When I architect solutions, bloat and complexity simply aren't invited to
+        the
+        table. The philosophy is straightforward: build it right, build it lean, and watch it outperform the
+        alternatives—because
         in my world, less truly is more.</p>
       <details class="manual terminal">
         <summary class="manual-title">
@@ -291,7 +326,8 @@
           <ul>
             <li>Direct communication gets us where we need to go—no unnecessary detours.</li>
             <li>Starting with the full picture helps me deliver exactly what you need, first time around.</li>
-            <li>I'm a fan of quick check-ins to stay on the same page, and I'm just a call away when things are urgent.</li>
+            <li>I'm a fan of quick check-ins to stay on the same page, and I'm just a call away when things are urgent.
+            </li>
           </ul>
 
           <h3><i data-feather="clock"></i>My Rhythm</h3>
@@ -341,6 +377,8 @@
   </div>
 
   <script>
+    document.documentElement.classList.add('loading');
+
     const outputEl = document.getElementById('terminalOutput');
     const commandInput = document.getElementById('commandInput');
 
@@ -550,75 +588,75 @@
       }
     });
 
-    window.addEventListener('DOMContentLoaded', function() {
-  // Elements to animate
-  const heroTitle = document.querySelector('.hero h1');
-  const heroText = heroTitle.textContent;
-  heroTitle.textContent = '';
-  
-  // Add the blinking cursor
-  const cursor = document.createElement('span');
-  cursor.className = 'cursor';
-  cursor.textContent = '|';
-  heroTitle.appendChild(cursor);
-  
-  let charIndex = 0;
-  const baseDelay = 70; // Base typing speed
-  
-  // Function to add variation to typing speed for more realistic feel
-  function getTypingDelay() {
-    // Random variation between 0.7x and 1.5x the base speed
-    return Math.floor(baseDelay * (0.7 + Math.random() * 0.8));
-  }
-  
-  // Simple recursive function to type one character at a time
-  function typeNextChar() {
-    if (charIndex < heroText.length) {
-      // Insert character before cursor
-      heroTitle.insertBefore(
-        document.createTextNode(heroText.charAt(charIndex)), 
-        cursor
-      );
-      charIndex++;
-      setTimeout(typeNextChar, getTypingDelay());
-    } else {
-      // Initialize the terminal when typing is done
-      setTimeout(function() {
-        printIntro();
-        commandInput.focus();
-      }, 300);
-    }
-  }
-  
-  // Start typing animation after a short delay
-  setTimeout(typeNextChar, 500);
-  
-  // Keep your existing click event listener
-  document.getElementById('terminalWindow').addEventListener('click', () => {
-    commandInput.focus();
-  });
-  
-  // Keep your existing scroll event listener
-  document.addEventListener('scroll', function () {
-    document.querySelectorAll('.content section').forEach(function (section) {
-      let rect = section.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 50) {
-        section.classList.add('visible');
-      } else {
-        section.classList.remove('visible');
-      }
-    });
-  });
-});
+    window.addEventListener('DOMContentLoaded', function () {
+      // Elements to animate
+      const heroTitle = document.querySelector('.hero h1');
+      const heroText = heroTitle.textContent;
+      heroTitle.textContent = '';
 
-    document.addEventListener('scroll', function () {
-      document.querySelectorAll('.content section').forEach(function (section) {
-        let rect = section.getBoundingClientRect();
-        if (rect.top < window.innerHeight - 50) {
-          section.classList.add('visible');
+      // Add the blinking cursor
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      cursor.textContent = '|';
+      heroTitle.appendChild(cursor);
+
+      let charIndex = 0;
+      const baseDelay = 70;
+
+      function getTypingDelay() {
+        return Math.floor(baseDelay * (0.7 + Math.random() * 0.8));
+      }
+
+      function typeNextChar() {
+        if (charIndex < heroText.length) {
+          heroTitle.insertBefore(
+            document.createTextNode(heroText.charAt(charIndex)),
+            cursor
+          );
+          charIndex++;
+          setTimeout(typeNextChar, getTypingDelay());
         } else {
-          section.classList.remove('visible');
+          // Show terminal without pushing content down
+          setTimeout(function () {
+            const terminal = document.getElementById('terminalWindow');
+            terminal.style.opacity = '1';
+            printIntro();
+          }, 500);
         }
+      }
+
+      // Show page now that we're ready to control visibility
+      document.documentElement.classList.remove('loading');
+
+      setTimeout(function () {
+        document.querySelector('.hero h1').classList.add('visible');
+        document.querySelector('.hero p').classList.add('visible');
+      }, 300);
+
+      // Start typing after a short delay
+      setTimeout(typeNextChar, 300);
+
+      // Initialize scroll effects
+      document.addEventListener('scroll', function () {
+        if (document.querySelector('details').open) {  // Remove the semicolon here
+          document.querySelectorAll('.content section').forEach(function (section) {
+            section.classList.add('visible');
+          });
+          return;
+        }
+        // Normal visibility logic when details is closed
+        document.querySelectorAll('.content section').forEach(function (section) {
+          const rect = section.getBoundingClientRect();
+          const buffer = 50;
+          if (
+            rect.top >= 0 - buffer &&
+            rect.bottom <= window.innerHeight + buffer
+          ) {
+            section.classList.add('visible');
+          } else {
+            section.classList.remove('visible');
+          }
+        });
       });
     });
 
