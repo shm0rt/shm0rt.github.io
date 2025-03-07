@@ -115,14 +115,13 @@
     }
 
     /* ========== TERMINAL COMPONENT ========== */
-    #terminalWindow {
-      width: 90%;
-      max-width: 900px;
-      margin: 0 auto;
-      position: relative;
-      top: 2em;
-      opacity: 0;
-      transition: opacity 0.5s ease;
+    #terminalWindow,
+    #terminalOutput,
+    #terminalOutput * {
+      opacity: 1 !important;
+      filter: none !important;
+      transform: none !important;
+      transition: none !important;
     }
 
     .terminal {
@@ -208,6 +207,17 @@
       padding: 0 !important;
       width: 100%;
       outline: none !important;
+    }
+
+    .output p,
+    .output pre,
+    .tree,
+    .output span,
+    .output a {
+      filter: blur(0) !important;
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
     }
 
     /* ========== FILE SYSTEM STYLING ========== */
@@ -381,6 +391,9 @@
 
     const outputEl = document.getElementById('terminalOutput');
     const commandInput = document.getElementById('commandInput');
+    const heroTitle = document.querySelector('.hero h1');
+    const heroP = document.querySelector('.hero p');
+    const terminalWindow = document.getElementById('terminalWindow');
 
     const dirStructure = {
       about: { type: 'dir', desc: 'Personal information' },
@@ -511,6 +524,7 @@
       printFastfetch();
       appendOutput('Press or type <span class="dir" onclick="processCommand(\'/help\')">/help</span> or <span class="dir" onclick="processCommand(\'?\')">?</span> for the help menu.');
       printLs();
+      commandInput.focus();
     }
 
     function printHelp() {
@@ -594,7 +608,7 @@
       const heroText = heroTitle.textContent;
       heroTitle.textContent = '';
 
-      // Add the blinking cursor
+      // Blinking cursor
       const cursor = document.createElement('span');
       cursor.className = 'cursor';
       cursor.textContent = '|';
@@ -625,7 +639,7 @@
         }
       }
 
-      // Show page now that we're ready to control visibility
+      // Show page
       document.documentElement.classList.remove('loading');
 
       setTimeout(function () {
@@ -638,30 +652,36 @@
 
       // Initialize scroll effects
       document.addEventListener('scroll', function () {
-        if (document.querySelector('details').open) {  // Remove the semicolon here
-          document.querySelectorAll('.content section').forEach(function (section) {
-            section.classList.add('visible');
-          });
+        const details = document.querySelector('details');
+        const sections = document.querySelectorAll('.content section');
+
+        if (details.open) {
+          sections.forEach(section => section.classList.add('visible'));
           return;
         }
-        // Normal visibility logic when details is closed
-        document.querySelectorAll('.content section').forEach(function (section) {
+
+        const buffer = 50;
+        const windowHeight = window.innerHeight;
+
+        sections.forEach(function (section) {
           const rect = section.getBoundingClientRect();
-          const buffer = 50;
-          if (
-            rect.top >= 0 - buffer &&
-            rect.bottom <= window.innerHeight + buffer
-          ) {
+          if (rect.top >= 0 - buffer && rect.bottom <= windowHeight + buffer) {
             section.classList.add('visible');
           } else {
             section.classList.remove('visible');
           }
         });
+      }, { passive: true });
+      document.addEventListener('click', function (e) {
+        // Focus command input when clicking anywhere in terminal
+        if (e.target.closest('#terminalWindow')) {
+          commandInput.focus();
+        }
       });
     });
 
   </script>
-  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
   <script>feather.replace();</script>
 </body>
 
