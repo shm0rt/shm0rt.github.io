@@ -1,0 +1,287 @@
+/* ========== VARIABLES ========== */
+:root {
+    --background-color: #121212;
+    --page-background: #1e1e1e;
+    --font-color: #e0e0e0;
+    --primary-color: #4db6ac;
+    --error-color: #ef5350;
+    --border-color: var(--primary-color);
+    --selection-color: var(--primary-color);
+    --font-stack: "JetBrains Mono", "Fira Code", monospace;
+}
+
+/* ========== BASE STYLES ========== */
+html.loading {
+    visibility: hidden;
+}
+
+body {
+    background-color: var(--page-background);
+    color: var(--font-color);
+    font-family: var(--font-stack);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: #444444;
+    color: var(--font-color);
+}
+
+/* ========== LAYOUT ========== */
+.hero {
+    min-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2em 1em;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5em;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    max-width: 600px;
+    margin-bottom: 2em;
+}
+
+.content {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1em;
+}
+
+.manual-content h3 svg {
+    margin-right: 8px;
+}
+
+.manual-content h3 i {
+    margin-right: 8px;
+    display: inline-flex;
+    align-items: center;
+}
+
+#about,
+#skills,
+#projects,
+#contact {
+    margin-top: 80px;
+}
+
+/* ========== ANIMATIONS ========== */
+/* Loading animations - single declaration for performance */
+.hero h1,
+.hero p,
+.content section {
+    opacity: 0;
+    filter: blur(5px);
+    transform: scale(0.97);
+    transition: all 0.5s ease-out;
+}
+
+.hero h1.visible,
+.hero p.visible,
+.content section.visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+}
+
+.cursor {
+    display: inline-block;
+    color: var(--primary-color);
+    font-weight: bold;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    from,
+    to {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* ========== TERMINAL COMPONENT ========== */
+#terminalWindow,
+#terminalOutput,
+#terminalOutput * {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+.terminal {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: var(--background-color);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.terminal-header {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    padding: 0.5rem 1rem;
+    background-color: var(--background-color);
+}
+
+.terminal-body {
+    padding: 1rem 1rem 1.5rem;
+    position: relative;
+}
+
+.traffic-lights {
+    display: flex;
+    gap: 8px;
+}
+
+.traffic-light {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.close {
+    background-color: #ff5f56;
+}
+
+.minimize {
+    background-color: #ffbd2e;
+}
+
+.zoom {
+    background-color: #27c93f;
+}
+
+/* Terminal content */
+.output {
+    min-height: 80px;
+    margin-bottom: 0.5rem;
+    overflow-y: auto;
+}
+
+.prompt-line {
+    display: flex !important;
+    align-items: center !important;
+    margin-top: 0.5rem !important;
+}
+
+.prompt {
+    color: var(--primary-color);
+    margin-right: 0.5rem;
+}
+
+.output p,
+.tree {
+    margin: 0 0 0.3rem 0 !important;
+    padding: 0 !important;
+    font-family: var(--font-stack) !important;
+    font-size: 0.9rem !important;
+    line-height: 1.3 !important;
+    text-align: left !important;
+}
+
+.command-input {
+    background: transparent !important;
+    border: none !important;
+    color: var(--font-color) !important;
+    font-family: var(--font-stack) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    outline: none !important;
+}
+
+.output p,
+.output pre,
+.tree,
+.output span,
+.output a {
+    filter: blur(0) !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* ========== FILE SYSTEM STYLING ========== */
+.tree {
+    background-color: var(--background-color);
+    white-space: pre;
+    border: none;
+    margin: 0.2rem 0;
+    padding: 0.2rem 0;
+    line-height: 1.2;
+}
+
+.dir {
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.hidden-file {
+    color: #666;
+}
+
+.error {
+    color: var(--error-color);
+}
+
+/* ========== MANUAL SECTION STYLING ========== */
+.manual {
+    display: block;
+    width: 90%;
+    max-width: 900px;
+    margin: 1em auto;
+    padding: 0.25em;
+    background-color: var(--background-color);
+    border-left: 2px solid var(--primary-color);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+    border-radius: 6px;
+}
+
+.manual-title {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    display: block;
+    padding: 0.3em 0.6em;
+    transition: background-color 0.2s;
+}
+
+.manual-title:hover {
+    background-color: #444444;
+    color: var(--font-color);
+    border-radius: 4px;
+}
+
+.manual-content {
+    margin-top: 0.6em;
+    padding: 0.8em 1em;
+    background-color: rgba(255, 255, 255, 0.05);
+    line-height: 1.5;
+}
+
+.manual-content h3 {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    margin: 0.8em 0 0.4em;
+}
