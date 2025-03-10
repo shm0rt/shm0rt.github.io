@@ -1,18 +1,64 @@
-document.documentElement.classList.add("loading");
+// Global variables to be initialized when DOM is ready
+let outputEl;
+let commandInput;
+let dirStructure;
+let commandHistory = [];
+let historyIndex = -1;
 
-const outputEl = document.getElementById("terminalOutput");
-const commandInput = document.getElementById("commandInput");
-const heroTitle = document.querySelector(".hero h1");
-const heroP = document.querySelector(".hero p");
-const terminalWindow = document.getElementById("terminalWindow");
+// Initialize terminal when DOM is ready
+window.addEventListener("DOMContentLoaded", function() {
+  // Initialize DOM elements
+  outputEl = document.getElementById("terminalOutput");
+  commandInput = document.getElementById("commandInput");
+  
+  // Initialize directory structure
+  dirStructure = {
+    about: { type: "dir", desc: "Personal information" },
+    skills: { type: "dir", desc: "Technical skills" },
+    projects: { type: "dir", desc: "Portfolio projects" },
+    contact: { type: "dir", desc: "Contact information" },
+  };
+  
+  // Setup terminal input event listener
+  commandInput.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+      const cmd = commandInput.value.trim();
+      if (cmd) {
+        processCommand(cmd);
+        commandHistory.unshift(cmd);
+        historyIndex = -1;
+      }
+      commandInput.value = "";
+    } else if (e.key === "ArrowUp") {
+      if (historyIndex < commandHistory.length - 1) {
+        historyIndex++;
+        commandInput.value = commandHistory[historyIndex];
+        setTimeout(() => {
+          commandInput.selectionStart = commandInput.selectionEnd = commandInput.value.length;
+        }, 0);
+      }
+      e.preventDefault();
+    } else if (e.key === "ArrowDown") {
+      if (historyIndex > 0) {
+        historyIndex--;
+        commandInput.value = commandHistory[historyIndex];
+      } else if (historyIndex === 0) {
+        historyIndex = -1;
+        commandInput.value = "";
+      }
+      e.preventDefault();
+    }
+  });
+  
+  // Click anywhere in terminal to focus input
+  document.addEventListener("click", function(e) {
+    if (e.target.closest("#terminalWindow")) {
+      commandInput.focus();
+    }
+  });
+});
 
-const dirStructure = {
-  about: { type: "dir", desc: "Personal information" },
-  skills: { type: "dir", desc: "Technical skills" },
-  projects: { type: "dir", desc: "Portfolio projects" },
-  contact: { type: "dir", desc: "Contact information" },
-};
-
+// Terminal output functions
 function appendOutput(content, isError = false) {
   const p = document.createElement("p");
   if (isError) p.classList.add("error");
@@ -66,18 +112,8 @@ function printLl() {
 
   const date = new Date();
   const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   ];
   const month = monthNames[date.getMonth()];
   const day = String(date.getDate()).padStart(2, " ");
@@ -136,18 +172,18 @@ function printFastfetch() {
     output += `<span style="color:var(--primary-color)">${info.label}</span> ${info.value}\n`;
   });
 
-  output +=
-    '\n<span style="background-color:#FF0000"> </span><span style="background-color:#FFFF00"> </span><span style="background-color:#00FF00"> </span><span style="background-color:#00FFFF"> </span><span style="background-color:#0000FF"> </span><span style="background-color:#FF00FF"> </span><span style="background-color:#FFFFFF"> </span>\n';
+  output += '\n<span style="background-color:#FF0000"> </span><span style="background-color:#FFFF00"> </span><span style="background-color:#00FF00"> </span><span style="background-color:#00FFFF"> </span><span style="background-color:#0000FF"> </span><span style="background-color:#FF00FF"> </span><span style="background-color:#FFFFFF"> </span>\n';
 
   pre.innerHTML = output;
   outputEl.appendChild(pre);
   outputEl.scrollTop = outputEl.scrollHeight;
 }
+
 // Command functions
 function printIntro() {
   printFastfetch();
   appendOutput(
-    'Press or type <span class="dir" onclick="processCommand(\'/help\')">/help</span> or <span class="dir" onclick="processCommand(\'?\')">?</span> for the help menu.',
+    'Press or type <span class="dir" onclick="processCommand(\'/help\')">/help</span> or <span class="dir" onclick="processCommand(\'?\')">?</span> for the help menu.'
   );
   printLs();
   commandInput.focus();
@@ -195,118 +231,7 @@ function processCommand(cmd) {
   } else appendOutput(`Command not found: ${c}`, true);
 }
 
-let commandHistory = [];
-let historyIndex = -1;
-
-commandInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    const cmd = commandInput.value.trim();
-    if (cmd) {
-      processCommand(cmd);
-      commandHistory.unshift(cmd);
-      historyIndex = -1;
-    }
-    commandInput.value = "";
-  } else if (e.key === "ArrowUp") {
-    if (historyIndex < commandHistory.length - 1) {
-      historyIndex++;
-      commandInput.value = commandHistory[historyIndex];
-      setTimeout(() => {
-        commandInput.selectionStart = commandInput.selectionEnd =
-          commandInput.value.length;
-      }, 0);
-    }
-    e.preventDefault();
-  } else if (e.key === "ArrowDown") {
-    if (historyIndex > 0) {
-      historyIndex--;
-      commandInput.value = commandHistory[historyIndex];
-    } else if (historyIndex === 0) {
-      historyIndex = -1;
-      commandInput.value = "";
-    }
-    e.preventDefault();
-  }
-});
-
-window.addEventListener("DOMContentLoaded", function () {
-  // Elements to animate
-  const heroTitle = document.querySelector(".hero h1");
-  const heroText = heroTitle.textContent;
-  heroTitle.textContent = "";
-
-  // Blinking cursor
-  const cursor = document.createElement("span");
-  cursor.className = "cursor";
-  cursor.textContent = "|";
-  heroTitle.appendChild(cursor);
-
-  let charIndex = 0;
-  const baseDelay = 70;
-
-  function getTypingDelay() {
-    return Math.floor(baseDelay * (0.7 + Math.random() * 0.8));
-  }
-
-  function typeNextChar() {
-    if (charIndex < heroText.length) {
-      heroTitle.insertBefore(
-        document.createTextNode(heroText.charAt(charIndex)),
-        cursor,
-      );
-      charIndex++;
-      setTimeout(typeNextChar, getTypingDelay());
-    } else {
-      // Show terminal without pushing content down
-      setTimeout(function () {
-        const terminal = document.getElementById("terminalWindow");
-        terminal.style.opacity = "1";
-        printIntro();
-      }, 500);
-    }
-  }
-
-  // Show page
-  document.documentElement.classList.remove("loading");
-
-  setTimeout(function () {
-    document.querySelector(".hero h1").classList.add("visible");
-    document.querySelector(".hero p").classList.add("visible");
-  }, 300);
-
-  // Start typing after a short delay
-  setTimeout(typeNextChar, 300);
-
-  // Initialize scroll effects
-  document.addEventListener(
-    "scroll",
-    function () {
-      const details = document.querySelector("details");
-      const sections = document.querySelectorAll(".content section");
-
-      if (details.open) {
-        sections.forEach((section) => section.classList.add("visible"));
-        return;
-      }
-
-      const buffer = 50;
-      const windowHeight = window.innerHeight;
-
-      sections.forEach(function (section) {
-        const rect = section.getBoundingClientRect();
-        if (rect.top >= 0 - buffer && rect.bottom <= windowHeight + buffer) {
-          section.classList.add("visible");
-        } else {
-          section.classList.remove("visible");
-        }
-      });
-    },
-    { passive: true },
-  );
-  document.addEventListener("click", function (e) {
-    // Focus command input when clicking anywhere in terminal
-    if (e.target.closest("#terminalWindow")) {
-      commandInput.focus();
-    }
-  });
-});
+// Make functions globally accessible for HTML onclick handlers
+window.cdDir = cdDir;
+window.processCommand = processCommand;
+window.printIntro = printIntro;
