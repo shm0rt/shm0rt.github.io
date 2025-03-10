@@ -42,8 +42,8 @@ function printDirectoryListing(format) {
   const pre = document.createElement("pre");
   pre.classList.add("tree");
   let output = "";
-  
-  switch(format) {
+
+  switch (format) {
     case 'ls':
       // Basic ls output
       const dirs = Object.keys(dirStructure);
@@ -54,20 +54,20 @@ function printDirectoryListing(format) {
         }
       });
       break;
-      
+
     case 'la':
       // ls -a output (with hidden files)
       output += '<span class="dir">.</span>        ';
       output += '<span class="dir">..</span>       ';
       output += '<span class="hidden-file">.config</span>  ';
       output += '<span class="hidden-file">.bashrc</span>\n';
-      
+
       Object.keys(dirStructure).forEach((dir) => {
         output += `<a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>`;
         output += "       ";
       });
       break;
-      
+
     case 'll':
       // ls -l output (detailed)
       const date = new Date();
@@ -75,14 +75,14 @@ function printDirectoryListing(format) {
       const month = monthNames[date.getMonth()];
       const day = String(date.getDate()).padStart(2, " ");
       const time = `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
-      
+
       output = `total ${Object.keys(dirStructure).length * 4}\n`;
       Object.keys(dirStructure).forEach((dir) => {
         output += `drwxr-xr-x  2 shm0rt  users  4096 ${month} ${day} ${time} `;
         output += `<a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>\n`;
       });
       break;
-      
+
     case 'tree':
       // tree output
       const treeNodes = Object.keys(dirStructure);
@@ -153,12 +153,18 @@ function printHelp() {
 }
 
 function cdDir(dirId) {
-  const target = document.getElementById(dirId);
-  if (target) {
-    target.scrollIntoView({ behavior: "smooth" });
-    appendOutput(`Navigating to ${dirId} section...`);
+  // Use the smoothScrollToSection function from animations.js
+  if (window.smoothScrollToSection) {
+    window.smoothScrollToSection(dirId);
   } else {
-    appendOutput(`No such directory: ${dirId}`, true);
+    // Fallback if the function isn't available
+    const target = document.getElementById(dirId);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+      appendOutput(`Navigating to ${dirId} section...`);
+    } else {
+      appendOutput(`No such directory: ${dirId}`, true);
+    }
   }
 }
 
@@ -173,7 +179,7 @@ function processCommand(cmd) {
 
   appendOutput(`↪ ${c}`);
 
-  switch(c) {
+  switch (c) {
     case "/help":
     case "help":
     case "?":

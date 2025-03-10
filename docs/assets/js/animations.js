@@ -91,34 +91,34 @@ function typeNextChar() {
 function initScrollEffects() {
     // Pre-mark elements for animation
     const animatableElements = document.querySelectorAll('.container section, .skill-box, .tech-skill');
-    
+
     // Set up staggered animations for grid items
     document.querySelectorAll('.skill-grid .skill-box').forEach((el, index) => {
         el.style.setProperty('--animation-order', index);
     });
-    
+
     document.querySelectorAll('.tech-skills-grid .tech-skill').forEach((el, index) => {
         el.style.setProperty('--animation-order', index % 6); // Keep delays reasonable
     });
-    
+
     // Store initial widths for skill bars
     document.querySelectorAll('.skill-bar').forEach(bar => {
         bar.setAttribute('data-width', bar.style.width);
         bar.style.width = '0';
     });
-    
+
     // Mark elements for animation
     animatableElements.forEach(element => {
         element.classList.add('animate-on-scroll', 'hidden');
     });
-    
+
     // Intersection Observer for reveal on scroll
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('reveal');
                 entry.target.classList.remove('hidden');
-                
+
                 // For skill bars, animate after reveal
                 if (entry.target.classList.contains('skill-box')) {
                     const skillBar = entry.target.querySelector('.skill-bar');
@@ -128,7 +128,7 @@ function initScrollEffects() {
                         }, 200);
                     }
                 }
-                
+
                 observer.unobserve(entry.target);
             }
         });
@@ -137,32 +137,42 @@ function initScrollEffects() {
         rootMargin: '0px',
         threshold: 0.15
     });
-    
+
     // Start observing elements
     animatableElements.forEach(element => observer.observe(element));
 }
 
-// Enhanced smooth scroll for terminal navigation
-window.smoothScrollToSection = function(sectionId) {
+// Enhanced smooth scroll for terminal navigation - modified to only highlight the title
+window.smoothScrollToSection = function (sectionId) {
     const section = document.getElementById(sectionId);
     if (!section) return;
-    
+
     // Display notification in terminal
     if (window.appendOutput) {
         window.appendOutput(`Navigating to ${sectionId} section...`);
     }
-    
-    // Highlight the section briefly
-    section.classList.add('highlight-section');
-    
-    // Smooth scroll
-    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    
-    // Remove highlight after animation
-    setTimeout(() => section.classList.remove('highlight-section'), 1500);
+
+    // Only highlight the section's title (h2) instead of the entire section
+    const sectionTitle = section.querySelector('h2');
+    if (sectionTitle) {
+        // Add a subtle highlight to the title only
+        sectionTitle.style.transition = 'color 0.3s ease-in-out';
+        sectionTitle.style.color = 'var(--accent)';
+
+        // Smooth scroll
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Remove highlight after animation
+        setTimeout(() => {
+            sectionTitle.style.color = '';
+        }, 1000);
+    } else {
+        // If no title found, just scroll without highlighting
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 }
 
 // Make available for terminal.js
-window.cdDir = function(dirId) {
+window.cdDir = function (dirId) {
     smoothScrollToSection(dirId);
 }
