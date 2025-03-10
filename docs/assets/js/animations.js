@@ -43,6 +43,15 @@ window.addEventListener("DOMContentLoaded", function() {
   
   // Start typing after a short delay
   setTimeout(startTyping, 300);
+  
+  // CHANGE: Show terminal immediately with fastfetch
+  const terminal = document.getElementById("terminalWindow");
+  terminal.style.opacity = "1";
+  
+  // Call printIntro from terminal.js immediately
+  if (typeof window.printIntro === 'function') {
+    window.printIntro();
+  }
 });
 
 function getTypingDelay() {
@@ -67,15 +76,8 @@ function typeNextChar() {
     hiddenText.remove();
     cursor.classList.remove("cursor-typing");
     
-    setTimeout(function() {
-      const terminal = document.getElementById("terminalWindow");
-      terminal.style.opacity = "1";
-      
-      // Call printIntro from terminal.js
-      if (typeof window.printIntro === 'function') {
-        window.printIntro();
-      }
-    }, 500);
+    // REMOVED: We already show the terminal at the start
+    // No need to wait for typing to complete
   }
 }
 
