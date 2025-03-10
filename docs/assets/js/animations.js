@@ -1,22 +1,36 @@
 // Typing animation and scroll effects
 let heroTitle;
 let heroText;
+let visibleText;
+let hiddenText;
 let cursor;
 let charIndex = 0;
-const baseDelay = 70;
+const baseDelay = 40;
 
 // Initialize when DOM is ready
 window.addEventListener("DOMContentLoaded", function() {
   // Get hero elements
   heroTitle = document.querySelector(".hero h1");
   heroText = heroTitle.textContent;
-  heroTitle.textContent = "";
   
-  // Create blinking cursor
+  // Setup for typing effect - grug way
+  heroTitle.innerHTML = ''; // Clear the title
+  
+  // Create visible text span (starts empty)
+  visibleText = document.createElement("span");
+  visibleText.className = "visible-text";
+  heroTitle.appendChild(visibleText);
+  
+  // Create cursor
   cursor = document.createElement("span");
-  cursor.className = "cursor";
-  cursor.textContent = "|";
+  cursor.className = "cursor cursor-typing";
   heroTitle.appendChild(cursor);
+  
+  // Create hidden text span (starts with full text)
+  hiddenText = document.createElement("span");
+  hiddenText.className = "hidden-text";
+  hiddenText.textContent = heroText;
+  heroTitle.appendChild(hiddenText);
   
   // Make sections visible with animation
   setTimeout(function() {
@@ -32,7 +46,7 @@ window.addEventListener("DOMContentLoaded", function() {
 });
 
 function getTypingDelay() {
-  return Math.floor(baseDelay * (0.7 + Math.random() * 0.8));
+  return Math.floor(baseDelay * (0.7 + Math.random() * 0.6));
 }
 
 function startTyping() {
@@ -42,14 +56,17 @@ function startTyping() {
 
 function typeNextChar() {
   if (charIndex < heroText.length) {
-    heroTitle.insertBefore(
-      document.createTextNode(heroText.charAt(charIndex)),
-      cursor
-    );
+    // Reveal one more character
+    visibleText.textContent = heroText.substring(0, charIndex + 1);
+    hiddenText.textContent = heroText.substring(charIndex + 1);
+    
     charIndex++;
     setTimeout(typeNextChar, getTypingDelay());
   } else {
-    // Animation complete, show terminal
+    // Animation complete, remove hidden text and start cursor blinking
+    hiddenText.remove();
+    cursor.classList.remove("cursor-typing");
+    
     setTimeout(function() {
       const terminal = document.getElementById("terminalWindow");
       terminal.style.opacity = "1";

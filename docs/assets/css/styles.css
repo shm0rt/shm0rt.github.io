@@ -1,466 +1,254 @@
-/* ========== VARIABLES ========== */
+/* GRUG CSS - SIMPLE GOOD, COMPLEX BAD */
+
+/* ----- VARS ----- */
 :root {
-    /* Main theme colors */
-    --background-color: #121212;
-    --page-background: #1e1e1e;
-    --font-color: #e0e0e0;
-    --primary-color: #4db6ac;
-    --secondary-color: #727578;
-    --error-color: #ef5350;
-    --invert-font-color: #fff;
+    /* few colors better than many colors */
+    --bg: #121212;
+    --bg-alt: #1e1e1e;
+    --text: #e0e0e0;
+    --accent: #4db6ac;
+    --subtle: #727578;
+    --alert: #ef5350;
+    --code-bg: #2a2a2a;
     
-    /* Utility variables */
-    --border-color: var(--primary-color);
-    --selection-color: var(--primary-color);
-    --block-background-color: var(--background-color);
-    --global-font-size: 15px;
-    --global-line-height: 1.4em;
-    --global-space: 10px;
+    /* one font good */
+    --font: "JetBrains Mono", monospace;
     
-    /* Font stacks */
-    --font-stack: "JetBrains Mono", "Fira Code", monospace;
-    --mono-font-stack: var(--font-stack);
-    
-    /* Terminal-specific */
-    --code-bg-color: #2a2a2a;
-    --input-style: solid;
-    --display-h1-decoration: none;
-    --page-width: 60em;
-}
-
-/* ========== BASE STYLES ========== */
-* {
+    /* few sizes good */
+    --s: 10px;    /* small */
+    --m: 16px;    /* medium */
+    --l: 24px;    /* large */
+    --xl: 32px;   /* extra large */
+  }
+  
+  /* ----- RESET ----- */
+  * {
     box-sizing: border-box;
-    text-rendering: geometricPrecision;
-}
-
-*::selection {
-    background: var(--primary-color);
-    color: var(--invert-font-color);
-}
-
-html.loading {
-    visibility: hidden;
-}
-
-body {
-    background-color: var(--page-background);
-    color: var(--font-color);
-    font-family: var(--font-stack);
-    font-size: var(--global-font-size);
-    line-height: var(--global-line-height);
-    margin: 0;
-    word-wrap: break-word;
-}
-
-h1, h2, h3, h4, h5, h6, .logo {
-    line-height: var(--global-line-height);
-    position: relative;
-    font-weight: 600;
     margin: 0;
     padding: 0;
-}
-
-h2, h3, h4, h5, h6 {
-    margin-bottom: var(--global-line-height);
-}
-
-a {
-    color: var(--primary-color);
+  }
+  
+  /* ----- BASE ----- */
+  body {
+    background: var(--bg-alt);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: var(--m);
+    line-height: 1.4;
+  }
+  
+  a {
+    color: var(--accent);
     text-decoration: none;
-    cursor: pointer;
-}
-
-a:hover {
-    background-color: #444444;
-    color: var(--font-color);
-}
-
-p {
-    margin: 0 0 var(--global-line-height);
-    color: var(--font-color);
-}
-
-/* ========== LAYOUT ========== */
-.hero {
-    min-height: 75vh;
+  }
+  
+  a:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  h1, h2, h3 {
+    font-weight: 600;
+    margin-bottom: var(--m);
+  }
+  
+  p {
+    margin-bottom: var(--m);
+    text-align: left;
+  }
+  
+  code {
+    background: var(--code-bg);
+    padding: 2px 4px;
+  }
+  
+  /* ----- LAYOUT ----- */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--m);
+  }
+  
+  .hero {
+    min-height: 70vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 2em 1em;
-}
-
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 0.5em;
-}
-
-.hero p {
-    font-size: 1.3rem;
-    max-width: 600px;
-    margin-bottom: 2em;
-}
-
-.content {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 0 1em;
-}
-
-#about,
-#skills,
-#projects,
-#contact {
-    margin-top: 80px;
-}
-
-/* ========== ANIMATIONS ========== */
-/* Loading animations - single declaration for performance */
-.hero h1,
-.hero p,
-.content section {
-    opacity: 0;
-    filter: blur(5px);
-    transform: scale(0.97);
-    transition: all 0.5s ease-out;
-}
-
-.hero h1.visible,
-.hero p.visible,
-.content section.visible {
-    opacity: 1;
-    filter: blur(0);
-    transform: scale(1);
-}
-
-.cursor {
-    display: inline-block;
-    color: var(--primary-color);
-    font-weight: bold;
-    animation: blink 1s step-end infinite;
-}
-
-@keyframes blink {
-    from, to {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0;
-    }
-}
-
-/* Terminal cursor animation */
-@keyframes cursor {
-    0% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
-/* ========== TERMINAL COMPONENT ========== */
-#terminalWindow,
-#terminalOutput,
-#terminalOutput * {
-    opacity: 1 !important;
-    filter: none !important;
-    transform: none !important;
-    transition: none !important;
-}
-
-.terminal {
+  }
+  
+  .hero h1 {
+    font-size: var(--xl);
+  }
+  
+  section {
+    margin-top: var(--xl);
+  }
+  
+  /* ----- TERMINAL ----- */
+  .terminal {
+    background: var(--bg);
+    border-radius: 6px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    margin: var(--m) 0;
+    overflow: hidden;
     width: 90%;
     max-width: 900px;
-    margin: 0 auto;
-    background-color: var(--background-color);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-.terminal-header {
+  }
+  
+  .terminal-header {
     display: flex;
     align-items: center;
+    padding: var(--s);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     height: 30px;
-    padding: 0.5rem 1rem;
-    background-color: var(--background-color);
-}
-
-.terminal-body {
-    padding: 1rem 1rem 1.5rem;
-    position: relative;
-}
-
-.traffic-lights {
+  }
+  
+  .traffic-lights {
     display: flex;
-    gap: 8px;
-}
-
-.traffic-light {
+    gap: 6px;
+  }
+  
+  .traffic-light {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-}
-
-.close {
-    background-color: #ff5f56;
-}
-
-.minimize {
-    background-color: #ffbd2e;
-}
-
-.zoom {
-    background-color: #27c93f;
-}
-
-/* Terminal content */
-.output {
+  }
+  
+  .close {
+    background: #ff5f56;
+  }
+  
+  .minimize {
+    background: #ffbd2e;
+  }
+  
+  .zoom {
+    background: #27c93f;
+  }
+  
+  .terminal-body {
+    padding: var(--m);
+    font-size: 0.9em;
+    text-align: left;
+  }
+  
+  .output {
     min-height: 80px;
     margin-bottom: 0.5rem;
     overflow-y: auto;
-}
-
-.prompt-line {
-    display: flex !important;
-    align-items: center !important;
-    margin-top: 0.5rem !important;
-}
-
-.prompt {
-    color: var(--primary-color);
+    text-align: left;
+  }
+  
+  .output p {
+    margin: 0 0 0.3rem 0;
+    font-size: 0.9rem;
+    line-height: 1.3;
+    text-align: left;
+  }
+  
+  .prompt-line {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+  
+  .prompt {
+    color: var(--accent);
     margin-right: 0.5rem;
-}
-
-.output p,
-.tree {
-    margin: 0 0 0.3rem 0 !important;
-    padding: 0 !important;
-    font-family: var(--font-stack) !important;
-    font-size: 0.9rem !important;
-    line-height: 1.3 !important;
-    text-align: left !important;
-}
-
-.command-input {
-    background: transparent !important;
-    border: none !important;
-    color: var(--font-color) !important;
-    font-family: var(--font-stack) !important;
-    margin: 0 !important;
-    padding: 0 !important;
+  }
+  
+  /* Remove terminal-prompt styling as it's not used in your HTML */
+  
+  .prompt {
+    color: var(--accent);
+    margin-right: 0.5rem;
+  }
+  
+  .command-input {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: var(--font);
     width: 100%;
-    outline: none !important;
-}
-
-.output p,
-.output pre,
-.tree,
-.output span,
-.output a {
-    filter: blur(0) !important;
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-}
-
-/* Terminal prompt styling */
-.terminal-prompt {
-    position: relative;
-    white-space: nowrap;
-}
-
-.terminal-prompt::before {
-    content: "> ";
-}
-
-.terminal-prompt::after {
-    content: "";
-    animation: cursor 800ms infinite;
-    background: var(--primary-color);
-    border-radius: 0;
-    display: inline-block;
-    height: 1em;
-    margin-left: .2em;
-    width: 3px;
-    bottom: -2px;
-    position: relative;
-}
-
-/* ========== FILE SYSTEM STYLING ========== */
-.tree {
-    background-color: var(--background-color);
+    outline: none;
+  }
+  
+  /* File system styling */
+  .tree {
+    background: var(--bg);
     white-space: pre;
     border: none;
     margin: 0.2rem 0;
     padding: 0.2rem 0;
     line-height: 1.2;
-}
-
-.dir {
-    color: var(--primary-color);
+    font-size: 0.9rem;
+    text-align: left;
+  }
+  
+  .dir {
+    color: var(--accent);
     cursor: pointer;
-}
-
-.hidden-file {
-    color: #666;
-}
-
-.error {
-    color: var(--error-color);
-}
-
-/* Code styling */
-code {
-    font-weight: inherit;
-    background-color: var(--code-bg-color);
-    font-family: var(--mono-font-stack);
-}
-
-code::after, code::before {
-    content: "`";
-    display: inline;
-}
-
-pre code::after, pre code::before {
-    content: "";
-}
-
-pre {
-    display: block;
-    word-break: break-all;
-    word-wrap: break-word;
-    color: var(--secondary-color);
-    background-color: var(--block-background-color);
-    border: 1px solid var(--secondary-color);
-    padding: var(--global-space);
-    white-space: pre-wrap;
-}
-
-pre code {
-    overflow-x: scroll;
-    padding: 0;
-    margin: 0;
-    display: inline-block;
-    min-width: 100%;
-    font-family: var(--mono-font-stack);
-    background-color: var(--block-background-color);
-}
-
-/* ========== MANUAL SECTION STYLING ========== */
-.manual {
-    display: block;
-    width: 90%;
-    max-width: 900px;
-    margin: 1em auto;
-    padding: 0.25em;
-    background-color: var(--background-color);
-    border-left: 2px solid var(--primary-color);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-    border-radius: 6px;
-}
-
-.manual-title {
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: var(--primary-color);
-    display: block;
-    padding: 0.3em 0.6em;
-    transition: background-color 0.2s;
-}
-
-.manual-title:hover {
-    background-color: #444444;
-    color: var(--font-color);
-    border-radius: 4px;
-}
-
-.manual-content {
-    margin-top: 0.6em;
-    padding: 0.8em 1em;
-    background-color: rgba(255, 255, 255, 0.05);
-    line-height: 1.5;
-}
-
-.manual-content h3 {
-    color: var(--primary-color);
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    margin: 0.8em 0 0.4em;
-}
-
-.manual-content h3 svg,
-.manual-content h3 i {
-    margin-right: 8px;
-}
-
-.manual-content h3 i {
-    display: inline-flex;
-    align-items: center;
-}
-
-/* Lists styling */
-ul, ol {
-    margin: 0;
-    padding: 0;
-}
-
-li, li > ul > li {
+  }
+  
+  .hidden-file {
+    color: var(--subtle);
+  }
+  
+  .error {
+    color: var(--alert);
+  }
+  
+  /* ----- ANIMATIONS ----- */
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  
+  /* Typing effect - grug way */
+  .hero h1 {
+    font-size: var(--xl);
+    text-align: center;
     position: relative;
-    display: block;
-    padding-left: calc(var(--global-space) * 2);
-}
-
-nav > ul > li {
-    padding-left: 0;
-}
-
-li::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-ul > li::after {
-    content: "-";
-}
-
-nav ul > li::after {
-    content: "";
-}
-
-/* ========== CONTACT SECTION ========== */
-#contact a {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 20px;
-}
-
-#contact a svg {
-    margin-right: 8px;
-}
-
-/* ========== MEDIA QUERIES ========== */
-@media screen and (max-width: 960px) {
-    pre::-webkit-scrollbar {
-        height: 3px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .hero h1 {
-        font-size: 2.2rem;
+  }
+  
+  .visible-text, .hidden-text {
+    display: inline;
+    white-space: nowrap;
+  }
+  
+  .hidden-text {
+    color: transparent;
+  }
+  
+  /* Cursor styling */
+  .cursor {
+    display: inline-block;
+    width: 3px;
+    height: 0.9em;
+    background-color: var(--accent);
+    margin-left: 0;
+    margin-right: 0;
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+    position: relative;
+    top: 1px;
+  }
+  
+  /* Cursor that doesn't blink during typing */
+  .cursor-typing {
+    animation: none;
+  }
+  
+  /* ----- MOBILE ----- */
+  @media (max-width: 600px) {
+    :root {
+      --m: 14px;
+      --l: 20px;
+      --xl: 28px;
     }
     
-    .hero p {
-        font-size: 1.1rem;
+    .hero h1 {
+      font-size: var(--xl);
     }
-}
+  }
