@@ -3,7 +3,7 @@ let outputEl;
 let commandInput;
 let dirStructure = {
   'about': 'About section',
-  'skills': 'Skills section', 
+  'skills': 'Skills section',
   'projects': 'Projects section',
   'contact': 'Contact section'
 };
@@ -12,20 +12,20 @@ let historyIndex = -1;
 
 // Initialize terminal when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    outputEl = document.getElementById('terminalOutput');
-    commandInput = document.getElementById('commandInput');
-  
-    // Listen for the Enter key press in the command input.
-    commandInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        const command = commandInput.value.trim().toLowerCase();
-        commandInput.value = ''; // Clear input after reading command.
-        processCommand(command);
-      }
-    });
+  outputEl = document.getElementById('terminalOutput');
+  commandInput = document.getElementById('commandInput');
 
-    // Initial terminal introduction
-    printIntro();
+  // Listen for the Enter key press in the command input.
+  commandInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const command = commandInput.value.trim().toLowerCase();
+      commandInput.value = ''; // Clear input after reading command.
+      processCommand(command);
+    }
+  });
+
+  // Initial terminal introduction
+  printIntro();
 });
 
 // Terminal output functions

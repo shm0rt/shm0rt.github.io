@@ -6,6 +6,7 @@
     --text: #e0e0e0;
     --text-secondary: #b0b0b0;
     --accent: #4db6ac;
+    --accent-rgb: 77, 182, 172;
     --subtle: #727578;
     --alert: #ef5350;
     
@@ -432,6 +433,76 @@ section#about, section#skills, section#projects {
     padding-bottom: var(--space-l);
 }
 
+/* Skills section styling */
+.skills-subheading {
+    margin-top: var(--space-l);
+    margin-bottom: var(--space-m);
+    font-size: var(--font-size-l);
+}
+
+/* Skill bars grid */
+.skill-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-m);
+    margin-bottom: var(--space-l);
+}
+
+.skill-box {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius);
+    padding: var(--space-s);
+    transition: transform var(--transition);
+}
+
+.skill-box:hover {
+    transform: translateY(-2px);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.skill-title {
+    font-size: var(--font-size-m);
+    margin-bottom: var(--space-s);
+    font-weight: 500;
+}
+
+.skill-bar-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.skill-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 4px;
+    transition: width 1s ease-in-out;
+}
+
+/* Technical skills grid */
+.tech-skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xs);
+}
+
+.tech-skill {
+    background: rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius);
+    padding: var(--space-xs) var(--space-s);
+    font-size: 0.9rem;
+    transition: all var(--transition);
+}
+
+.tech-skill:hover {
+    background: rgba(var(--accent-rgb), 0.1);
+    border-color: var(--accent);
+}
+
 /* === FOOTER === */
 footer {
     background: var(--bg);
@@ -539,6 +610,11 @@ footer h2::after {
         margin-top: var(--space-l);
         padding: 0 var(--space-s);
     }
+
+    .skill-grid, 
+    .tech-skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 /* Mobile View */
@@ -618,5 +694,41 @@ footer h2::after {
     
     .manual-section li {
         font-size: 0.85rem;
+    }
+
+    .skill-grid, 
+    .tech-skills-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .skill-box {
+        padding: 8px;
+        margin-bottom: 0;
+    }
+    
+    .skill-title {
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+    }
+    
+    .skill-bar-container {
+        height: 20px;
+        font-size: 14px;
+    }
+    
+    .tech-skills-grid {
+        gap: 4px;
+    }
+    
+    .tech-skill {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+    }
+    
+    .skills-subheading {
+        margin-top: var(--space-m);
+        margin-bottom: 12px;
+        font-size: 1rem;
     }
 }
