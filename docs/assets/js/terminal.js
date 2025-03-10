@@ -1,4 +1,4 @@
-// Global variables to be initialized when DOM is ready
+// Global variables
 let outputEl;
 let commandInput;
 let dirStructure = {
@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
   outputEl = document.getElementById('terminalOutput');
   commandInput = document.getElementById('commandInput');
 
-  // Listen for the Enter key press in the command input.
+  // Listen for Enter key press
   commandInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       const command = commandInput.value.trim().toLowerCase();
-      commandInput.value = ''; // Clear input after reading command.
+      commandInput.value = '';
       processCommand(command);
     }
   });
@@ -37,81 +37,62 @@ function appendOutput(content, isError = false) {
   outputEl.scrollTop = outputEl.scrollHeight;
 }
 
-function printLs() {
+// Generic function for directory listings
+function printDirectoryListing(format) {
   const pre = document.createElement("pre");
   pre.classList.add("tree");
-
-  const dirs = Object.keys(dirStructure);
   let output = "";
-
-  dirs.forEach((dir, index) => {
-    output += `<a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>`;
-    if (index < dirs.length - 1) {
-      output += "       ";
-    }
-  });
-
-  pre.innerHTML = output;
-  outputEl.appendChild(pre);
-  outputEl.scrollTop = outputEl.scrollHeight;
-}
-
-function printLa() {
-  const pre = document.createElement("pre");
-  pre.classList.add("tree");
-
-  let output = "";
-  output += '<span class="dir">.</span>        ';
-  output += '<span class="dir">..</span>       ';
-  output += '<span class="hidden-file">.config</span>  ';
-  output += '<span class="hidden-file">.bashrc</span>\n';
-
-  Object.keys(dirStructure).forEach((dir) => {
-    output += `<a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>`;
-    output += "       "; // Add consistent spacing
-  });
-
-  pre.innerHTML = output;
-  outputEl.appendChild(pre);
-  outputEl.scrollTop = outputEl.scrollHeight;
-}
-
-function printLl() {
-  const pre = document.createElement("pre");
-  pre.classList.add("tree");
-
-  const date = new Date();
-  const monthNames = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-  ];
-  const month = monthNames[date.getMonth()];
-  const day = String(date.getDate()).padStart(2, " ");
-  const time = `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
-
-  // Create Unix-like ls -l output
-  let output = `total ${Object.keys(dirStructure).length * 4}\n`;
-
-  Object.keys(dirStructure).forEach((dir) => {
-    output += `drwxr-xr-x  2 shm0rt  users  4096 ${month} ${day} ${time} `;
-    output += `<a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>\n`;
-  });
-
-  pre.innerHTML = output;
-  outputEl.appendChild(pre);
-  outputEl.scrollTop = outputEl.scrollHeight;
-}
-
-function printTree() {
-  const pre = document.createElement("pre");
-  pre.classList.add("tree");
-
-  const dirs = Object.keys(dirStructure);
-  let output = `<span class="dir">.</span>\n`;
-  dirs.forEach((dir, index) => {
-    const prefix = index === dirs.length - 1 ? "└── " : "├── ";
-    output += `<span>${prefix}</span><a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>\n`;
-  });
+  
+  switch(format) {
+    case 'ls':
+      // Basic ls output
+      const dirs = Object.keys(dirStructure);
+      dirs.forEach((dir, index) => {
+        output += `<a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>`;
+        if (index < dirs.length - 1) {
+          output += "       ";
+        }
+      });
+      break;
+      
+    case 'la':
+      // ls -a output (with hidden files)
+      output += '<span class="dir">.</span>        ';
+      output += '<span class="dir">..</span>       ';
+      output += '<span class="hidden-file">.config</span>  ';
+      output += '<span class="hidden-file">.bashrc</span>\n';
+      
+      Object.keys(dirStructure).forEach((dir) => {
+        output += `<a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>`;
+        output += "       ";
+      });
+      break;
+      
+    case 'll':
+      // ls -l output (detailed)
+      const date = new Date();
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const month = monthNames[date.getMonth()];
+      const day = String(date.getDate()).padStart(2, " ");
+      const time = `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+      
+      output = `total ${Object.keys(dirStructure).length * 4}\n`;
+      Object.keys(dirStructure).forEach((dir) => {
+        output += `drwxr-xr-x  2 shm0rt  users  4096 ${month} ${day} ${time} `;
+        output += `<a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>\n`;
+      });
+      break;
+      
+    case 'tree':
+      // tree output
+      const treeNodes = Object.keys(dirStructure);
+      output = `<span class="dir">.</span>\n`;
+      treeNodes.forEach((dir, index) => {
+        const prefix = index === treeNodes.length - 1 ? "└── " : "├── ";
+        output += `<span>${prefix}</span><a href="#" class="dir nav-link" onclick="cdDir('${dir}'); return false;">${dir}</a>\n`;
+      });
+      break;
+  }
 
   pre.innerHTML = output;
   outputEl.appendChild(pre);
@@ -156,7 +137,7 @@ function printIntro() {
   appendOutput(
     'Press or type <span class="dir" onclick="processCommand(\'/help\')">/help</span> or <span class="dir" onclick="processCommand(\'?\')">?</span> for the help menu.'
   );
-  printLs();
+  printDirectoryListing('ls');
   commandInput.focus();
 }
 
@@ -192,23 +173,43 @@ function processCommand(cmd) {
 
   appendOutput(`↪ ${c}`);
 
-  if (c === "/help" || c === "help" || c === "?") printHelp();
-  else if (c === "clear") clearOutput();
-  else if (c === "home") {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    appendOutput('Navigating to top...');
+  switch(c) {
+    case "/help":
+    case "help":
+    case "?":
+      printHelp();
+      break;
+    case "clear":
+      clearOutput();
+      break;
+    case "home":
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      appendOutput('Navigating to top...');
+      break;
+    case "ls":
+      printDirectoryListing('ls');
+      break;
+    case "ll":
+      printDirectoryListing('ll');
+      break;
+    case "la":
+      printDirectoryListing('la');
+      break;
+    case "tree":
+      printDirectoryListing('tree');
+      break;
+    default:
+      if (c.startsWith("cd ")) {
+        const path = c.slice(3).trim().replace(/^\//, "");
+        cdDir(path);
+      } else {
+        appendOutput(`Command not found: ${c}`, true);
+      }
   }
-  else if (c === "ls") printLs();
-  else if (c === "ll") printLl();
-  else if (c === "la") printLa();
-  else if (c === "tree") printTree();
-  else if (c.startsWith("cd ")) {
-    const path = c.slice(3).trim().replace(/^\//, "");
-    cdDir(path);
-  } else appendOutput(`Command not found: ${c}`, true);
 }
 
-// Make functions globally accessible for HTML onclick handlers
+// Make functions globally accessible
 window.cdDir = cdDir;
 window.processCommand = processCommand;
 window.printIntro = printIntro;
+window.appendOutput = appendOutput;
