@@ -465,6 +465,41 @@ section#projects {
     position: absolute;
 }
 
+/* About section with image */
+.about-container {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-l);
+    margin-bottom: var(--space-m);
+    align-items: flex-start;
+  }
+  
+  .about-text {
+    flex: 3; /* Giving more space for text */
+  }
+  
+  .about-image {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: var(--space-s);
+  }
+  
+  .profile-photo {
+    max-width: 100%;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: transform var(--transition);
+    filter: grayscale(100%); /* Keeps the black and white style */
+    border: 2px solid rgba(var(--accent-rgb), 0.3);
+  }
+  
+  .profile-photo:hover {
+    transform: scale(1.02);
+    filter: grayscale(80%); /* Slight color reveal on hover */
+  }
+
 /* === SKILLS & PROJECTS === */
 .skills-subheading {
     margin-top: var(--space-l);
@@ -653,6 +688,20 @@ footer h2::after {
     .tech-skills-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+    .about-container {
+        flex-direction: column; /* Photo appears above text on mobile */
+        gap: var(--space-m);
+      }
+      
+      .about-image {
+        width: 100%;
+        margin-bottom: var(--space-s);
+        padding-right: 0;
+      }
+      
+      .profile-photo {
+        max-width: 70%; /* Slightly smaller on mobile */
+      }
 }
 
 /* Mobile View */
