@@ -1,16 +1,44 @@
 /* ========== VARIABLES ========== */
 :root {
+    /* Main theme colors */
     --background-color: #121212;
     --page-background: #1e1e1e;
     --font-color: #e0e0e0;
     --primary-color: #4db6ac;
+    --secondary-color: #727578;
     --error-color: #ef5350;
+    --invert-font-color: #fff;
+    
+    /* Utility variables */
     --border-color: var(--primary-color);
     --selection-color: var(--primary-color);
+    --block-background-color: var(--background-color);
+    --global-font-size: 15px;
+    --global-line-height: 1.4em;
+    --global-space: 10px;
+    
+    /* Font stacks */
     --font-stack: "JetBrains Mono", "Fira Code", monospace;
+    --mono-font-stack: var(--font-stack);
+    
+    /* Terminal-specific */
+    --code-bg-color: #2a2a2a;
+    --input-style: solid;
+    --display-h1-decoration: none;
+    --page-width: 60em;
 }
 
 /* ========== BASE STYLES ========== */
+* {
+    box-sizing: border-box;
+    text-rendering: geometricPrecision;
+}
+
+*::selection {
+    background: var(--primary-color);
+    color: var(--invert-font-color);
+}
+
 html.loading {
     visibility: hidden;
 }
@@ -19,15 +47,37 @@ body {
     background-color: var(--page-background);
     color: var(--font-color);
     font-family: var(--font-stack);
+    font-size: var(--global-font-size);
+    line-height: var(--global-line-height);
+    margin: 0;
+    word-wrap: break-word;
+}
+
+h1, h2, h3, h4, h5, h6, .logo {
+    line-height: var(--global-line-height);
+    position: relative;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+}
+
+h2, h3, h4, h5, h6 {
+    margin-bottom: var(--global-line-height);
 }
 
 a {
     color: var(--primary-color);
     text-decoration: none;
+    cursor: pointer;
 }
 
 a:hover {
     background-color: #444444;
+    color: var(--font-color);
+}
+
+p {
+    margin: 0 0 var(--global-line-height);
     color: var(--font-color);
 }
 
@@ -57,16 +107,6 @@ a:hover {
     max-width: 900px;
     margin: 2rem auto;
     padding: 0 1em;
-}
-
-.manual-content h3 svg {
-    margin-right: 8px;
-}
-
-.manual-content h3 i {
-    margin-right: 8px;
-    display: inline-flex;
-    align-items: center;
 }
 
 #about,
@@ -103,12 +143,23 @@ a:hover {
 }
 
 @keyframes blink {
-    from,
-    to {
+    from, to {
         opacity: 1;
     }
-
     50% {
+        opacity: 0;
+    }
+}
+
+/* Terminal cursor animation */
+@keyframes cursor {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
         opacity: 0;
     }
 }
@@ -219,6 +270,29 @@ a:hover {
     transition: none !important;
 }
 
+/* Terminal prompt styling */
+.terminal-prompt {
+    position: relative;
+    white-space: nowrap;
+}
+
+.terminal-prompt::before {
+    content: "> ";
+}
+
+.terminal-prompt::after {
+    content: "";
+    animation: cursor 800ms infinite;
+    background: var(--primary-color);
+    border-radius: 0;
+    display: inline-block;
+    height: 1em;
+    margin-left: .2em;
+    width: 3px;
+    bottom: -2px;
+    position: relative;
+}
+
 /* ========== FILE SYSTEM STYLING ========== */
 .tree {
     background-color: var(--background-color);
@@ -240,6 +314,43 @@ a:hover {
 
 .error {
     color: var(--error-color);
+}
+
+/* Code styling */
+code {
+    font-weight: inherit;
+    background-color: var(--code-bg-color);
+    font-family: var(--mono-font-stack);
+}
+
+code::after, code::before {
+    content: "`";
+    display: inline;
+}
+
+pre code::after, pre code::before {
+    content: "";
+}
+
+pre {
+    display: block;
+    word-break: break-all;
+    word-wrap: break-word;
+    color: var(--secondary-color);
+    background-color: var(--block-background-color);
+    border: 1px solid var(--secondary-color);
+    padding: var(--global-space);
+    white-space: pre-wrap;
+}
+
+pre code {
+    overflow-x: scroll;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    min-width: 100%;
+    font-family: var(--mono-font-stack);
+    background-color: var(--block-background-color);
 }
 
 /* ========== MANUAL SECTION STYLING ========== */
@@ -284,4 +395,72 @@ a:hover {
     display: flex;
     align-items: center;
     margin: 0.8em 0 0.4em;
+}
+
+.manual-content h3 svg,
+.manual-content h3 i {
+    margin-right: 8px;
+}
+
+.manual-content h3 i {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Lists styling */
+ul, ol {
+    margin: 0;
+    padding: 0;
+}
+
+li, li > ul > li {
+    position: relative;
+    display: block;
+    padding-left: calc(var(--global-space) * 2);
+}
+
+nav > ul > li {
+    padding-left: 0;
+}
+
+li::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+ul > li::after {
+    content: "-";
+}
+
+nav ul > li::after {
+    content: "";
+}
+
+/* ========== CONTACT SECTION ========== */
+#contact a {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+#contact a svg {
+    margin-right: 8px;
+}
+
+/* ========== MEDIA QUERIES ========== */
+@media screen and (max-width: 960px) {
+    pre::-webkit-scrollbar {
+        height: 3px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+    
+    .hero p {
+        font-size: 1.1rem;
+    }
 }
