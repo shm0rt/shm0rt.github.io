@@ -394,17 +394,24 @@ section#about, section#skills, section#projects {
     margin-bottom: 8px;
 }
 
-.manual-section h3 svg {
+.manual-section h3 svg,
+.manual summary svg {
     fill: var(--accent);
-    height: 18px;
     stroke: var(--accent);
+    height: 18px;
     width: 18px;
 }
 
-/* Fix specific icon colors */
+/* For the modern "Heroicon" style SVGs that use stroke instead of fill */
 .manual-section h3 svg[data-slot="icon"] {
     fill: none;
     stroke: var(--accent);
+}
+
+/* For SVGs that use classes for styling */
+.manual-section h3 svg .st0,
+.manual summary svg .st0 {
+    fill: var(--accent) !important;
 }
 
 .manual-section ul {
