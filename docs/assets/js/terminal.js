@@ -1,66 +1,36 @@
 // Global variables to be initialized when DOM is ready
 let outputEl;
 let commandInput;
-let dirStructure;
+let dirStructure = {
+  'about': 'About section',
+  'skills': 'Skills section', 
+  'projects': 'Projects section',
+  'contact': 'Contact section'
+};
 let commandHistory = [];
 let historyIndex = -1;
 
 // Initialize terminal when DOM is ready
-window.addEventListener("DOMContentLoaded", function() {
-  // Initialize DOM elements
-  outputEl = document.getElementById("terminalOutput");
-  commandInput = document.getElementById("commandInput");
+document.addEventListener('DOMContentLoaded', () => {
+    outputEl = document.getElementById('terminalOutput');
+    commandInput = document.getElementById('commandInput');
   
-  // Initialize directory structure
-  dirStructure = {
-    about: { type: "dir", desc: "Personal information" },
-    skills: { type: "dir", desc: "Technical skills" },
-    projects: { type: "dir", desc: "Portfolio projects" },
-    contact: { type: "dir", desc: "Contact information" },
-  };
-  
-  // Setup terminal input event listener
-  commandInput.addEventListener("keydown", function(e) {
-    if (e.key === "Enter") {
-      const cmd = commandInput.value.trim();
-      if (cmd) {
-        processCommand(cmd);
-        commandHistory.unshift(cmd);
-        historyIndex = -1;
+    // Listen for the Enter key press in the command input.
+    commandInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const command = commandInput.value.trim().toLowerCase();
+        commandInput.value = ''; // Clear input after reading command.
+        processCommand(command);
       }
-      commandInput.value = "";
-    } else if (e.key === "ArrowUp") {
-      if (historyIndex < commandHistory.length - 1) {
-        historyIndex++;
-        commandInput.value = commandHistory[historyIndex];
-        setTimeout(() => {
-          commandInput.selectionStart = commandInput.selectionEnd = commandInput.value.length;
-        }, 0);
-      }
-      e.preventDefault();
-    } else if (e.key === "ArrowDown") {
-      if (historyIndex > 0) {
-        historyIndex--;
-        commandInput.value = commandHistory[historyIndex];
-      } else if (historyIndex === 0) {
-        historyIndex = -1;
-        commandInput.value = "";
-      }
-      e.preventDefault();
-    }
-  });
-  
-  // Click anywhere in terminal to focus input
-  document.addEventListener("click", function(e) {
-    if (e.target.closest("#terminalWindow")) {
-      commandInput.focus();
-    }
-  });
+    });
+
+    // Initial terminal introduction
+    printIntro();
 });
 
 // Terminal output functions
 function appendOutput(content, isError = false) {
-  const p = document.createElement("p");
+  const p = document.createElement("div");
   if (isError) p.classList.add("error");
   p.innerHTML = content;
   outputEl.appendChild(p);
@@ -181,6 +151,7 @@ function printFastfetch() {
 
 // Command functions
 function printIntro() {
+  outputEl.innerHTML = ''; // Clear any existing content
   printFastfetch();
   appendOutput(
     'Press or type <span class="dir" onclick="processCommand(\'/help\')">/help</span> or <span class="dir" onclick="processCommand(\'?\')">?</span> for the help menu.'
@@ -204,6 +175,7 @@ function cdDir(dirId) {
   const target = document.getElementById(dirId);
   if (target) {
     target.scrollIntoView({ behavior: "smooth" });
+    appendOutput(`Navigating to ${dirId} section...`);
   } else {
     appendOutput(`No such directory: ${dirId}`, true);
   }
@@ -211,6 +183,7 @@ function cdDir(dirId) {
 
 function clearOutput() {
   outputEl.innerHTML = "";
+  printIntro();
 }
 
 function processCommand(cmd) {
@@ -221,6 +194,10 @@ function processCommand(cmd) {
 
   if (c === "/help" || c === "help" || c === "?") printHelp();
   else if (c === "clear") clearOutput();
+  else if (c === "home") {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    appendOutput('Navigating to top...');
+  }
   else if (c === "ls") printLs();
   else if (c === "ll") printLl();
   else if (c === "la") printLa();

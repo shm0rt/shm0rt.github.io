@@ -1,8 +1,8 @@
 // Typing animation and scroll effects
 let heroTitle;
 let heroText;
+let typingContainer;
 let visibleText;
-let hiddenText;
 let cursor;
 let charIndex = 0;
 const baseDelay = 40;
@@ -13,24 +13,23 @@ window.addEventListener("DOMContentLoaded", function() {
   heroTitle = document.querySelector(".hero h1");
   heroText = heroTitle.textContent;
   
-  // Setup for typing effect - grug way
+  // Setup for typing effect
   heroTitle.innerHTML = ''; // Clear the title
+  
+  // Create typing container to handle wrapping properly
+  typingContainer = document.createElement("div");
+  typingContainer.className = "typing-container";
+  heroTitle.appendChild(typingContainer);
   
   // Create visible text span (starts empty)
   visibleText = document.createElement("span");
   visibleText.className = "visible-text";
-  heroTitle.appendChild(visibleText);
+  typingContainer.appendChild(visibleText);
   
-  // Create cursor
+  // Create terminal-style cursor
   cursor = document.createElement("span");
-  cursor.className = "cursor cursor-typing";
-  heroTitle.appendChild(cursor);
-  
-  // Create hidden text span (starts with full text)
-  hiddenText = document.createElement("span");
-  hiddenText.className = "hidden-text";
-  hiddenText.textContent = heroText;
-  heroTitle.appendChild(hiddenText);
+  cursor.className = "terminal-cursor cursor-typing";
+  typingContainer.appendChild(cursor);
   
   // Make sections visible with animation
   setTimeout(function() {
@@ -40,6 +39,9 @@ window.addEventListener("DOMContentLoaded", function() {
   
   // Initialize scroll effects
   initScrollEffects();
+  
+  // Make sure the hero text has appropriate width constraints
+  heroTitle.style.width = "100%";
   
   // Start typing after a short delay
   setTimeout(startTyping, 300);
@@ -52,10 +54,39 @@ window.addEventListener("DOMContentLoaded", function() {
   if (typeof window.printIntro === 'function') {
     window.printIntro();
   }
+  
+  // Listen for window resize to ensure text wrapping works correctly
+  window.addEventListener("resize", updateTextWrapping);
 });
 
+// Ensure text wrapping is handled properly
+function updateTextWrapping() {
+  // Just ensure the wrapping is respected
+  if (heroTitle) {
+    heroTitle.style.width = "100%";
+  }
+}
+
+// More human-like typing delays
 function getTypingDelay() {
-  return Math.floor(baseDelay * (0.7 + Math.random() * 0.6));
+  // Base typing speed
+  let delay = baseDelay;
+  
+  // Add some randomness to simulate human typing
+  delay *= (0.7 + Math.random() * 0.6);
+  
+  // Occasionally add a longer pause (as if thinking)
+  if (Math.random() < 0.08) {
+    delay *= 3;
+  }
+  
+  // Add slight pause after punctuation and special characters
+  const lastChar = heroText.charAt(charIndex - 1);
+  if ([',', '.', ':', ';', '&', ':'].includes(lastChar)) {
+    delay *= 1.5;
+  }
+  
+  return Math.floor(delay);
 }
 
 function startTyping() {
@@ -67,17 +98,13 @@ function typeNextChar() {
   if (charIndex < heroText.length) {
     // Reveal one more character
     visibleText.textContent = heroText.substring(0, charIndex + 1);
-    hiddenText.textContent = heroText.substring(charIndex + 1);
     
     charIndex++;
     setTimeout(typeNextChar, getTypingDelay());
   } else {
-    // Animation complete, remove hidden text and start cursor blinking
-    hiddenText.remove();
+    // Animation complete, change cursor to blinking
     cursor.classList.remove("cursor-typing");
-    
-    // REMOVED: We already show the terminal at the start
-    // No need to wait for typing to complete
+    cursor.classList.add("cursor-blinking");
   }
 }
 
