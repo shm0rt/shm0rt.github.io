@@ -772,7 +772,7 @@ footer h2::after {
     }
 
     .hero {
-        min-height: 70vh;
+        min-height: 100vh;
         padding: var(--space-l) var(--space-s);
     }
 
