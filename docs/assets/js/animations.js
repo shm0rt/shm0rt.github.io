@@ -151,22 +151,28 @@ function initScrollArrow() {
     
     // Reset the scroll state on each page load
     if (scrollArrow) {
-        // Always show arrow on page load regardless of previous scrolling
+        // Always hide arrow initially
         scrollArrow.classList.add('hidden');
         
-        // Show arrow after terminal is visible (6 seconds)
-        setTimeout(function() {
-            scrollArrow.classList.add('visible');
-            scrollArrow.classList.remove('hidden');
-        }, 4000);
+        // Variable to track if user has already scrolled
+        let hasScrolled = false;
         
-        // Hide arrow when user scrolls
+        // Set scroll flag when user scrolls
         window.addEventListener('scroll', function() {
             if (window.scrollY > window.innerHeight * 0.2) {
+                hasScrolled = true;
                 scrollArrow.classList.remove('visible');
                 scrollArrow.classList.add('hidden');
             }
         });
+        
+        // Show arrow after terminal is visible (4 seconds), but only if user hasn't scrolled
+        setTimeout(function() {
+            if (!hasScrolled) {
+                scrollArrow.classList.add('visible');
+                scrollArrow.classList.remove('hidden');
+            }
+        }, 4000);
         
         // Make arrow clickable to scroll to first section
         scrollArrow.addEventListener('click', function() {
