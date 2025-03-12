@@ -170,12 +170,12 @@ function initScrollArrow() {
         
         // Make arrow clickable to scroll to first section
         scrollArrow.addEventListener('click', function() {
-            const aboutSection = document.getElementById('about');
-            if (aboutSection) {
-                aboutSection.scrollIntoView({ behavior: 'smooth' });
-                scrollArrow.classList.remove('visible');
-                scrollArrow.classList.add('hidden');
-            }
+            // Use existing smooth scroll function
+            window.smoothScrollToSection('about');
+            
+            // Hide the arrow after scrolling
+            scrollArrow.classList.remove('visible');
+            scrollArrow.classList.add('hidden');
         });
     }
 }
