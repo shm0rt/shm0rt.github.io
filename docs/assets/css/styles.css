@@ -578,6 +578,8 @@ section#projects {
     border-radius: var(--radius);
     padding: var(--space-s);
     transition: transform var(--transition);
+    display: flex;
+    flex-direction: column;
 }
 
 .skill-box:hover {
@@ -586,9 +588,7 @@ section#projects {
 }
 
 .skill-title {
-    font-size: var(--font-size-m);
-    margin-bottom: var(--space-s);
-    font-weight: 500;
+    flex-grow: 1;
 }
 
 .skill-bar-container {
