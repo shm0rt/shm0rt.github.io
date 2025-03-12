@@ -158,7 +158,7 @@ function initScrollArrow() {
         setTimeout(function() {
             scrollArrow.classList.add('visible');
             scrollArrow.classList.remove('hidden');
-        }, 6000);
+        }, 4000);
         
         // Hide arrow when user scrolls
         window.addEventListener('scroll', function() {
