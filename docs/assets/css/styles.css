@@ -805,7 +805,8 @@ footer h2::after {
     }
 
     .command-input,
-    .output p {
+    .output p,
+    .output div {
         font-size: 12px;
     }
 
