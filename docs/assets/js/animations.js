@@ -180,7 +180,7 @@ function initScrollArrow() {
     }
 }
 
-// Enhanced smooth scroll for terminal navigation - modified to only highlight the title
+// Enhanced smooth scroll for terminal navigation
 window.smoothScrollToSection = function (sectionId) {
     const section = document.getElementById(sectionId);
     if (!section) return;
@@ -190,27 +190,57 @@ window.smoothScrollToSection = function (sectionId) {
         window.appendOutput(`Navigating to ${sectionId} section...`);
     }
 
-    // Only highlight the section's title (h2) instead of the entire section
-    const sectionTitle = section.querySelector('h2');
-    if (sectionTitle) {
-        // Add a subtle highlight to the title only
-        sectionTitle.style.transition = 'color 0.3s ease-in-out';
-        sectionTitle.style.color = 'var(--accent)';
+    // Find the section's h2 header
+    const sectionHeader = section.querySelector('h2');
+    
+    // Custom smooth scroll function
+    function smoothScroll(target) {
+        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+        const startPosition = window.pageYOffset;
+        const distance = targetPosition - startPosition;
+        const duration = 800; // Adjust for scroll speed
+        let start = null;
 
-        // Smooth scroll
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        function animation(currentTime) {
+            if (start === null) start = currentTime;
+            const timeElapsed = currentTime - start;
+            const run = ease(timeElapsed, startPosition, distance, duration);
+            window.scrollTo(0, run);
+            if (timeElapsed < duration) {
+                requestAnimationFrame(animation);
+            }
+        }
+
+        // Easing function for smooth acceleration and deceleration
+        function ease(t, b, c, d) {
+            t /= d / 2;
+            if (t < 1) return c / 2 * t * t + b;
+            t--;
+            return -c / 2 * (t * (t - 2) - 1) + b;
+        }
+
+        requestAnimationFrame(animation);
+    }
+
+    if (sectionHeader) {
+        // Smooth scroll to the header
+        smoothScroll(sectionHeader);
+
+        // Highlight section title briefly
+        sectionHeader.style.transition = 'color 0.3s ease-in-out';
+        sectionHeader.style.color = 'var(--accent)';
 
         // Remove highlight after animation
         setTimeout(() => {
-            sectionTitle.style.color = '';
+            sectionHeader.style.color = '';
         }, 1000);
     } else {
-        // If no title found, just scroll without highlighting
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Fallback if no header found
+        smoothScroll(section);
     }
 }
 
-// Make available for terminal.js
+// Ensure compatibility with terminal.js
 window.cdDir = function (dirId) {
     smoothScrollToSection(dirId);
 }
