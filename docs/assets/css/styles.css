@@ -355,6 +355,63 @@ section#projects {
     /* Remove background highlight */
 }
 
+/* === SCROLL ARROW === */
+.scroll-arrow {
+    position: fixed;
+    bottom: var(--space-l);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  
+  .scroll-arrow svg {
+    width: 30px;
+    height: 30px;
+    stroke: var(--accent);
+    stroke-opacity: 0.8;
+    filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.3));
+    transition: stroke-opacity 0.3s ease;
+  }
+  
+  .scroll-arrow:hover svg {
+    stroke-opacity: 1;
+  }
+  
+  .scroll-arrow.visible {
+    opacity: 1;
+    animation: subtle-float 3s ease-in-out infinite;
+  }
+  
+  .scroll-arrow.hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+    pointer-events: none;
+  }
+  
+  @keyframes subtle-float {
+    0%, 100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    50% {
+      transform: translateX(-50%) translateY(-6px);
+    }
+  }
+  
+  /* Mobile adjustments for arrow */
+  @media (max-width: 576px) {
+    .scroll-arrow {
+      bottom: var(--space-m);
+    }
+    
+    .scroll-arrow svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
 /* === ABOUT SECTION === */
 #about p {
     color: var(--text);

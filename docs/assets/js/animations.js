@@ -32,6 +32,9 @@ window.addEventListener("DOMContentLoaded", function () {
     // Initialize scroll effects
     initScrollEffects();
 
+    // Initialize scroll arrow
+    initScrollArrow();
+
     // Start typing after a short delay
     setTimeout(startTyping, 300);
 
@@ -140,6 +143,41 @@ function initScrollEffects() {
 
     // Start observing elements
     animatableElements.forEach(element => observer.observe(element));
+}
+
+// Initialize scroll arrow (following the same style as other initializations)
+function initScrollArrow() {
+    const scrollArrow = document.getElementById('scrollDownArrow');
+    
+    // Reset the scroll state on each page load
+    if (scrollArrow) {
+        // Always show arrow on page load regardless of previous scrolling
+        scrollArrow.classList.add('hidden');
+        
+        // Show arrow after terminal is visible (6 seconds)
+        setTimeout(function() {
+            scrollArrow.classList.add('visible');
+            scrollArrow.classList.remove('hidden');
+        }, 6000);
+        
+        // Hide arrow when user scrolls
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > window.innerHeight * 0.2) {
+                scrollArrow.classList.remove('visible');
+                scrollArrow.classList.add('hidden');
+            }
+        });
+        
+        // Make arrow clickable to scroll to first section
+        scrollArrow.addEventListener('click', function() {
+            const aboutSection = document.getElementById('about');
+            if (aboutSection) {
+                aboutSection.scrollIntoView({ behavior: 'smooth' });
+                scrollArrow.classList.remove('visible');
+                scrollArrow.classList.add('hidden');
+            }
+        });
+    }
 }
 
 // Enhanced smooth scroll for terminal navigation - modified to only highlight the title
