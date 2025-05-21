@@ -184,9 +184,7 @@ section#projects {
     overflow-wrap: break-word;
 }
 
-/* Terminal cursor animation - simplified */
 @keyframes blink {
-
     0%,
     49% {
         opacity: 1;
@@ -198,7 +196,6 @@ section#projects {
     }
 }
 
-/* Terminal-style block cursor */
 .terminal-cursor {
     background-color: var(--accent);
     bottom: 0;
@@ -364,53 +361,44 @@ section#projects {
     z-index: 100;
     cursor: pointer;
     opacity: 0;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  
-  .scroll-arrow svg {
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+}
+
+.scroll-arrow svg {
     width: 30px;
     height: 30px;
     stroke: var(--accent);
     stroke-opacity: 0.8;
     filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.3));
     transition: stroke-opacity 0.3s ease;
-  }
-  
-  .scroll-arrow:hover svg {
+}
+
+.scroll-arrow:hover svg {
     stroke-opacity: 1;
-  }
-  
-  .scroll-arrow.visible {
+}
+
+.scroll-arrow.visible {
     opacity: 1;
     animation: subtle-float 3s ease-in-out infinite;
-  }
-  
-  .scroll-arrow.hidden {
+}
+
+.scroll-arrow.hidden {
     opacity: 0;
     transform: translateX(-50%) translateY(10px);
     pointer-events: none;
-  }
-  
-  @keyframes subtle-float {
-    0%, 100% {
-      transform: translateX(-50%) translateY(0);
+}
+
+@keyframes subtle-float {
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0);
     }
     50% {
-      transform: translateX(-50%) translateY(-6px);
+        transform: translateX(-50%) translateY(-6px);
     }
-  }
-  
-  /* Mobile adjustments for arrow */
-  @media (max-width: 576px) {
-    .scroll-arrow {
-      bottom: var(--space-m);
-    }
-    
-    .scroll-arrow svg {
-      width: 24px;
-      height: 24px;
-    }
-  }
+}
 
 /* === ABOUT SECTION === */
 #about p {
@@ -530,33 +518,33 @@ section#projects {
     gap: var(--space-l);
     margin-bottom: var(--space-m);
     align-items: flex-start;
-  }
-  
-  .about-text {
+}
+
+.about-text {
     flex: 3; /* Giving more space for text */
-  }
-  
-  .about-image {
+}
+
+.about-image {
     flex: 2;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-right: var(--space-s);
-  }
-  
-  .profile-photo {
+}
+
+.profile-photo {
     max-width: 100%;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     transition: transform var(--transition);
     filter: grayscale(100%); /* Keeps the black and white style */
     border: 2px solid rgba(var(--accent-rgb), 0.3);
-  }
-  
-  .profile-photo:hover {
+}
+
+.profile-photo:hover {
     transform: scale(1.02);
     filter: grayscale(80%); /* Slight color reveal on hover */
-  }
+}
 
 /* === SKILLS & PROJECTS === */
 .skills-subheading {
@@ -627,12 +615,97 @@ section#projects {
 .animate-on-scroll {
     opacity: 1;
     transform: translateY(0);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
 }
 
 .animate-on-scroll.hidden {
     opacity: 0;
     transform: translateY(20px);
+}
+
+/* Project Section Styles */
+.projects-container {
+    width: 100%;
+    margin-bottom: var(--space-xl);
+}
+
+.project-card {
+    background-color: var(--bg-alt);
+    border-radius: var(--radius);
+    padding: var(--space-m);
+    margin-bottom: var(--space-m);
+    border-left: 3px solid var(--accent);
+    box-shadow: var(--shadow);
+    transition: transform var(--transition);
+}
+
+.project-card:hover {
+    transform: translateY(-3px);
+}
+
+.project-title {
+    font-size: var(--font-size-l);
+    margin-bottom: var(--space-s);
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
+
+.project-desc {
+    font-size: var(--font-size-s);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-m);
+    line-height: 1.6;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: var(--space-m);
+}
+
+.project-tag {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: var(--radius);
+    font-family: var(--terminal-font);
+}
+
+.project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: var(--accent);
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    transition: all var(--transition);
+    font-family: var(--terminal-font);
+}
+
+.project-link:hover {
+    background-color: var(--accent);
+    color: var(--bg);
+}
+
+.project-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+.project-link {
+    position: relative;
+}
+
+.project-link:hover .svg-container svg {
+    filter: brightness(0) saturate(100%);
+    transition: filter 0.2s ease;
 }
 
 /* === FOOTER === */
@@ -744,17 +817,21 @@ footer h2::after {
     .about-container {
         flex-direction: column; /* Photo appears above text on mobile */
         gap: var(--space-m);
-      }
-      
-      .about-image {
+    }
+
+    .about-image {
         width: 100%;
         margin-bottom: var(--space-s);
         padding-right: 0;
-      }
-      
-      .profile-photo {
-        max-width: 70%; /* Slightly smaller on mobile */
-      }
+    }
+
+    .project-title {
+        font-size: 1.1rem;
+    }
+
+    .project-desc {
+        font-size: 0.85rem;
+    }
 }
 
 /* Mobile View */
@@ -832,6 +909,15 @@ footer h2::after {
         font-size: 0.85rem;
     }
 
+    .scroll-arrow {
+        bottom: var(--space-m);
+    }
+
+    .scroll-arrow svg {
+        width: 24px;
+        height: 24px;
+    }
+
     .skill-grid,
     .tech-skills-grid {
         grid-template-columns: 1fr;
@@ -861,5 +947,22 @@ footer h2::after {
         margin-top: var(--space-m);
         margin-bottom: 12px;
         font-size: 1rem;
+    }
+    .project-card {
+        padding: var(--space-s);
+    }
+
+    .project-tags {
+        gap: 6px;
+    }
+
+    .project-tag {
+        font-size: 0.75rem;
+        padding: 3px 8px;
+    }
+
+    .project-link {
+        padding: 6px 12px;
+        font-size: 0.85rem;
     }
 }
