@@ -763,6 +763,252 @@ footer h2::after {
     width: 20px;
 }
 
+/* === PGP KEY AND MODAL STYLING === */
+
+/* Email and contact links container */
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-l);
+    justify-content: center;
+    margin-top: var(--space-l);
+}
+
+/* Contact link styling */
+.contact-link {
+    align-items: center;
+    border-radius: var(--radius);
+    color: var(--accent);
+    display: flex;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-s);
+    transition: transform var(--transition);
+}
+
+.contact-link:hover {
+    transform: translateY(-2px);
+}
+
+/* Email container to group email and PGP key */
+.email-container {
+    display: inline-flex;
+    align-items: center; /* This ensures vertical centering */
+    position: relative;
+}
+
+/* PGP Key Link styling - simple positioning */
+.pgp-key-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 4px; /* Reduced from 8px to bring it closer */
+    transition: transform 0.3s ease;
+}
+
+.pgp-key-icon {
+    fill: var(--accent);
+    stroke: none;
+    width: 22px; /* Slightly reduced size */
+    height: 22px;
+    position: relative;
+    top: 1px; /* Subtle vertical adjustment to align with text */
+}
+
+.pgp-key-link:hover {
+    background-color: transparent;
+    transform: scale(1.1);
+}
+
+/* Modal styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+}
+
+/* Modal content adjustments */
+.modal-content {
+    background-color: var(--bg-alt);
+    margin: 10% auto;
+    padding: var(--space-l);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    width: 80%;
+    max-width: 700px;
+    max-height: 80vh; /* Limit height on larger screens */
+    position: relative;
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column; /* Stack contents vertically */
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+    color: var(--accent);
+}
+
+.modal h3 {
+    color: var(--accent);
+    margin-bottom: var(--space-m);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+/* Make PGP text area scrollable */
+.pgp-key-text {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius);
+    padding: var(--space-m);
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 50vh; /* Limit height to ensure buttons are visible */
+    font-family: var(--terminal-font);
+    font-size: 14px;
+    line-height: 1.4;
+    margin: var(--space-m) 0;
+    white-space: pre-wrap;
+    word-break: break-all;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Ensure buttons are always visible */
+.pgp-actions {
+    display: flex;
+    gap: var(--space-m);
+    justify-content: flex-end;
+    margin-top: var(--space-m);
+    position: sticky;
+    bottom: 0;
+    background-color: var(--bg-alt); /* Match modal background */
+    padding-top: var(--space-s); /* Add padding for visual separation */
+    border-top: 1px solid rgba(255, 255, 255, 0.05); /* Subtle separator */
+}
+
+/* Button styling */
+.button {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: var(--accent);
+    border: none;
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 14px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Copy button styling - more subtle */
+#copyPgpKey {
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(var(--accent-rgb), 0.3);
+}
+
+/* Download button styling - more prominent */
+#downloadPgpKey {
+    background-color: var(--accent);
+    color: var(--bg);
+}
+
+#downloadPgpKey:hover {
+    background-color: rgba(var(--accent-rgb), 0.8);
+    color: var(--bg);
+}
+
+#copyPgpKey:hover {
+    background-color: rgba(var(--accent-rgb), 0.2);
+    color: var(--accent);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    /* Keep links spaced appropriately */
+    .links {
+        gap: var(--space-m);
+    }
+
+    /* Email container keeps email and PGP together */
+    .email-container {
+        display: inline-flex;
+        margin-bottom: 0;
+    }
+
+    /* Modal adjustments for mobile */
+    .modal-content {
+        width: 90%;
+        margin: 15% auto;
+        padding: var(--space-m);
+        max-height: 85vh;
+    }
+
+    .pgp-key-text {
+        font-size: 12px;
+        padding: var(--space-s);
+        max-height: 40vh; /* Smaller on mobile */
+    }
+
+    .button {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 400px) {
+    .links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-s);
+    }
+
+    .pgp-actions {
+        flex-direction: column;
+        gap: var(--space-s);
+    }
+
+    .button {
+        width: 100%;
+    }
+
+    .pgp-key-text {
+        max-height: 30vh; /* Even smaller on very small screens */
+    }
+}
+
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
     :root {

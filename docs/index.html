@@ -684,29 +684,48 @@
             <div class="container">
                 <h2>Contact Shm0rt</h2>
                 <div class="links">
-                    <a
-                        href="mailto:me@shm0rt.ch"
-                        class="contact-link"
-                        aria-label="Email"
-                    >
-                        <svg
-                            data-slot="icon"
-                            aria-hidden="true"
-                            fill="none"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
+                    <div class="email-container">
+                        <a
+                            href="mailto:me@shm0rt.ch"
+                            class="contact-link"
+                            aria-label="Email"
                         >
-                            <path
-                                d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            ></path>
-                        </svg>
-                        Email
-                    </a>
-
+                            <svg
+                                data-slot="icon"
+                                aria-hidden="true"
+                                fill="none"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                ></path>
+                            </svg>
+                            Email
+                        </a>
+                        <a
+                            href="#"
+                            class="pgp-key-link"
+                            aria-label="PGP Key"
+                            id="pgpKeyLink"
+                            title="View PGP Key"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink"
+                                viewBox="0 0 128 128"
+                                class="pgp-key-icon"
+                            >
+                                <path
+                                    d="m 29.09375,11.234375 c -3.183804,0 -5.71875,2.566196 -5.71875,5.75 l 0,94.031255 c 0,3.1838 2.534946,5.75 5.71875,5.75 l 69.8125,0 c 3.1838,0 5.71875,-2.5662 5.71875,-5.75 l 0,-70.656255 -21.03125,0 c -4.306108,0 -8.0625,-3.141109 -8.0625,-7.3125 l 0,-21.8125 -46.4375,0 z m 50.4375,0 0,21.8125 c 0,1.714122 1.631968,3.3125 4.0625,3.3125 l 21.03125,0 -25.09375,-25.125 z M 64,45.640625 c 8.462853,0 15.375,6.91215 15.375,15.375 l 0,9.125 c 3.356433,0.7473 5.84375,3.724511 5.84375,7.3125 l 0,17.53125 c 0,4.154724 -3.314025,7.500005 -7.46875,7.500005 l -27.5,0 c -4.154725,0 -7.5,-3.345281 -7.5,-7.500005 l 0,-17.53125 c 0,-3.597001 2.505807,-6.574596 5.875,-7.3125 l 0,-9.125 c 0,-8.46285 6.912151,-15.375 15.375,-15.375 z m 0,5.125 c -5.692497,0 -10.25,4.557502 -10.25,10.25 l 0,8.96875 20.5,0 0,-8.96875 c 0,-5.692498 -4.5575,-10.25 -10.25,-10.25 z"
+                                />
+                            </svg>
+                        </a>
+                    </div>
                     <a
                         href="https://github.com/shm0rt"
                         class="contact-link"
@@ -897,9 +916,11 @@
             </div>
         </footer>
 
+        <script src="./assets/js/main.js"></script>
         <script src="./assets/js/terminal.js"></script>
         <script src="./assets/js/animations.js"></script>
-        <script src="./assets/js/main.js"></script>
+        <script src="./assets/js/pgp-key.js"></script>
+
         <div id="pgpKeyModal" class="modal">
             <div class="modal-content">
                 <span class="modal-close">&times;</span>
@@ -907,23 +928,67 @@
                 <pre class="pgp-key-text">
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
-        mQINBGXrCVUBEADK3wVh40xNhliQF+9QbE7rjVn+4FjRDJX6apZsxO17S5f+Qpvx
-        0L2S5xfkmRW2QWI5NMo5j0W1K0BP9v+8NqUdRx/+IvQJLvGCJ2aTf9LnFCKOWWVP
-        4L+zYnx1J5SQnJV/YT/F/uMnW5npVSCrX2PGXxGNHoXdV87GLHpY4hxbO1G8Y9cD
-        cAr3Q5dCGDYdPBLwWmm1uLb9KMKQXmUzT1iMR7/gZbr7KjvR1u37d95byLJJTJX0
-        BdytH/NxsIH0uPxr6P+q2TVIBFSzSJ5Z+VtOkhZfZjSM7ISDXcSjA5U8jQP0l6xP
-        ZU90zrJ4jg5pKAHLm74wD/TzXf+j1fnz5Xf+2W8u7gDsTtJQxRgY/yJYJHNL9tHh
-        F6a02dSsgVUQZskL5lJPQecfhkjR4EYWLIc50FBR2Nof4VrHFHzEuL4cXj3j9vRs
-        wjZG9Y3L0c+fDEcwDZ3d8wy0+OP1hpR7h6r/MLVd1tNRGVyJkFejQCHQ1Wkn8Q5s
-        Rme4JYWbTQEMlybC7qhSfdsQ30k+/bZfDXFLqOyaGK9N50kkIIpLN2s1PdDuLzF+
-        vAzjOOW/SuXLjI+uSuZ/5gNORZw0Qb8wlnwT/7BT98fYYaQ8BwGwYNnW1YRxvgOd
-        qY6mqm7K8lSrBzLWqXVRXgV0h0F7w7QGPz8gD/cvkvbCdZN+CeK9D1P2DQARAQAB
-        =JbPU
-        -----END PGP PUBLIC KEY BLOCK-----</pre
+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
+=imDf
+-----END PGP PUBLIC KEY BLOCK-----
+</pre
                 >
                 <div class="pgp-actions">
                     <button id="copyPgpKey" class="button">Copy</button>
-                    <a href="#" class="button" download="shm0rt_public_key.asc"
+                    <a
+                        href="#"
+                        id="downloadPgpKey"
+                        class="button"
+                        download="publickey - me@shm0rt.ch - 0x9EF1B771.asc"
                         >Download</a
                     >
                 </div>
